@@ -16,12 +16,12 @@ export default defineConfig({
     tsconfigPaths(),
     viteStaticCopy({
       targets: [
+        // {
+        //   src: "../fonts/*",
+        //   dest: "dist/assets/fonts",
+        // },
         {
-          src: "../fonts/*",
-          dest: "dist/assets/fonts",
-        },
-        {
-          src: normalizePath(resolve(__dirname, '../fonts/')),
+          src: normalizePath(resolve(__dirname, './fonts') + "/*.ttf"),
           dest: 'assets/fonts'
         }
       ],
