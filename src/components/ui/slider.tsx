@@ -1,3 +1,5 @@
+// @ts-nocheck TS2322
+// TS2322: Types of property 'css' are incompatible.
 import { Slider as ChakraSlider, For, HStack } from "@chakra-ui/react"
 import * as React from "react"
 

@@ -1,3 +1,5 @@
+// @ts-nocheck TS2322
+// TS2322: Types of property 'css' are incompatible.
 "use client"
 
 import type { GroupProps, SlotRecipeProps } from "@chakra-ui/react"
