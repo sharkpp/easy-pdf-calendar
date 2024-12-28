@@ -6,7 +6,7 @@ import { jsPDF } from 'jspdf';
 import 'svg2pdf.js';
 import { useFont } from './hooks/jspdf-usefont';
 import { PageSize } from './utils/jspdf-pagesize';
-import { convertPointsToUnit } from './utils/jspdf-convert-unit';
+import { convertPointsFromUnit, convertPointsToUnit } from './utils/jspdf-convert-unit';
 
 const MS24H = 24 * 60 * 60 * 1000;
 
@@ -30,10 +30,13 @@ type SVG_LENGTH_TYPE =
   SVGLength["SVG_LENGTHTYPE_PC"] 
 ;
 
+// 
 function convertSVGUserUnitTo(elm: SVGRectElement, n: number, unit: SVG_LENGTH_TYPE = SVGLength.SVG_LENGTHTYPE_MM) {
   const nn = elm.ownerSVGElement?.createSVGLength();
-  nn?.newValueSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_NUMBER, n);
-  nn?.convertToSpecifiedUnits(unit);
+  if (nn) {
+    nn.value = n;
+    nn.convertToSpecifiedUnits(unit);
+  }
   return nn?.valueInSpecifiedUnits;
 }
 
@@ -108,73 +111,19 @@ function App() {
           console.log({firstDateOfMonth,firstDayOfWeek,lastDateOfMonth,lastDateOfPrevMonth,dateBox});
 
           dateBox.forEach((date, dateIndex) => {
-            const dateElm: SVGRectElement | null = svgCalender_.querySelector(
-              date < 0
-                ? `*[id^="d2-${-date}"],*[inkscape\\:label^="d2-${-date}"]` // 先月or来月
-                : `*[id^="d-${date}"],*[inkscape\\:label^="d-${date}"]` // 今月
-            );
-            const dateBoxElm: SVGRectElement | null = svgCalender_.querySelector(
-              `*[id^="day-${dateIndex}"],*[inkscape\\:label^="day-${dateIndex}"]`
-            );
-            if (!dateElm || !dateBoxElm) { 
-              return;
-            }
-            dateElm.style.display = "block";
-            const dateBoxBBoxByMM = getBBoxBy(dateBoxElm);
-
-            const dateBoxXByMM = getSVGLenByMM((dateBoxElm as SVGRectElement).x);
-            const dateBoxYByMM = getSVGLenByMM((dateBoxElm as SVGRectElement).y);
-            const dateBoxWByMM = getSVGLenByMM((dateBoxElm as SVGRectElement).width);
-            const dateBoxHByMM = getSVGLenByMM((dateBoxElm as SVGRectElement).height);
-
-            const dateBBoxByMM = getBBoxBy(dateElm);
-            const dateWByMM = dateBBoxByMM.width * dateBBoxByMM.width / dateBoxWByMM;
-            const dateHByMM = dateBBoxByMM.height * dateBBoxByMM.height / dateBoxHByMM;
-            console.log({date,dateElm,dateBoxElm,dateBoxXByMM,dateBoxYByMM,dateBoxWByMM,dateBoxHByMM,dateBoxBBoxByMM,dateBBoxByMM,dateWByMM,dateHByMM});
-            const x = dateElm.ownerSVGElement?.createSVGLength();
-            const y = dateElm.ownerSVGElement?.createSVGLength();
-            x?.newValueSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_MM, dateBoxXByMM);// + (dateBoxWByMM - dateWByMM) / 2);
-            y?.newValueSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_MM, dateBoxYByMM);// + (dateBoxHByMM - dateHByMM) / 2);
-            //ateElm.x.baseVal.appendItem(x);// newValueSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_MM, dateBoxXByMM + (dateBoxWByMM - dateWByMM) / 2);
-            //dateElm.y.baseVal.appendItem(y);// newValueSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_MM, dateBoxYByMM + (dateBoxHByMM - dateHByMM) / 2);
-            dateElm.firstElementChild?.setAttribute("x", ""+x?.valueAsString);//.x.baseVal.value = x;// newValueSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_MM, dateBoxXByMM + (dateBoxWByMM - dateWByMM) / 2);
-            dateElm.firstElementChild?.setAttribute("y", ""+y?.valueAsString);//y.baseVal.value = y;// newValueSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_MM, dateBoxYByMM + (dateBoxHByMM - dateHByMM) / 2);
-            //dateElm.setAttribute("transform", ""+dateElm.transform().);//y.baseVal.value = y;// newValueSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_MM, dateBoxYByMM + (dateBoxHByMM - dateHByMM) / 2);
-            console.log({date,dateIndex,dateElm});
-
-              // const dateStr = ""+Math.abs(date);
-              // const dateStrSizePt = doc.getTextDimensions(dateStr);
-              // const dateStrSizeMM = { w: convertPointsToUnit(dateStrSizePt.w, "mm"), h: convertPointsToUnit(dateStrSizePt.h, "mm") };
-              // console.log({dateBoxElm,dateBoxXByMM,dateBoxYByMM,dateBoxWByMM,dateBoxHByMM,dateStrSizePt,dateStrSizeMM});
-              // doc.text(
-              //   dateStr,
-              //   dateBoxXByMM + dateBoxWByMM / 2,
-              //   dateBoxYByMM + dateBoxHByMM / 2,
-              //   {
-              //     align: "center",
-              //     baseline: "middle",
-              //   });
+            const dateBoxElm = svgCalender_.querySelector(`*[id^="day-${dateIndex}"],*[inkscape\\:label^="day-${dateIndex}"]`);
+            console.log({date,dateIndex,dateBoxElm,x:getSVGLenByMM((dateBoxElm as SVGRectElement).x),y:getSVGLenByMM((dateBoxElm as SVGRectElement).y)});
+            doc.text(
+              ""+Math.abs(date),
+              (dateBoxElm as SVGRectElement).x.baseVal.value + (dateBoxElm as SVGRectElement).width.baseVal.value / 2,
+              (dateBoxElm as SVGRectElement).y.baseVal.value + (dateBoxElm as SVGRectElement).height.baseVal.value / 2,
+              {
+                align: "center",
+                baseline: "middle",
+              });
           });
 
-          //console.log( svgCalender_.querySelectorAll('*[id^="day-"],*[inkscape\\:label^="day-"]'));
-          // svgCalender_
-          //   .querySelectorAll('*[id^="day-"],*[inkscape\\:label^="day-"]')
-          //   .forEach((dayElm: Element) => {
-          //     const id = dayElm.id;
-          //     const inkscapeLabel = ((dayElm&&dayElm.attributes&&dayElm.attributes.getNamedItem("inkscape:label"))||{}).nodeValue;
-          //     const dateNo = +((inkscapeLabel||id).match(/day-([0-9]+)/)||[])[1]||0;
-          //     doc.text(
-          //       ""+dateBox[dateNo],
-          //       getSVGLenByMM((dayElm as SVGRectElement).x),
-          //       getSVGLenByMM((dayElm as SVGRectElement).y),
-          //       {
-          //         align: "center",
-          //         baseline: "middle",
-          //       });
-          //   });
           await doc.svg(svgCalender_);
-
-          break;
         }
 
 
