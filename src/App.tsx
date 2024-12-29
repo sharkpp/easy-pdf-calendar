@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { Button } from "@chakra-ui/react";
+import { Box, Button, SimpleGrid } from "@chakra-ui/react";
 import { css } from '@emotion/react';
 import tmpl from '../designs/simple-light-pict/main.svg?raw';
 import { jsPDF } from 'jspdf';
@@ -7,6 +7,8 @@ import 'svg2pdf.js';
 import { useFont } from './hooks/jspdf-usefont';
 import { PageSize } from './utils/jspdf-pagesize';
 import { convertPointsFromUnit, convertPointsToUnit } from './utils/jspdf-convert-unit';
+import CalenderPreview from './CalenderPreview';
+import DesignList from './DesignList';
 
 const MS24H = 24 * 60 * 60 * 1000;
 
@@ -136,8 +138,15 @@ function App() {
   }, []);
   return (
     <>
-      <div ref={refSvgHideContainer} css={css`width: 0px;height: 200px;`}>
-      </div>
+      <DesignList
+      />
+      <CalenderPreview
+        design="simple-light-pict"
+        year={2025}
+        month={1}
+      />
+      {/*<div ref={refSvgHideContainer} css={css`width: 0px;height: 200px;`}>
+      </div>*/}
       <div css={css`width: 100%;height: 100%;`}>
         <Button
           onClick={handleMakePDF}
