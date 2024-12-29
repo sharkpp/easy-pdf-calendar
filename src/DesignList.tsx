@@ -3,29 +3,28 @@
 import { Suspense, use } from 'react';
 import { css } from '@emotion/react';
 import { Box, Button, SimpleGrid } from "@chakra-ui/react";
-import { CardRoot as Card, CardHeader, CardBody, CardFooter, Text } from '@chakra-ui/react'
-import { CALENDER_DESIGNS_BASE_PATH } from './common';
+import { CardRoot as Card, CardHeader, CardBody, Heading, Text } from '@chakra-ui/react'
+import { CALENDER_DESIGNS_BASE_PATH, DesignsIndexItemType, DesignsIndexList } from './common';
+import { fetchData } from './fetch';
 import CalenderPreview from './CalenderPreview';
 
 type DesignListProps = {
-  tmp?: any
+  onSelect?: (name: string) => void;
 }
 
-async function readDesignListData() {
-  return (
-    fetch(`/${CALENDER_DESIGNS_BASE_PATH}/index.json`)
-      .then((res) => res.json())
-  );
-}
-
-function DesignListCore({ tmp }: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
+function DesignListCore({ onSelect }: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
 {
-  const designsList = use(readDesignListData());
+  const designsList: DesignsIndexList = use(
+    fetchData(`${CALENDER_DESIGNS_BASE_PATH}/index.json`, async (res) => res.json())
+  );
   return (
-    <SimpleGrid columns={[2, null, 3]} css={css`gap: 40px`}>
-      {designsList.index.map((design) => (
-        <Box bg='tomato' height='80px'>
-          <Card>
+    <SimpleGrid columns={[2, null, 3]} css={css`gap: 2rem`}>
+      {designsList.index.map((design: DesignsIndexItemType) => (
+        <Box key={design.id} height='80px'>
+          <Card size="sm" onClick={() => (onSelect && onSelect(design.id))}>
+            <CardHeader>
+              <Heading size='sm'>{design.id}</Heading>
+            </CardHeader>
             <CardBody>
               {/*<Text>View a summary of all your customers over the last month.</Text>*/}
               <CalenderPreview
@@ -40,13 +39,13 @@ function DesignListCore({ tmp }: DesignListProps & import("react").RefAttributes
     </SimpleGrid>
   );
 }
-function DesignList({ tmp }: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
+function DesignList(props: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
 {
   return (
     <>
       <div>
         <Suspense fallback={<p>Loading...</p>}>
-          <DesignListCore />
+          <DesignListCore {...props} />
         </Suspense>
       </div>
     </>

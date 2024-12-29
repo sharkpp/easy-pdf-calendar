@@ -138,21 +138,26 @@ function App() {
   }, []);
   return (
     <>
-      <DesignList
-      />
-      <CalenderPreview
+      <div
+        css={css`padding: 2rem`}
+      >
+        <DesignList
+          onSelect={(name) => console.log({name})}
+        />
+      </div>
+      {/*<CalenderPreview
         design="simple-light-pict"
         year={2025}
         month={1}
       />
-      {/*<div ref={refSvgHideContainer} css={css`width: 0px;height: 200px;`}>
-      </div>*/}
+      <div ref={refSvgHideContainer} css={css`width: 0px;height: 200px;`}>
+      </div>
       <div css={css`width: 100%;height: 100%;`}>
         <Button
           onClick={handleMakePDF}
         >make pdf</Button>
         <iframe ref={pdfRef} css={css`width: 100%;height: calc(100% - 40px);`} />
-      </div>
+      </div>*/}
     </>
   )
 }

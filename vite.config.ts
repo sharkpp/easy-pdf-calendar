@@ -37,7 +37,15 @@ const {
         });
       }
       return r;
-    }, { designsCopyList: [], designsIndexContent: { index: [] } } as designsResultType)
+    }, {
+      designsCopyList: [
+        {
+          src: normalizePath(resolve(__dirname, `${DESIGNS_PATH}/index.json`)),
+          dest: 'assets/designs/'
+        },
+      ],
+      designsIndexContent: { index: [] }
+    } as designsResultType)
 
 writeFileSync(DESIGNS_INDEX_JSON_PATH, JSON.stringify(designsIndexContent));
 
