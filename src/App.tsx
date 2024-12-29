@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Box, Button, SimpleGrid } from "@chakra-ui/react";
 import { css } from '@emotion/react';
 import tmpl from '../designs/simple-light-pict/main.svg?raw';
@@ -7,8 +7,9 @@ import 'svg2pdf.js';
 import { useFont } from './hooks/jspdf-usefont';
 import { PageSize } from './utils/jspdf-pagesize';
 import { convertPointsFromUnit, convertPointsToUnit } from './utils/jspdf-convert-unit';
-import CalenderPreview from './CalenderPreview';
 import DesignList from './DesignList';
+import CalenderPreview from './CalenderPreview';
+import CalanderDesignPreview from './CalanderDesignPreview';
 
 const MS24H = 24 * 60 * 60 * 1000;
 
@@ -52,13 +53,16 @@ function getBBoxBy(elm: SVGRectElement, unit: SVG_LENGTH_TYPE = SVGLength.SVG_LE
   }
 }
 
-function App() {
+const UI = {
+  SelectDesign: 0,
+  PreviewCalenderMonth: 1,
+};
 
+function App()
+{
   const refSvgHideContainer: React.MutableRefObject<null | HTMLIFrameElement> = useRef(null);
   const pdfRef: React.MutableRefObject<null | HTMLIFrameElement> = useRef(null);
-
   const notosans = useFont("Noto Sans Gothic", "/assets/fonts/NotoSansJP-Medium.ttf")
-
   const handleMakePDF = useCallback(() => {
     async function makePdf() {
       const year = 2025;
@@ -136,14 +140,36 @@ function App() {
     }
     makePdf();
   }, []);
+
+  const [ design, setDesign ] = useState("");
+  const [ year, setYear ] = useState(2025);
+  const [ month, setMonth ] = useState(1);
+  const [ ui, setUi ] = useState(UI.SelectDesign);
+
   return (
     <>
       <div
-        css={css`padding: 2rem`}
+        css={css`padding: 1rem; width: 100%; height: 100%;`}
       >
-        <DesignList
-          onSelect={(name) => console.log({name})}
-        />
+        {ui == UI.SelectDesign && <DesignList
+          design={design}
+          year={year}
+          onSelect={(designName) => {
+            setDesign(designName);
+            setUi(UI.PreviewCalenderMonth);
+          }}
+        />}
+        {ui == UI.PreviewCalenderMonth && <CalanderDesignPreview
+          design={design}
+          year={year}
+          month={month}
+          onChangeDesign={(designName) => {
+            setDesign(designName);
+          }}
+          onChangeMonth={(month) => {
+            setMonth(month);
+          }}
+        />}
       </div>
       {/*<CalenderPreview
         design="simple-light-pict"
