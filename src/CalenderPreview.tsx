@@ -5,13 +5,68 @@ import { css, SerializedStyles } from '@emotion/react';
 import SVG from 'react-inlinesvg';
 import { CALENDER_DESIGNS_BASE_PATH } from './common';
 
-const MS24H = 24 * 60 * 60 * 1000;
-
 type CalenderPreviewProps = {
   cssStyle?: SerializedStyles;
   design: string;
   year: number;
   month: number;
+}
+
+const MS24H = 24 * 60 * 60 * 1000;
+
+const MonthJName = [
+  '睦月',
+  '如月',
+  '弥生',
+  '卯月',
+  '皐月',
+  '水無月',
+  '文月',
+  '葉月',
+  '長月',
+  '神無月',
+  '霜月',
+  '師走',
+];
+
+const makeSelector = (id: string) => `*[id^="${id}"],*[inkscape\\:label^="${id}"]`;
+
+// テキストを追加
+function addSvgText(
+  baseElm: SVGRectElement,
+  text: string,
+  { textColor,  }: {
+    textColor?: string,
+  }
+) {
+  const fontSize = baseElm.height.baseVal.value;
+  baseElm.ownerSVGElement?.insertAdjacentHTML("beforeend", `
+    <text xml:space="preserve" 
+      style="
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+font-stretch: normal;
+font-size: ${fontSize};
+line-height: 1.25;
+font-family: &quot;Noto Sans Gothic&quot;;
+white-space: pre;
+display: inline;
+fill: ${textColor};
+fill-opacity: 1;
+stroke: none;
+dominant-baseline: central;"
+      x="0"
+      y="0"
+    >${text}</text>
+  `);
+  const textElm: SVGTextElement | null = baseElm.ownerSVGElement?.lastElementChild as SVGTextElement;
+  if (textElm) {
+    const rect: SVGRect = textElm.getBBox();
+    textElm.setAttribute("x", "" + (baseElm.x.baseVal.value + baseElm.width.baseVal.value / 2 - rect.width / 2));
+    textElm.setAttribute("y", "" + (baseElm.y.baseVal.value + baseElm.height.baseVal.value / 2));
+  }
+
 }
 
 function CalenderPreview({ cssStyle: cssProp, design, year, month }: CalenderPreviewProps & import("react").RefAttributes<HTMLDivElement>)
@@ -22,7 +77,7 @@ function CalenderPreview({ cssStyle: cssProp, design, year, month }: CalenderPre
   console.log({refCalender,calenderElm});
 
   useEffect(() => {
-    console.log({calenderElm});
+
     if (!calenderElm) {
       return;
     }
@@ -52,37 +107,36 @@ function CalenderPreview({ cssStyle: cssProp, design, year, month }: CalenderPre
 
     console.log({month,dateBox});
 
-    dateBox.forEach((date, dateIndex) => {
-      const dateBoxElm = calenderElm.querySelector(`*[id^="day-${dateIndex}"],*[inkscape\\:label^="day-${dateIndex}"]`) as SVGRectElement;
-      const fontSize = dateBoxElm.width.baseVal.value/ 2;
-      const textColor = 0 < date ? "rgb(0, 0, 0)" : "rgb(160, 160, 160)";
-      calenderElm.insertAdjacentHTML("beforeend", `
-        <text xml:space="preserve" 
-          style="
-font-style: normal;
-font-variant: normal;
-font-weight: normal;
-font-stretch: normal;
-font-size: ${fontSize};
-line-height: 1.25;
-font-family: &quot;Noto Sans Gothic&quot;;
-white-space: pre;
-display: inline;
-fill: ${textColor};
-fill-opacity: 1;
-stroke: none;
-dominant-baseline: central;"
-          x="0"
-          y="0">${
-            ""+Math.abs(date)
-          }</text>
-      `);
-      const dateNumElm: SVGTextElement | null = calenderElm.lastElementChild as SVGTextElement;
-      if (dateNumElm) {
-        const rect: SVGRect = dateNumElm.getBBox();
-        dateNumElm.setAttribute("x", "" + (dateBoxElm.x.baseVal.value + dateBoxElm.width.baseVal.value / 2 - rect.width / 2));
-        dateNumElm.setAttribute("y", "" + (dateBoxElm.y.baseVal.value + dateBoxElm.height.baseVal.value / 2));
+    // 年を追加
+    const yearBoxElm = calenderElm.querySelector(makeSelector(`year`)) as SVGRectElement;
+    addSvgText(
+      yearBoxElm,
+      `${year}年`,
+      {
+        textColor: "rgb(0, 0, 0)"
       }
+    );
+
+    // 月を追加
+    const monthBoxElm = calenderElm.querySelector(makeSelector(`month`)) as SVGRectElement;
+    addSvgText(
+      monthBoxElm,
+      `${month}月 ${MonthJName[month-1]}`,
+      {
+        textColor: "rgb(0, 0, 0)"
+      }
+    );
+
+    // 日付を追加
+    dateBox.forEach((date, dateIndex) => {
+      const dateBoxElm = calenderElm.querySelector(makeSelector(`day-${dateIndex}`)) as SVGRectElement;
+      addSvgText(
+        dateBoxElm,
+        ""+Math.abs(date),
+        {
+          textColor: 0 < date ? "rgb(0, 0, 0)" : "rgb(160, 160, 160)"
+        }
+      );
     });
   
   }, [calenderElm]);

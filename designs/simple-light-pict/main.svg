@@ -24,14 +24,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="0.89971966"
-     inkscape:cx="429.57825"
+     inkscape:cx="429.02252"
      inkscape:cy="235.07322"
      inkscape:window-width="1440"
      inkscape:window-height="900"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer6" />
+     inkscape:current-layer="layer1" />
   <defs
      id="defs1">
     <rect
@@ -560,7 +560,8 @@
   <g
      inkscape:label="base"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     style="display:none">
     <rect
        style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.115866;stroke-linecap:round;stroke-linejoin:round"
        id="rect1"
@@ -569,14 +570,6 @@
        x="5"
        y="5"
        inkscape:label="picture-area" />
-    <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0608076;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1-0"
-       width="104"
-       height="20"
-       x="73"
-       y="5"
-       inkscape:label="month" />
     <rect
        style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0131989;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-74"
@@ -634,661 +627,364 @@
        y="26"
        inkscape:label="week-6" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4"
-       width="14"
-       height="14"
-       x="73"
-       y="34"
+       width="10.5"
+       height="10.5"
+       x="74.75"
+       y="36.75"
        inkscape:label="day-0" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-8"
-       width="14"
-       height="14"
-       x="88"
-       y="34"
+       width="10.5"
+       height="10.5"
+       x="89.75"
+       y="36.75"
        inkscape:label="day-1" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-7"
-       width="14"
-       height="14"
-       x="103"
-       y="34"
+       width="10.5"
+       height="10.5"
+       x="104.75"
+       y="36.75"
        inkscape:label="day-2" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-0"
-       width="14"
-       height="14"
-       x="118"
-       y="34"
+       width="10.5"
+       height="10.5"
+       x="119.75"
+       y="36.75"
        inkscape:label="day-3" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-02"
-       width="14"
-       height="14"
-       x="133"
-       y="34"
+       width="10.5"
+       height="10.5"
+       x="134.75"
+       y="36.75"
        inkscape:label="day-4" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-1"
-       width="14"
-       height="14"
-       x="148"
-       y="34"
+       width="10.5"
+       height="10.5"
+       x="149.75"
+       y="36.75"
        inkscape:label="day-5" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-71"
-       width="14"
-       height="14"
-       x="163"
-       y="34"
+       width="10.5"
+       height="10.5"
+       x="164.75"
+       y="36.75"
        inkscape:label="day-6" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-9"
-       width="14"
-       height="14"
-       x="73"
-       y="49"
+       width="10.5"
+       height="10.5"
+       x="74.75"
+       y="51.75"
        inkscape:label="day-7" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-8-6"
-       width="14"
-       height="14"
-       x="88"
-       y="49"
+       width="10.5"
+       height="10.5"
+       x="89.75"
+       y="51.75"
        inkscape:label="day-8" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-7-6"
-       width="14"
-       height="14"
-       x="103"
-       y="49"
+       width="10.5"
+       height="10.5"
+       x="104.75"
+       y="51.75"
        inkscape:label="day-9" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-0-4"
-       width="14"
-       height="14"
-       x="118"
-       y="49"
+       width="10.5"
+       height="10.5"
+       x="119.75"
+       y="51.75"
        inkscape:label="day-10" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-02-0"
-       width="14"
-       height="14"
-       x="133"
-       y="49"
+       width="10.5"
+       height="10.5"
+       x="134.75"
+       y="51.75"
        inkscape:label="day-11" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-1-8"
-       width="14"
-       height="14"
-       x="148"
-       y="49"
+       width="10.5"
+       height="10.5"
+       x="149.75"
+       y="51.75"
        inkscape:label="day-12" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-71-2"
-       width="14"
-       height="14"
-       x="163"
-       y="49"
+       width="10.5"
+       height="10.5"
+       x="164.75"
+       y="51.75"
        inkscape:label="day-13" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-98"
-       width="14"
-       height="14"
-       x="73"
-       y="64"
+       width="10.5"
+       height="10.5"
+       x="74.75"
+       y="66.75"
        inkscape:label="day-14" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-8-1"
-       width="14"
-       height="14"
-       x="88"
-       y="64"
+       width="10.5"
+       height="10.5"
+       x="89.75"
+       y="66.75"
        inkscape:label="day-15" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-7-1"
-       width="14"
-       height="14"
-       x="103"
-       y="64"
+       width="10.5"
+       height="10.5"
+       x="104.75"
+       y="66.75"
        inkscape:label="day-16" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-0-6"
-       width="14"
-       height="14"
-       x="118"
-       y="64"
+       width="10.5"
+       height="10.5"
+       x="119.75"
+       y="66.75"
        inkscape:label="day-17" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-02-1"
-       width="14"
-       height="14"
-       x="133"
-       y="64"
+       width="10.5"
+       height="10.5"
+       x="134.75"
+       y="66.75"
        inkscape:label="day-18" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-1-1"
-       width="14"
-       height="14"
-       x="148"
-       y="64"
+       width="10.5"
+       height="10.5"
+       x="149.75"
+       y="66.75"
        inkscape:label="day-19" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-71-8"
-       width="14"
-       height="14"
-       x="163"
-       y="64"
+       width="10.5"
+       height="10.5"
+       x="164.75"
+       y="66.75"
        inkscape:label="day-20" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-83"
-       width="14"
-       height="14"
-       x="73"
-       y="79"
+       width="10.5"
+       height="10.5"
+       x="74.75"
+       y="81.75"
        inkscape:label="day-21" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-8-7"
-       width="14"
-       height="14"
-       x="88"
-       y="79"
+       width="10.5"
+       height="10.5"
+       x="89.75"
+       y="81.75"
        inkscape:label="day-22" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-7-0"
-       width="14"
-       height="14"
-       x="103"
-       y="79"
+       width="10.5"
+       height="10.5"
+       x="104.75"
+       y="81.75"
        inkscape:label="day-23" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-0-1"
-       width="14"
-       height="14"
-       x="118"
-       y="79"
+       width="10.5"
+       height="10.5"
+       x="119.75"
+       y="81.75"
        inkscape:label="day-24" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-02-3"
-       width="14"
-       height="14"
-       x="133"
-       y="79"
+       width="10.5"
+       height="10.5"
+       x="134.75"
+       y="81.75"
        inkscape:label="day-25" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-1-4"
-       width="14"
-       height="14"
-       x="148"
-       y="79"
+       width="10.5"
+       height="10.5"
+       x="149.75"
+       y="81.75"
        inkscape:label="day-26" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-71-3"
-       width="14"
-       height="14"
-       x="163"
-       y="79"
+       width="10.5"
+       height="10.5"
+       x="164.75"
+       y="81.75"
        inkscape:label="day-27" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-6"
-       width="14"
-       height="14"
-       x="73"
-       y="94"
+       width="10.5"
+       height="10.5"
+       x="74.75"
+       y="96.75"
        inkscape:label="day-28" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-8-5"
-       width="14"
-       height="14"
-       x="88"
-       y="94"
+       width="10.5"
+       height="10.5"
+       x="89.75"
+       y="96.75"
        inkscape:label="day-29" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-7-4"
-       width="14"
-       height="14"
-       x="103"
-       y="94"
+       width="10.5"
+       height="10.5"
+       x="104.75"
+       y="96.75"
        inkscape:label="day-30" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-0-17"
-       width="14"
-       height="14"
-       x="118"
-       y="94"
+       width="10.5"
+       height="10.5"
+       x="119.75"
+       y="96.75"
        inkscape:label="day-31" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-02-13"
-       width="14"
-       height="14"
-       x="133"
-       y="94"
+       width="10.5"
+       height="10.5"
+       x="134.75"
+       y="96.75"
        inkscape:label="day-32" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-1-48"
-       width="14"
-       height="14"
-       x="148"
-       y="94"
+       width="10.5"
+       height="10.5"
+       x="149.75"
+       y="96.75"
        inkscape:label="day-33" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-71-6"
-       width="14"
-       height="14"
-       x="163"
-       y="94"
+       width="10.5"
+       height="10.5"
+       x="164.75"
+       y="96.75"
        inkscape:label="day-34" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-3"
-       width="14"
-       height="14"
-       x="73"
-       y="109"
+       width="10.5"
+       height="10.5"
+       x="74.75"
+       y="111.75"
        inkscape:label="day-35" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-8-10"
-       width="14"
-       height="14"
-       x="88"
-       y="109"
+       width="10.5"
+       height="10.5"
+       x="89.75"
+       y="111.75"
        inkscape:label="day-36" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-7-19"
-       width="14"
-       height="14"
-       x="103"
-       y="109"
+       width="10.5"
+       height="10.5"
+       x="104.75"
+       y="111.75"
        inkscape:label="day-37" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-0-5"
-       width="14"
-       height="14"
-       x="118"
-       y="109"
+       width="10.5"
+       height="10.5"
+       x="119.75"
+       y="111.75"
        inkscape:label="day-38" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-02-7"
-       width="14"
-       height="14"
-       x="133"
-       y="109"
+       width="10.5"
+       height="10.5"
+       x="134.75"
+       y="111.75"
        inkscape:label="day-39" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-1-6"
-       width="14"
-       height="14"
-       x="148"
-       y="109"
+       width="10.5"
+       height="10.5"
+       x="149.75"
+       y="111.75"
        inkscape:label="day-40" />
     <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0186661;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4-71-85"
-       width="14"
-       height="14"
-       x="163"
-       y="109"
+       width="10.5"
+       height="10.5"
+       x="164.75"
+       y="111.75"
        inkscape:label="day-41" />
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,0,1.7013158)"
-       id="text39"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect39);display:inline;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="year"><tspan
-         x="280.91211"
-         y="64.403278"
-         id="tspan1">2020年</tspan></text>
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer4"
-     inkscape:label="month">
-    <g
-       inkscape:groupmode="layer"
-       id="layer5"
-       inkscape:label="m-1"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="116.6478"
-         y="18.741362"
-         id="text10"><tspan
-           sodipodi:role="line"
-           id="tspan10"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="116.6478"
-           y="18.741362">１月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,36.191829,0.98301344)"
-         id="text11"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect11);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan9">睦月</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g19"
-       inkscape:label="m-2"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="120.09978"
-         y="18.741362"
-         id="text18"><tspan
-           sodipodi:role="line"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="120.09978"
-           y="18.741362"
-           id="tspan38">2月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,36.326187,0.98301344)"
-         id="text19"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect19);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan11">如月</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g17"
-       inkscape:label="m-3"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="117.17744"
-         y="18.741362"
-         id="text16"><tspan
-           sodipodi:role="line"
-           id="tspan16"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="117.17744"
-           y="18.741362">３月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,35.558792,0.98301344)"
-         id="text17"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect17);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan18">弥生</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g15"
-       inkscape:label="m-4"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="120.31678"
-         y="18.741362"
-         id="text14"><tspan
-           sodipodi:role="line"
-           id="tspan14"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="120.31678"
-           y="18.741362">4月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,36.437291,0.98301344)"
-         id="text15"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect15);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan19">卯月</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g13"
-       inkscape:label="m-5"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="117.19812"
-         y="18.741362"
-         id="text12"><tspan
-           sodipodi:role="line"
-           id="tspan12"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="117.19812"
-           y="18.741362">５月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,36.419205,0.98301344)"
-         id="text13"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect13);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan30">皐月</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g21"
-       inkscape:label="m-6"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="117.18779"
-         y="18.741362"
-         id="text20"><tspan
-           sodipodi:role="line"
-           id="tspan20"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="117.18779"
-           y="18.741362">６月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,31.161128,0.98301344)"
-         id="text21"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect21);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan31">水無月</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g23"
-       inkscape:label="m-7"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="117.16711"
-         y="18.741362"
-         id="text22"><tspan
-           sodipodi:role="line"
-           id="tspan22"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="117.16711"
-           y="18.741362">７月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,36.372696,0.98301344)"
-         id="text23"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect23);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan32">文月</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g25"
-       inkscape:label="m-8"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="117.18779"
-         y="18.741362"
-         id="text24"><tspan
-           sodipodi:role="line"
-           id="tspan24"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="117.18779"
-           y="18.741362">８月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,36.442459,0.98301344)"
-         id="text25"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect25);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan33">葉月</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g27"
-       inkscape:label="m-9"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="117.18264"
-         y="18.741362"
-         id="text26"><tspan
-           sodipodi:role="line"
-           id="tspan26"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="117.18264"
-           y="18.741362">９月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,36.336523,0.98301344)"
-         id="text27"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect27);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan39">長月</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g29"
-       inkscape:label="m-10"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="111.35614"
-         y="18.741362"
-         id="text28"><tspan
-           sodipodi:role="line"
-           id="tspan28"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="111.35614"
-           y="18.741362">１０月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,31.117203,0.98301344)"
-         id="text29"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect29);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan40">神無月</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g37"
-       inkscape:label="m-11"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="111.35614"
-         y="18.741362"
-         id="text36"><tspan
-           sodipodi:role="line"
-           id="tspan36"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="111.35614"
-           y="18.741362">１１月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,36.357193,0.98301344)"
-         id="text37"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect37);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan41">霜月</tspan></text>
-    </g>
-    <g
-       inkscape:groupmode="layer"
-       id="g35"
-       inkscape:label="m-12"
-       style="display:none">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="116.43328"
-         y="18.741362"
-         id="text34"><tspan
-           sodipodi:role="line"
-           id="tspan34"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
-           x="116.43328"
-           y="18.741362">12月</tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0.26458333,0,0,0.26458333,35.199641,0.98301344)"
-         id="text35"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.9999px;line-height:1.25;font-family:'Noto Sans Gothic';-inkscape-font-specification:'Noto Sans Gothic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect35);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
-           x="423.60156"
-           y="67.879292"
-           id="tspan42">師走</tspan></text>
-    </g>
+    <rect
+       style="fill:#dcdcdc;fill-opacity:1;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+       id="rect102"
+       width="37.347279"
+       height="11.174777"
+       x="74.106415"
+       y="8.8221922"
+       inkscape:label="year" />
+    <rect
+       style="fill:#dcdcdc;fill-opacity:1;stroke-width:1.21344;stroke-linecap:round;stroke-linejoin:round"
+       id="rect103"
+       width="54.991665"
+       height="11.174777"
+       x="115.56161"
+       y="8.8221922"
+       inkscape:label="month" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="design"
-     sodipodi:insensitive="true">
+     sodipodi:insensitive="true"
+     style="display:inline">
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,0.2560308,-0.52890071)"
@@ -1296,7 +992,7 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect3);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="280.33008"
          y="122.0849"
-         id="tspan43">Sun</tspan></text>
+         id="tspan1">Sun</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,14.635914,-0.56610774)"
@@ -1304,7 +1000,7 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect3-6);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="280.33008"
          y="122.0849"
-         id="tspan44">Mon</tspan></text>
+         id="tspan2">Mon</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,30.533533,-0.56610774)"
@@ -1312,7 +1008,7 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect3-69);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="280.33008"
          y="122.0849"
-         id="tspan45">Tue</tspan></text>
+         id="tspan3">Tue</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,44.549097,-0.56610774)"
@@ -1320,7 +1016,7 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect3-5);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="280.33008"
          y="122.0849"
-         id="tspan46">Wed</tspan></text>
+         id="tspan4">Wed</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,60.51183,-0.56610774)"
@@ -1328,7 +1024,7 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect3-3);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="280.33008"
          y="122.0849"
-         id="tspan47">Thu</tspan></text>
+         id="tspan5">Thu</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,77.082277,-0.52890071)"
@@ -1336,7 +1032,7 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect3-38);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="280.33008"
          y="122.0849"
-         id="tspan48">Fri</tspan></text>
+         id="tspan6">Fri</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,90.944361,-0.52890071)"
@@ -1344,7 +1040,7 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect3-9);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="280.33008"
          y="122.0849"
-         id="tspan49">Sat</tspan></text>
+         id="tspan7">Sat</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
        d="M 73,34.5 H 87"
@@ -1513,574 +1209,6 @@
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
        d="m 163,109.5 h 14"
        id="path3-695" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer6"
-     inkscape:label="parts-days">
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,11.46885,12.939216)"
-       id="text40"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-31"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan50">31</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-59"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-92);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-30"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan51">30</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-592"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-46);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-29"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan52">29</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-37"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-11);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-28"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan53">28</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-37-0"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-11-6);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-27"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan54">27</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-37-1"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-11-1);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-26"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan55">26</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-37-5"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-11-2);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-25"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan56">25</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-37-2"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-11-17);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-24"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan57">24</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-37-2-9"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-11-17-9);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-23"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan58">23</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-37-2-4"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-11-17-6);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-22"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan59">22</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-37-2-6"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-11-17-2);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-21"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan60">21</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-2"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-4);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-20"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan61">20</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-0"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-1);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-19"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan62">19</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-20"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-49);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-18"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan63">18</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-3"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-16);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-17"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan64">17</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-1"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-48);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-16"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan65">16</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-02"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-9);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-15"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan66">15</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-36"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-12);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-14"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan67">14</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-25"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-6);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-13"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan68">13</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-9"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-3);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-12"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan71">12</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-5"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-8);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-11"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan72">11</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-6"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-2);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-10"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan73">10</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-28"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-42);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-9"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan74">9</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-8"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-67);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-8"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan75">8</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-03"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-5);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-7"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan76">7</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-63"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-19);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-6"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan77">6</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-4"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-66);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-5"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan78">5</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-7"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-7);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-4"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan79">4</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-37-7"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect40-11-64);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-3"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan80">3</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-94"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect40-79);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-2"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan81">2</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,12.424048,18.581024)"
-       id="text40-09"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect40-47);display:none;fill:#000000;fill-opacity:1;stroke:none"
-       inkscape:label="d-1"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan82">1</tspan></text>
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="g71"
-     inkscape:label="parts-last-month-days">
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.406592,-29.653241)"
-       id="text41"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect71);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-31"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan83">31</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.192135,-29.653241)"
-       id="text42"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect72);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-30"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan84">30</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.207638,-29.648074)"
-       id="text43"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect73);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-29"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan85">29</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.174048,-29.653241)"
-       id="text44"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect74);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-28"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan86">28</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.192135,-29.573143)"
-       id="text45"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect75);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-27"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan87">27</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.145626,-29.653241)"
-       id="text46"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect76);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-26"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan88">26</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.233476,-29.653241)"
-       id="text47"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect77);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-25"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan89">25</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.11462,-29.573143)"
-       id="text48"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect78);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-24"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan90">24</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.25673,-29.653241)"
-       id="text49"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect79);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-23"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan91">23</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.20247,-29.573143)"
-       id="text50"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect80);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-22"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan92">22</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.422095,-29.573143)"
-       id="text51"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect81);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-21"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan93">21</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.207638,-29.653241)"
-       id="text52"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect82);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-20"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan94">20</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,43.905331,-29.650658)"
-       id="text53"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect83);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-19"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan95">19</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,43.871741,-29.653241)"
-       id="text54"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect84);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-18"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan96">18</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,43.889828,-29.640322)"
-       id="text55"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect85);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-17"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan97">17</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,43.843319,-29.660993)"
-       id="text56"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect86);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-16"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan98">16</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,43.931169,-29.720421)"
-       id="text57"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect87);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-15"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan99">15</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,43.812313,-29.640322)"
-       id="text58"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect88);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-14"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan100">14</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,43.954423,-29.653241)"
-       id="text59"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect89);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-13"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan101">13</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,43.900163,-29.573143)"
-       id="text60"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect90);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-12"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan102">12</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,44.119788,-29.640322)"
-       id="text61"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect91);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-11"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan103">11</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,43.905331,-29.655825)"
-       id="text62"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect92);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-10"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan104">10</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,47.695797,-29.650658)"
-       id="text63"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect93);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-9"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan105">9</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,47.638953,-29.653241)"
-       id="text64"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect94);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-8"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan106">8</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,47.574357,-29.653241)"
-       id="text65"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect95);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-7"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan107">7</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,47.571773,-29.660993)"
-       id="text66"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect96);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-6"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan108">6</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,47.530432,-29.73334)"
-       id="text67"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect97);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-5"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan109">5</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,47.695797,-29.653241)"
-       id="text68"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect98);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-4"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan110">4</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,47.605363,-29.653241)"
-       id="text69"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect99);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-3"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan111">3</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,47.566606,-29.573143)"
-       id="text70"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect100);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-2"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan112">2</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,47.483923,-29.640322)"
-       id="text71"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect101);display:none;fill:#808080;fill-opacity:1;stroke:none"
-       inkscape:label="d2-1"><tspan
-         x="283.61328"
-         y="185.9522"
-         id="tspan113">1</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
