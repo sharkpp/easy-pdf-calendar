@@ -20,9 +20,9 @@ function DesignListCore({ design, year, onSelect }: DesignListProps & import("re
     fetchData(`${CALENDER_DESIGNS_BASE_PATH}/index.json`, async (res) => res.json())
   );
   return (
-    <SimpleGrid columns={[2, null, 3]} gap={"1rem"}>
+    <SimpleGrid minChildWidth="sm" gap={"1rem"}>
       {designsList.index.map((designItem: DesignsIndexItemType) => (
-        <Box key={designItem.id} height='80px'>
+        <Box key={designItem.id}>
           <Card
             size="sm"
             onClick={() => (onSelect && onSelect(designItem.id))}

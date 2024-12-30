@@ -15,6 +15,8 @@ type CalanderDesignPreviewProps = {
   onChangeMonth?: (month: number) => void;
 }
 
+const MonthList = [ 1,2,3,4,5,6,7,8,9,10,11,12 ];
+
 function CalanderDesignPreview({
   design,
   year,
@@ -80,7 +82,7 @@ function CalanderDesignPreview({
           .area-br { grid-area: area-br; }
         `}
       >
-        <Box className="calender" background="green" width="100%" padding="4" color="white">
+        <Box className="calender" width="100%" padding="4" color="white">
           <CalenderPreview
             //cssStyle={css`width: 80%;`}
             design={design}
@@ -89,19 +91,19 @@ function CalanderDesignPreview({
           />
         </Box>
 
-        <Box className="design-p2" background="blue" width="100%" padding="4" color="white">
+        <Box className="design-p2" width="100%" padding="4" color="white">
         </Box>
-        <Box className="design-p1" background="orange" width="100%" padding="4" color="white">
+        <Box className="design-p1" width="100%" padding="4" color="white">
         </Box>
-        <Box className="design-n1" background="red" width="100%" padding="4" color="white">
+        <Box className="design-n1" width="100%" padding="4" color="white">
         </Box>
-        <Box className="design-n2" background="tomato" width="100%" padding="4" color="white">
+        <Box className="design-n2" width="100%" padding="4" color="white">
         </Box>
 
-        <Box className="month-p2" background="orange" width="100%" padding="4" color="white">
+        <Box className="month-p2" width="100%" padding="4" color="white">
         </Box>
         <Box
-          className="month-p1" background="blue" width="100%" padding="4" color="white"
+          className="month-p1" width="100%" padding="4" color="white"
           onClick={() => (1<=month-1&&onChangeMonth&&onChangeMonth(month-1))}
         >
           {1<=month-1&&<CalenderPreview
@@ -112,7 +114,7 @@ function CalanderDesignPreview({
           />}
         </Box>
         <Box
-          className="month-n1" background="red" width="100%" padding="4" color="white"
+          className="month-n1" width="100%" padding="4" color="white"
           onClick={() => (month+1<=12&&onChangeMonth&&onChangeMonth(month+1))}
         >
         {month+1<=12&&<CalenderPreview
@@ -122,19 +124,34 @@ function CalanderDesignPreview({
             month={month+1}
           />}
         </Box>
-        <Box className="month-n2" background="tomato" width="100%" padding="4" color="white">
+        <Box className="month-n2" width="100%" padding="4" color="white">
         </Box>
 
-        <Box className="area-tl" background="green" width="100%" padding="4" color="white">
+        <Box className="area-tl" width="100%" padding="4" color="white">
         </Box>
-        <Box className="area-tr" background="yellow" width="100%" padding="4" color="white">
+        <Box className="area-tr" width="100%" padding="4" color="white">
         </Box>
-        <Box className="area-bl" background="blue" width="100%" padding="4" color="white">
+        <Box className="area-bl" width="100%" padding="4" color="white">
         </Box>
-        <Box className="area-br" background="gray" width="100%" padding="4" color="white">
+        <Box className="area-br" width="100%" padding="4" color="white">
         </Box>
 
       </SimpleGrid>
+
+      {/*<div css={css`width: 0px; height: 0px;`}>
+          {MonthList.reduce((r, month_) => {
+            if ([month-1, month, month+1].indexOf(month_) < 0) {
+              r.push(
+                <CalenderPreview
+                  design={design}
+                  year={year}
+                  month={month_}
+                />
+              );
+            }
+            return r;
+          }, [] as any)}
+      </div>*/}
     </>
   );
 }
