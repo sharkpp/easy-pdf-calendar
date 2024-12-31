@@ -24,12 +24,12 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="0.89971966"
-     inkscape:cx="429.02252"
-     inkscape:cy="235.07322"
+     inkscape:cx="306.76222"
+     inkscape:cy="188.39202"
      inkscape:window-width="1440"
-     inkscape:window-height="900"
+     inkscape:window-height="872"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="28"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1" />
   <defs
@@ -561,7 +561,7 @@
      inkscape:label="base"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:none">
+     style="display:inline">
     <rect
        style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.115866;stroke-linecap:round;stroke-linejoin:round"
        id="rect1"
@@ -570,62 +570,6 @@
        x="5"
        y="5"
        inkscape:label="picture-area" />
-    <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0131989;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1-4-74"
-       width="13.999999"
-       height="7"
-       x="73"
-       y="26"
-       inkscape:label="week-0" />
-    <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0131989;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1-4-8-0"
-       width="13.999999"
-       height="7"
-       x="88"
-       y="26"
-       inkscape:label="week-1" />
-    <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0131989;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1-4-7-08"
-       width="13.999999"
-       height="7"
-       x="103"
-       y="26"
-       inkscape:label="week-2" />
-    <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0131989;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1-4-0-7"
-       width="13.999999"
-       height="7"
-       x="118"
-       y="26"
-       inkscape:label="week-3" />
-    <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0131989;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1-4-02-6"
-       width="13.999999"
-       height="7"
-       x="133"
-       y="26"
-       inkscape:label="week-4" />
-    <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0131989;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1-4-1-46"
-       width="13.999999"
-       height="7"
-       x="148"
-       y="26"
-       inkscape:label="week-5" />
-    <rect
-       style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0131989;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1-4-71-37"
-       width="13.999999"
-       height="7"
-       x="163"
-       y="26"
-       inkscape:label="week-6" />
     <rect
        style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4"
@@ -969,22 +913,30 @@
        height="11.174777"
        x="74.106415"
        y="8.8221922"
-       inkscape:label="year" />
+       inkscape:label="year[long,jaJP]" />
     <rect
-       style="fill:#dcdcdc;fill-opacity:1;stroke-width:1.21344;stroke-linecap:round;stroke-linejoin:round"
+       style="display:inline;fill:#dcdcdc;fill-opacity:1;stroke-width:0.869427;stroke-linecap:round;stroke-linejoin:round"
+       id="rect103-0"
+       width="28.231014"
+       height="11.174777"
+       x="148.20372"
+       y="8.8221922"
+       inkscape:label="month[long,jaJP]" />
+    <rect
+       style="fill:#dcdcdc;fill-opacity:1;stroke-width:0.878437;stroke-linecap:round;stroke-linejoin:round"
        id="rect103"
-       width="54.991665"
+       width="28.81916"
        height="11.174777"
        x="115.56161"
        y="8.8221922"
-       inkscape:label="month" />
+       inkscape:label="month[short,jaJP]" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="design"
-     sodipodi:insensitive="true"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,0.2560308,-0.52890071)"

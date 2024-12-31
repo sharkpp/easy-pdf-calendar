@@ -14,7 +14,7 @@ type CalenderPreviewProps = {
 
 const MS24H = 24 * 60 * 60 * 1000;
 
-const MonthJName = [
+const MonthLongJp = [
   '睦月',
   '如月',
   '弥生',
@@ -27,6 +27,35 @@ const MonthJName = [
   '神無月',
   '霜月',
   '師走',
+];
+
+const MonthLongEn = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+const MonthShortEn = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 
 const makeSelector = (id: string) => `*[id^="${id}"],*[inkscape\\:label^="${id}"]`;
@@ -107,31 +136,67 @@ function CalenderPreview({ cssStyle: cssProp, design, year, month }: CalenderPre
 
     console.log({month,dateBox});
 
-    // 年を追加
-    const yearBoxElm = calenderElm.querySelector(makeSelector(`year`)) as SVGRectElement;
-    addSvgText(
-      yearBoxElm,
-      `${year}年`,
-      {
-        textColor: "rgb(0, 0, 0)"
-      }
-    );
+    // 年や日を追加
+    calenderElm
+      .querySelectorAll([
+          makeSelector(`year`),
+          makeSelector(`month`)
+        ].join(","))
+      .forEach((baseElm: Element) => {
+        const name = (
+            baseElm.getAttribute('inkscape:label') ||
+            baseElm.getAttribute('id') ||
+            ''
+          );
+        // format
+        const [ _, kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', ''];
+        const formats = formats_.split(',');
+        console.log({name,formats_,formats});
+        //
+        let text = '';
+        const isLong = 0<=formats.indexOf('long');
+        const isShort = 0<=formats.indexOf('short');
+        const isJaJP = 0<=formats.indexOf('jaJP');
+        const isEnUS = 0<=formats.indexOf('enUS');
+        //const isNumber = 0<=formats.indexOf('number') || '' === formats_;
+        // kind  | formats    | sample
+        // ------+------------+--------
+        // year  | number     | 2025
+        //       | long,jaJP  | 2025年
+        // month | number     | 1
+        //       | short,jaJP | 1月
+        //       | long,jaJP  | 睦月
+        //       | short,enUS | Jan
+        //       | long,enUS  | January
+        // ------+------------+--------
+        switch (kind) {
+          case 'year':
+            if      (isLong  && isJaJP) { text = `${year}年`; }
+            else                        { text = ""+year; }
+            break;
+          case 'month':
+            if      (isShort && isJaJP) { text = `${month}月`; }
+            else if (isLong  && isJaJP) { text = MonthLongJp[month-1]; }
+            else if (isShort && isEnUS) { text = MonthShortEn[month-1]; }
+            else if (isLong  && isEnUS) { text = MonthLongEn[month-1]; }
+            else                        { text = ""+month;}
+            break;
+        }
 
-    // 月を追加
-    const monthBoxElm = calenderElm.querySelector(makeSelector(`month`)) as SVGRectElement;
-    addSvgText(
-      monthBoxElm,
-      `${month}月 ${MonthJName[month-1]}`,
-      {
-        textColor: "rgb(0, 0, 0)"
-      }
-    );
+        addSvgText(
+          baseElm as SVGRectElement,
+          text,
+          {
+            textColor: "rgb(0, 0, 0)"
+          }
+        );
+      });
 
     // 日付を追加
     dateBox.forEach((date, dateIndex) => {
-      const dateBoxElm = calenderElm.querySelector(makeSelector(`day-${dateIndex}`)) as SVGRectElement;
+      const dateBaseElm = calenderElm.querySelector(makeSelector(`day-${dateIndex}`)) as SVGRectElement;
       addSvgText(
-        dateBoxElm,
+        dateBaseElm,
         ""+Math.abs(date),
         {
           textColor: 0 < date ? "rgb(0, 0, 0)" : "rgb(160, 160, 160)"
