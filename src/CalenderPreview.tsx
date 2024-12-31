@@ -2,14 +2,24 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
+import {
+  FileUploadDropzone,
+  FileUploadList,
+  FileUploadRoot,
+} from "@/components/ui/file-upload";
+import {
+  Skeleton,
+} from "@/components/ui/skeleton"
 import SVG from 'react-inlinesvg';
 import { CALENDER_DESIGNS_BASE_PATH } from './common';
+import { getBBoxBy } from './utils/svg-convert-unit';
 
 type CalenderPreviewProps = {
   cssStyle?: SerializedStyles;
   design: string;
   year: number;
   month: number;
+  readonly?: boolean;
 }
 
 const MS24H = 24 * 60 * 60 * 1000;
@@ -98,13 +108,22 @@ dominant-baseline: central;"
 
 }
 
-function CalenderPreview({ cssStyle: cssProp, design, year, month }: CalenderPreviewProps & import("react").RefAttributes<HTMLDivElement>)
+function CalenderPreview({
+  cssStyle: cssProp,
+  design,
+  year,
+  month,
+  readonly = false
+}: CalenderPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
   const refCalender = useRef<SVGElement | null>(null);
   const [ calenderElm, setCalenderElm ] = useState<SVGElement | null>(null);
 
-  console.log({refCalender,calenderElm});
+  const [ photoUploaders, setPhotoUploaders ] = useState({});
 
+  //console.log({refCalender,calenderElm});
+
+  // SVGテンプレート読み込み完了後の書き換え処理
   useEffect(() => {
 
     if (!calenderElm) {
@@ -116,25 +135,25 @@ function CalenderPreview({ cssStyle: cssProp, design, year, month }: CalenderPre
     const lastDateOfMonth = new Date(new Date(year, month-1+1, 1).getTime() - MS24H).getDate(); // 今月の最後の日
     const lastDateOfPrevMonth = new Date(firstDateOfMonth.getTime() - MS24H).getDate(); // 先月の最後の日
 
-    let dateBox = new Array(7 * 6).fill(0); // 0:空欄 1〜:今月の日 〜-1:先月or来月の日
+    let dateItems = new Array(7 * 6).fill(0); // 0:空欄 1〜:今月の日 〜-1:先月or来月の日
     // 今月の日を設定
     for (let i = 0; i < lastDateOfMonth; ++i) {
-      dateBox[i + firstDayOfWeek] = i + 1;
+      dateItems[i + firstDayOfWeek] = i + 1;
     }
     // 先月の日を設定
     for (let i = 0; i < 7; ++i) {
       if (0 <= firstDayOfWeek - 1 - i) {
-        dateBox[firstDayOfWeek - 1 - i] = -(lastDateOfPrevMonth - i);
+        dateItems[firstDayOfWeek - 1 - i] = -(lastDateOfPrevMonth - i);
       }
     }
     // 来月の日を設定
     for (let i = 0; i < 14; ++i) {
-      if (firstDayOfWeek + lastDateOfMonth + i < dateBox.length) {
-        dateBox[firstDayOfWeek + lastDateOfMonth + i] = -(i + 1);
+      if (firstDayOfWeek + lastDateOfMonth + i < dateItems.length) {
+        dateItems[firstDayOfWeek + lastDateOfMonth + i] = -(i + 1);
       }
     }
 
-    console.log({month,dateBox});
+    //console.log({month,dateItems});
 
     // 年や日を追加
     calenderElm
@@ -151,7 +170,7 @@ function CalenderPreview({ cssStyle: cssProp, design, year, month }: CalenderPre
         // format
         const [ _, kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', ''];
         const formats = formats_.split(',');
-        console.log({name,formats_,formats});
+        //console.log({name,formats_,formats});
         //
         let text = '';
         const isLong = 0<=formats.indexOf('long');
@@ -193,7 +212,7 @@ function CalenderPreview({ cssStyle: cssProp, design, year, month }: CalenderPre
       });
 
     // 日付を追加
-    dateBox.forEach((date, dateIndex) => {
+    dateItems.forEach((date, dateIndex) => {
       const dateBaseElm = calenderElm.querySelector(makeSelector(`day-${dateIndex}`)) as SVGRectElement;
       addSvgText(
         dateBaseElm,
@@ -203,11 +222,80 @@ function CalenderPreview({ cssStyle: cssProp, design, year, month }: CalenderPre
         }
       );
     });
-  
-  }, [calenderElm]);
+
+    // 画像アップローダ
+    calenderElm
+    .querySelectorAll(makeSelector(`photo`))
+    .forEach((baseElm: Element) => {
+      const name = (
+          baseElm.getAttribute('inkscape:label') ||
+          baseElm.getAttribute('id') ||
+          ''
+        );
+      const [ _, __, blockName ] = /^(.*)\[(.*)\]$/.exec(name) || ['', ''];
+      const svgBBox = (baseElm as SVGGraphicsElement).ownerSVGElement.getBoundingClientRect();
+      const baseBBox = baseElm.getBoundingClientRect();
+      //getBBoxBy(baseElm as SVGGraphicsElement, SVGLength.SVG_LENGTHTYPE_PX);
+
+      console.log({baseBBox});
+
+      if (readonly) {
+        setPhotoUploaders((curPhotoUploaders) => ({
+          ...curPhotoUploaders,
+          [blockName]: (
+            <Skeleton
+              key={`photo-${blockName}`}
+              css={css`
+                  position: absolute;
+                  left: ${baseBBox.x - svgBBox.x}px;
+                  top: ${baseBBox.y - svgBBox.y}px;
+                  width: ${baseBBox.width}px;
+                  height: ${baseBBox.height}px;
+                `}
+            />
+          )
+        }));
+      }
+      else {
+        setPhotoUploaders((curPhotoUploaders) => ({
+          ...curPhotoUploaders,
+          [blockName]: (
+            <FileUploadRoot
+              key={`photo-${blockName}`}
+              maxW="xl" alignItems="stretch" maxFiles={1}
+              css={css`
+                position: absolute;
+                left: ${baseBBox.x - svgBBox.x}px;
+                top: ${baseBBox.y - svgBBox.y}px;
+                width: ${baseBBox.width}px;
+                height: ${baseBBox.height}px;
+              `}
+            >
+              <FileUploadDropzone
+                label="Drag and drop here to upload"
+                description=".png, .jpg"
+                css={css`
+                  min-height: ${baseBBox.height}px;
+                `}
+              />
+              <FileUploadList />
+            </FileUploadRoot>
+          )
+        }));
+      }
+
+    });
+
+  }, [calenderElm, readonly]);
 
   return (
-    <div css={css`${cssProp||""}background: white; border: 1px solid rgb(240,240,240);`}>
+    <div
+      css={css`${cssProp||""}
+        background: white;
+        border: 1px solid rgb(240,240,240);
+        position: relative;
+      `}
+    >
       <SVG
         key={[design, year, month].join("-")}
         innerRef={refCalender}
@@ -224,7 +312,8 @@ function CalenderPreview({ cssStyle: cssProp, design, year, month }: CalenderPre
         }}
         css={css`user-select: none;`}
       />
-      </div>
+      {Object.values(photoUploaders)}
+    </div>
   );
 }
 

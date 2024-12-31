@@ -37,6 +37,7 @@ function DesignListCore({ design, year, onSelect }: DesignListProps & import("re
                 design={designItem.id}
                 year={year}
                 month={1}
+                readonly={true}
               />
             </CardBody>
           </Card>

@@ -111,6 +111,7 @@ function CalanderDesignPreview({
             design={design}
             year={year}
             month={month-1}
+            readonly={true}
           />}
         </Box>
         <Box
@@ -122,6 +123,7 @@ function CalanderDesignPreview({
             design={design}
             year={year}
             month={month+1}
+            readonly={true}
           />}
         </Box>
         <Box className="month-n2" width="100%" padding="4" color="white">

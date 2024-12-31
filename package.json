@@ -21,6 +21,7 @@
     "svg2pdf.js": "^2.2.4"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^3.2.4",
     "@eslint/js": "^9.15.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",

@@ -1,14 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
-import { Box, Button, SimpleGrid } from "@chakra-ui/react";
 import { css } from '@emotion/react';
 import tmpl from '../designs/simple-light-pict/main.svg?raw';
 import { jsPDF } from 'jspdf';
 import 'svg2pdf.js';
 import { useFont } from './hooks/jspdf-usefont';
 import { PageSize } from './utils/jspdf-pagesize';
-import { convertPointsFromUnit, convertPointsToUnit } from './utils/jspdf-convert-unit';
 import DesignList from './DesignList';
-import CalenderPreview from './CalenderPreview';
 import CalanderDesignPreview from './CalanderDesignPreview';
 
 const MS24H = 24 * 60 * 60 * 1000;
@@ -17,40 +14,6 @@ function getSVGLenByMM(n: SVGAnimatedLength) {
   const tmp = n.baseVal;
   tmp.convertToSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_MM);
   return tmp.valueInSpecifiedUnits;
-}
-
-type SVG_LENGTH_TYPE = 
-  SVGLength["SVG_LENGTHTYPE_UNKNOWN"] |
-  SVGLength["SVG_LENGTHTYPE_NUMBER"] |
-  SVGLength["SVG_LENGTHTYPE_PERCENTAGE"] |
-  SVGLength["SVG_LENGTHTYPE_EMS"] |
-  SVGLength["SVG_LENGTHTYPE_EXS"] |
-  SVGLength["SVG_LENGTHTYPE_PX"] |
-  SVGLength["SVG_LENGTHTYPE_CM"] |
-  SVGLength["SVG_LENGTHTYPE_MM"] |
-  SVGLength["SVG_LENGTHTYPE_IN"] |
-  SVGLength["SVG_LENGTHTYPE_PT"] |
-  SVGLength["SVG_LENGTHTYPE_PC"] 
-;
-
-// 
-function convertSVGUserUnitTo(elm: SVGRectElement, n: number, unit: SVG_LENGTH_TYPE = SVGLength.SVG_LENGTHTYPE_MM) {
-  const nn = elm.ownerSVGElement?.createSVGLength();
-  if (nn) {
-    nn.value = n;
-    nn.convertToSpecifiedUnits(unit);
-  }
-  return nn?.valueInSpecifiedUnits;
-}
-
-function getBBoxBy(elm: SVGRectElement, unit: SVG_LENGTH_TYPE = SVGLength.SVG_LENGTHTYPE_MM) {
-  const bbox = elm.getBBox();
-  return {
-    x:      convertSVGUserUnitTo(elm, bbox.x,      unit) || 0,
-    y:      convertSVGUserUnitTo(elm, bbox.y,      unit) || 0,
-    width:  convertSVGUserUnitTo(elm, bbox.width,  unit) || 0,
-    height: convertSVGUserUnitTo(elm, bbox.height, unit) || 0,
-  }
 }
 
 const UI = {
@@ -171,11 +134,7 @@ function App()
           }}
         />}
       </div>
-      {/*<CalenderPreview
-        design="simple-light-pict"
-        year={2025}
-        month={1}
-      />
+      {/*
       <div ref={refSvgHideContainer} css={css`width: 0px;height: 200px;`}>
       </div>
       <div css={css`width: 100%;height: 100%;`}>

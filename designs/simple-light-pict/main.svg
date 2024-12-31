@@ -561,7 +561,7 @@
      inkscape:label="base"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline">
+     style="display:none">
     <rect
        style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.115866;stroke-linecap:round;stroke-linejoin:round"
        id="rect1"
@@ -569,7 +569,7 @@
        height="118"
        x="5"
        y="5"
-       inkscape:label="picture-area" />
+       inkscape:label="photo[data]" />
     <rect
        style="fill:#f3f3f3;fill-opacity:1;stroke:none;stroke-width:0.0139996;stroke-linecap:round;stroke-linejoin:round"
        id="rect1-4"
