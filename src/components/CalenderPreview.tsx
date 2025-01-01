@@ -4,13 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
 import SVG from 'react-inlinesvg';
 import {
-  FileUploadDropzone,
-  FileUploadList,
-  FileUploadRoot,
-} from "@/components/ui/file-upload";
-import {
   Skeleton,
 } from "@/components/ui/skeleton"
+import DropZone from '@/components/DropZone';
 import { CALENDER_DESIGNS_BASE_PATH } from '@/common';
 
 type CalenderPreviewProps = {
@@ -259,26 +255,19 @@ function CalenderPreview({
         setPhotoUploaders((curPhotoUploaders) => ({
           ...curPhotoUploaders,
           [blockName]: (
-            <FileUploadRoot
+            <DropZone
               key={`photo-${blockName}`}
-              maxW="xl" alignItems="stretch" maxFiles={1}
-              css={css`
+              cssStyle={css`
                 position: absolute;
-                left: ${baseBBox.x - svgBBox.x}px;
-                top: ${baseBBox.y - svgBBox.y}px;
-                width: ${baseBBox.width}px;
+                left:   ${baseBBox.x - svgBBox.x}px;
+                top:    ${baseBBox.y - svgBBox.y}px;
+                width:  ${baseBBox.width}px;
                 height: ${baseBBox.height}px;
               `}
-            >
-              <FileUploadDropzone
-                label="Drag and drop here to upload"
-                description=".png, .jpg"
-                css={css`
-                  min-height: ${baseBBox.height}px;
-                `}
-              />
-              <FileUploadList />
-            </FileUploadRoot>
+              onSelectFile={(file, isDrop) => {
+                console.log({file,isDrop});
+              }}
+            />
           )
         }));
       }
