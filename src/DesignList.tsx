@@ -50,7 +50,13 @@ function DesignList(props: DesignListProps & import("react").RefAttributes<HTMLD
 {
   return (
     <>
-      <div>
+      <div
+        css={css`
+          height: 100%;
+          width: 100%;
+          overflow-y: auto;
+        `}
+      >
         <Suspense fallback={<p>Loading...</p>}>
           <DesignListCore {...props} />
         </Suspense>

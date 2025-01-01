@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/skeleton"
 import SVG from 'react-inlinesvg';
 import { CALENDER_DESIGNS_BASE_PATH } from './common';
-import { getBBoxBy } from './utils/svg-convert-unit';
 
 type CalenderPreviewProps = {
   cssStyle?: SerializedStyles;
