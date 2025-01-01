@@ -2,10 +2,8 @@
 
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import SVG from 'react-inlinesvg';
-import { CALENDER_DESIGNS_BASE_PATH } from './common';
 import { Box, SimpleGrid } from '@chakra-ui/react';
-import CalenderPreview from './CalenderPreview';
+import CalenderPreview from '@/components/CalenderPreview';
 
 type CalanderDesignPreviewProps = {
   design: string;

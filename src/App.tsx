@@ -5,8 +5,8 @@ import { jsPDF } from 'jspdf';
 import 'svg2pdf.js';
 import { useFont } from './hooks/jspdf-usefont';
 import { PageSize } from './utils/jspdf-pagesize';
-import DesignList from './DesignList';
-import CalanderDesignPreview from './CalanderDesignPreview';
+import DesignList from './components/DesignList';
+import CalanderDesignPreview from './components/CalanderDesignPreview';
 
 const MS24H = 24 * 60 * 60 * 1000;
 

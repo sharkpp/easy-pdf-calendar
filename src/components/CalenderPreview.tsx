@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
+import SVG from 'react-inlinesvg';
 import {
   FileUploadDropzone,
   FileUploadList,
@@ -10,8 +11,7 @@ import {
 import {
   Skeleton,
 } from "@/components/ui/skeleton"
-import SVG from 'react-inlinesvg';
-import { CALENDER_DESIGNS_BASE_PATH } from './common';
+import { CALENDER_DESIGNS_BASE_PATH } from '@/common';
 
 type CalenderPreviewProps = {
   cssStyle?: SerializedStyles;

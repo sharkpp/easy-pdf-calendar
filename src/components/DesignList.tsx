@@ -2,11 +2,11 @@
 
 import { Suspense, use } from 'react';
 import { css } from '@emotion/react';
-import { Box, Button, SimpleGrid } from "@chakra-ui/react";
-import { CardRoot as Card, CardHeader, CardBody, Heading, Text } from '@chakra-ui/react'
-import { CALENDER_DESIGNS_BASE_PATH, DesignsIndexItemType, DesignsIndexList } from './common';
-import { fetchData } from './fetch';
-import CalenderPreview from './CalenderPreview';
+import { Box, SimpleGrid } from "@chakra-ui/react";
+import { CardRoot as Card, CardHeader, CardBody, Heading } from '@chakra-ui/react'
+import { CALENDER_DESIGNS_BASE_PATH, DesignsIndexItemType, DesignsIndexList } from '@/common';
+import { fetchData } from '@/fetch';
+import CalenderPreview from '@/components/CalenderPreview';
 
 type DesignListProps = {
   design: string;
