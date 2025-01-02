@@ -280,7 +280,6 @@ function CalenderPreview({
       const baseBBox = baseElm.getBoundingClientRect();
       //console.log({baseBBox});
 
-      //const name = `image-area-${name}`;
       const cssImageArea = css`
           position: absolute;
           left:   ${baseBBox.x - svgBBox.x}px;
@@ -313,7 +312,6 @@ function CalenderPreview({
       `}
     >
       <SVG
-        key={[design, year, month].join("-")}
         innerRef={refCalender}
         src={`${CALENDER_DESIGNS_BASE_PATH}/${design}/main.svg`}
         width="auto"
@@ -332,7 +330,7 @@ function CalenderPreview({
         if (readonly) {
           return (
             <Skeleton
-              key={`image-area-${imageBlock.name}`}
+              key={`image-block-${imageBlock.name}-skeleton`}
               css={imageBlock.cssStyle}
             />
           );
@@ -347,7 +345,7 @@ function CalenderPreview({
           if (imageBlock.imageCache) {
             return (<>
               <img
-                key={`image-area-${imageBlock.name}`}
+                key={`image-block-${imageBlock.name}-image`}
                 css={imageBlock.cssStyle}
                 src={imageBlock.imageCache}
                 alt=""
@@ -359,7 +357,7 @@ function CalenderPreview({
                 }}
               />
               <PopupImageCropper
-                key={`image-area-${imageBlock.name}-clopper-popup`}
+                key={`image-block-${imageBlock.name}-clopper-popup`}
                 open={imageBlock.openClopper}
                 onOpenChange={(details: OpenChangeDetails) => {
                   console.log({imageBlock,details});
@@ -385,7 +383,7 @@ function CalenderPreview({
           else {
             return (
               <DropZone
-                key={`image-area-${imageBlock.name}`}
+                key={`image-block-${imageBlock.name}-dropzone`}
                 cssStyle={imageBlock.cssStyle}
                 onSelectFile={(file, isDrop) => {
                   console.log({file,isDrop});

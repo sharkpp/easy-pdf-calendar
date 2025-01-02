@@ -10,12 +10,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { OpenChangeDetails } from '@zag-js/dialog';
-import { CropperRef, Cropper } from 'react-advanced-cropper';
-import 'react-advanced-cropper/dist/style.css';
+import { CropperRef, Cropper } from 'react-mobile-cropper';
+import 'react-mobile-cropper/dist/style.css'
+import { css } from '@emotion/react';
 
 // 画像切り取りポップアップのプロパティの型
 type PopupImageCropperProps = {
-  key: string;
   open: boolean;
   onOpenChange: (details: OpenChangeDetails) => void;
   image: string;
@@ -23,7 +23,6 @@ type PopupImageCropperProps = {
 }
 
 function PopupImageCropper({
-  key,
   open, onOpenChange,
   image, onImageChange,
 }: PopupImageCropperProps) {
@@ -32,16 +31,22 @@ function PopupImageCropper({
     console.log(cropper.getCoordinates(), cropper.getCanvas());
   };
 
-    return (
+  return (
     <Dialog 
-      key={key}
       size="cover"
       open={open}
       onOpenChange={onOpenChange}
       placement="center"
       motionPreset="slide-in-bottom"
     >
-      <DialogContent>
+      <DialogContent
+        css={css`
+          .chakra-dialog__body {
+            height:     calc(100% - 1.75rem - var(--chakra-spacing-6) - var(--chakra-spacing-4));
+            max-height: calc(100% - 1.75rem - var(--chakra-spacing-6) - var(--chakra-spacing-4));
+          }
+        `}
+      >
         <DialogHeader>
           <DialogTitle>Dialog Title</DialogTitle>
           <DialogCloseTrigger />
@@ -52,7 +57,13 @@ function PopupImageCropper({
           <Cropper
             src={image}
             onChange={onChange}
-            className={'cropper'}
+            css={css`
+                /*height: 200px;*/
+                max-height: 100%;
+              `}
+            stencilProps={{
+              aspectRatio: 16/9,
+            }}
           />
         </DialogBody>
       </DialogContent>

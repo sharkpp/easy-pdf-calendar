@@ -82,6 +82,7 @@ function CalanderDesignPreview({
       >
         <Box className="calender" width="100%" padding="4" color="white">
           <CalenderPreview
+            key={`${design}-${year}-${month}-preview`}
             //cssStyle={css`width: 80%;`}
             design={design}
             year={year}
@@ -105,6 +106,7 @@ function CalanderDesignPreview({
           onClick={() => (1<=month-1&&onChangeMonth&&onChangeMonth(month-1))}
         >
           {1<=month-1&&<CalenderPreview
+            key={`${design}-${year}-${month-1}-preview`}
             //cssStyle={css`width: 80%;`}
             design={design}
             year={year}
@@ -117,6 +119,7 @@ function CalanderDesignPreview({
           onClick={() => (month+1<=12&&onChangeMonth&&onChangeMonth(month+1))}
         >
         {month+1<=12&&<CalenderPreview
+            key={`${design}-${year}-${month+1}-preview`}
             //cssStyle={css`width: 80%;`}
             design={design}
             year={year}
