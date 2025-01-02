@@ -12,10 +12,12 @@
   "dependencies": {
     "@chakra-ui/react": "^3.2.3",
     "@emotion/react": "^11.14.0",
+    "idb-keyval": "^6.2.1",
     "jspdf": "^2.5.2",
     "lucide-react": "^0.469.0",
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
+    "react-advanced-cropper": "^0.20.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
     "react-inlinesvg": "^4.1.5",
@@ -44,6 +46,9 @@
       "vite": "^6.0.0"
     },
     "react-from-dom": {
+      "react": "^19.0.0"
+    },
+    "react-advanced-cropper": {
       "react": "^19.0.0"
     }
   }
