@@ -163,7 +163,7 @@ function CalenderPreview({
   // 画像ブロックの情報
   const [ imageBlocks, setImageBlocks ] = useState({} as {[key: string]: ImageBlockInfoType});
 
-  //console.log({refCalender,calenderElm});
+  //console.log({now:Date.now(),refCalender,calenderElm});
 
   // SVGテンプレート読み込み完了後の書き換え処理
   useEffect(() => {
@@ -328,6 +328,7 @@ function CalenderPreview({
       />
       {Object.values(imageBlocks).map(((imageBlock) => {
         if (readonly) {
+          return (<></>);
           return (
             <Skeleton
               key={`image-block-${imageBlock.name}-skeleton`}
@@ -336,12 +337,6 @@ function CalenderPreview({
           );
         }
         else {
-          getImage(imageBlock.name)
-            .then((imageData) => {
-              setImageBlocks(updateImageBlock(imageBlock.name, {
-                imageCache: imageData
-              }));
-            });
           if (imageBlock.imageCache) {
             return (<>
               <img
@@ -381,6 +376,12 @@ function CalenderPreview({
             </>);
           }
           else {
+            getImage(imageBlock.name)
+              .then((imageData) => {
+                setImageBlocks(updateImageBlock(imageBlock.name, {
+                  imageCache: imageData
+                }));
+              });
             return (
               <DropZone
                 key={`image-block-${imageBlock.name}-dropzone`}
