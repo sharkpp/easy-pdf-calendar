@@ -14,7 +14,7 @@ import {
 import { OpenChangeDetails } from '@zag-js/dialog';
 import { useColorMode } from '@/components/ui/color-mode';
 import { CropperRef, Cropper } from 'react-mobile-cropper';
-//import { CropperWrapper } from 'react-advanced-cropper';
+import { CropperState } from 'react-advanced-cropper';
 import 'react-mobile-cropper/dist/style.css'
 import { Check as CheckIcon, Eraser as EraserIcon, Trash2 as TrashIcon } from 'lucide-react';
 
@@ -23,7 +23,8 @@ type PopupImageCropperProps = {
   open: boolean;
   onOpenChange: (details: OpenChangeDetails) => void;
   image: string;
-  onImageChange: (image: string | undefined) => void;
+  cropState?: CropperState;
+  onCropApply: (croppedImage: string | undefined, cropState: CropperState | undefined) => void;
   aspectRatio: number;
 }
 
@@ -42,7 +43,7 @@ const cssColorTheme = {
 
 function PopupImageCropper({
   open, onOpenChange,
-  image, onImageChange,
+  image, onCropApply,
   aspectRatio,
 }: PopupImageCropperProps) {
 
@@ -114,7 +115,7 @@ function PopupImageCropper({
             <IconButton
               aria-label="image-drop"
               onClick={() => {
-                onImageChange(undefined); // 画像を削除
+                onCropApply(undefined, undefined); // 画像を削除
               }}
               variant="outline"
             >
@@ -123,6 +124,7 @@ function PopupImageCropper({
             <IconButton
               aria-label="crop-end"
               onClick={() => {
+                onCropApply(cropperRef.current?.getImage()?.src, cropperRef.current?.getState() || undefined); // 画像を適用
               }}
               variant="outline"
             >

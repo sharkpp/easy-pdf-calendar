@@ -1,6 +1,6 @@
 // カレンダーの一月分をデザインと月を指定し描画する
 
-import { useEffect, useRef, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
 import SVG from 'react-inlinesvg';
 import {
@@ -8,10 +8,10 @@ import {
 } from "@/components/ui/skeleton"
 import { OpenChangeDetails } from '@zag-js/dialog';
 import { get as getIdb, set as setIdb, del as delIdb } from 'idb-keyval';
-
 import { CALENDER_DESIGNS_BASE_PATH } from '@/common';
 import DropZone from '@/components/DropZone';
 import PopupImageCropper from './PopupImageCropper';
+import { ImageBlockState, useImageBlock } from '@/store/useImageBlock';
 
 // カレンダープレビューのプロパティの型
 type CalenderPreviewProps = {
@@ -29,8 +29,8 @@ type ImageBlockInfoType = {
   rect: DOMRect;
   cssStyle: SerializedStyles;
   baseElm: SVGGraphicsElement;
-  openClopper: boolean;
-  imageCache?: string | undefined;
+  openCropper: boolean;
+  imageBlockData?: ImageBlockState | undefined;
 }
 
 const MS24H = 24 * 60 * 60 * 1000;
@@ -118,33 +118,33 @@ dominant-baseline: central;"
   }
 }
 
-// 画像を保存
-function saveImage(name: string, imageData?: string): Promise<string | null> {
-  if (!imageData) { // 画像の指定がない場合は削除
-    return delIdb(name)
-      .catch((err) => {
-        console.log('It failed!', err);
-        return null;
-      })
-      .then(() => null);
-  }
-  return setIdb(name, imageData)
-    .catch((err) => {
-      console.log('It failed!', err);
-      return null;
-    })
-    .then(() => imageData);
-}
+// // 画像を保存
+// function saveImage(name: string, imageData?: string): Promise<string | null> {
+//   if (!imageData) { // 画像の指定がない場合は削除
+//     return delIdb(name)
+//       .catch((err) => {
+//         console.log('It failed!', err);
+//         return null;
+//       })
+//       .then(() => null);
+//   }
+//   return setIdb(name, imageData)
+//     .catch((err) => {
+//       console.log('It failed!', err);
+//       return null;
+//     })
+//     .then(() => imageData);
+// }
 
-// 画像を取得
-function getImage(name: string): Promise<string | null> {
-  return getIdb(name)
-    .then((val) => val || null)
-    .catch((err) => {
-      console.log('It failed!', err);
-      return null;
-    });
-}
+// // 画像を取得
+// function getImage(name: string): Promise<string | null> {
+//   return getIdb(name)
+//     .then((val) => val || null)
+//     .catch((err) => {
+//       console.log('It failed!', err);
+//       return null;
+//     });
+// }
 
 const updateImageBlock = (name: string, imageBlockPart: Partial<Record<keyof ImageBlockInfoType, any>>) => {
   return (
@@ -167,6 +167,8 @@ function CalenderPreview({
   blankImage = false,
 }: CalenderPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
+  const { getImageData, saveImageData } = useImageBlock();
+
   const refCalender = useRef<SVGElement | null>(null);
   const [ calenderElm, setCalenderElm ] = useState<SVGElement | null>(null);
 
@@ -305,7 +307,7 @@ function CalenderPreview({
           rect: baseBBox,
           cssStyle: cssImageArea,
           baseElm: baseElm as SVGGraphicsElement,
-          openClopper: false
+          openCropper: false
         }
       }));
 
@@ -340,16 +342,19 @@ function CalenderPreview({
         let imageBlockType: 'blank' | 'image' | 'dropzone' = 'blank';
         let requestImage = false;
 
-        if      (blankImage)            { imageBlockType = 'blank'; }
-        else if (imageBlock.imageCache) { imageBlockType = 'image'; }
-        else if (readonly)              { imageBlockType = 'blank'; requestImage = true; }
-        else                            { imageBlockType = 'dropzone'; requestImage = true; }
+        //const imageBlockData = use(getImageData(imageBlock.name));
+        //console.log({imageBlockData});
+
+        if      (blankImage)                { imageBlockType = 'blank'; }
+        else if (imageBlock.imageBlockData) { imageBlockType = 'image'; }
+        else if (readonly)                  { imageBlockType = 'blank'; requestImage = true; }
+        else                                { imageBlockType = 'dropzone'; requestImage = true; }
 
         if (requestImage) {
-          getImage(imageBlock.name)
-            .then((imageData) => {
+          getImageData(imageBlock.name)
+            .then((imageBlockData) => {
               setImageBlocks(updateImageBlock(imageBlock.name, {
-                imageCache: imageData
+                imageBlockData: imageBlockData
               }));
             });
         }
@@ -369,46 +374,52 @@ function CalenderPreview({
             <img
               key={`image-block-${imageBlock.name}-image`}
               css={imageBlock.cssStyle}
-              src={imageBlock.imageCache}
+              src={imageBlock.imageBlockData?.croppedImage || imageBlock.imageBlockData?.image || ''}
               alt=""
               onClick={() => {
                 console.log({imageBlock});
                 setImageBlocks(updateImageBlock(imageBlock.name, {
-                  openClopper: true
+                  openCropper: true
                 }));
               }}
             />
             <PopupImageCropper
-              key={`image-block-${imageBlock.name}-clopper-popup`}
-              open={imageBlock.openClopper}
+              key={`image-block-${imageBlock.name}-cropper-popup`}
+              open={imageBlock.openCropper}
               onOpenChange={(details: OpenChangeDetails) => {
                 console.log({imageBlock,details});
                 setImageBlocks(updateImageBlock(imageBlock.name, {
-                  openClopper: details.open
+                  openCropper: details.open
                 }));
               }}
-              image={imageBlock.imageCache || ''}
-              onImageChange={(image) => {
-                if (!image) {
-                  saveImage(imageBlock.name)
+              image={imageBlock.imageBlockData?.image || ''}
+              cropState={imageBlock.imageBlockData?.cropState}
+              onCropApply={(croppedImage, cropState) => {
+                console.log("onCropApply",{croppedImage,cropState});
+                if (!croppedImage) {
+                  saveImageData(imageBlock.name, null)
                     .then(() => {
                       setImageBlocks(updateImageBlock(imageBlock.name, {
-                        imageCache: undefined
+                        imageBlockData: undefined
                       }));
                     });
                   setImageBlocks(updateImageBlock(imageBlock.name, {
-                    openClopper: false,
+                    openCropper: false,
                   }));
                 }
                 else {
-                  saveImage(imageBlock.name, image)
-                    .then((imageData) => {
+                  saveImageData(imageBlock.name, {
+                    image: imageBlock.imageBlockData?.image || '',
+                    croppedImage: croppedImage,
+                    cropState: cropState
+                  })
+                    .then((imageBlockData) => {
                       setImageBlocks(updateImageBlock(imageBlock.name, {
-                        imageCache: imageData
+                        imageBlockData: imageBlockData
                       }));
                     });
                   setImageBlocks(updateImageBlock(imageBlock.name, {
-                    openClopper: false
+                    openCropper: false
                   }));
                 }
               }}
@@ -424,15 +435,17 @@ function CalenderPreview({
                 console.log({file,isDrop});
                 const reader = new FileReader(); // ファイル読み取り用オブジェクト作成
                 reader.onload = (event: ProgressEvent<FileReader>) => {
-                  console.log({'event.target.result':event.target?.result,openClopper:imageBlock.openClopper});
-                  saveImage(imageBlock.name, event.target?.result as string || '')
-                    .then((imageData) => {
+                  console.log({'event.target.result':event.target?.result,openCropper:imageBlock.openCropper});
+                  saveImageData(imageBlock.name, {
+                    image: event.target?.result as string || '',
+                  })
+                    .then((imageBlockData) => {
                       setImageBlocks(updateImageBlock(imageBlock.name, {
-                        imageCache: imageData
+                        imageBlockData: imageBlockData
                       }));
                     });
                   setImageBlocks(updateImageBlock(imageBlock.name, {
-                    openClopper: true
+                    openCropper: true
                   }));
                 };
                 reader.readAsDataURL(file);
