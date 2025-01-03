@@ -7,7 +7,7 @@ import {
   Skeleton,
 } from "@/components/ui/skeleton"
 import { OpenChangeDetails } from '@zag-js/dialog';
-import { get as getIdb, set as setIdb } from 'idb-keyval';
+import { get as getIdb, set as setIdb, del as delIdb } from 'idb-keyval';
 
 import { CALENDER_DESIGNS_BASE_PATH } from '@/common';
 import DropZone from '@/components/DropZone';
@@ -20,6 +20,7 @@ type CalenderPreviewProps = {
   year: number;
   month: number;
   readonly?: boolean;
+  blankImage?: boolean;
 }
 
 // 画像ブロックの情報の型
@@ -29,7 +30,7 @@ type ImageBlockInfoType = {
   cssStyle: SerializedStyles;
   baseElm: SVGGraphicsElement;
   openClopper: boolean;
-  imageCache?: string;
+  imageCache?: string | undefined;
 }
 
 const MS24H = 24 * 60 * 60 * 1000;
@@ -118,7 +119,15 @@ dominant-baseline: central;"
 }
 
 // 画像を保存
-function saveImage(name: string, imageData: string): Promise<string | null> {
+function saveImage(name: string, imageData?: string): Promise<string | null> {
+  if (!imageData) { // 画像の指定がない場合は削除
+    return delIdb(name)
+      .catch((err) => {
+        console.log('It failed!', err);
+        return null;
+      })
+      .then(() => null);
+  }
   return setIdb(name, imageData)
     .catch((err) => {
       console.log('It failed!', err);
@@ -154,7 +163,8 @@ function CalenderPreview({
   design,
   year,
   month,
-  readonly = false
+  readonly = false,
+  blankImage = false,
 }: CalenderPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
   const refCalender = useRef<SVGElement | null>(null);
@@ -327,41 +337,70 @@ function CalenderPreview({
         css={css`user-select: none;`}
       />
       {Object.values(imageBlocks).map(((imageBlock) => {
-        if (readonly) {
-          return (<></>);
+        let imageBlockType: 'blank' | 'image' | 'dropzone' = 'blank';
+        let requestImage = false;
+
+        if      (blankImage)            { imageBlockType = 'blank'; }
+        else if (imageBlock.imageCache) { imageBlockType = 'image'; }
+        else if (readonly)              { imageBlockType = 'blank'; requestImage = true; }
+        else                            { imageBlockType = 'dropzone'; requestImage = true; }
+
+        if (requestImage) {
+          getImage(imageBlock.name)
+            .then((imageData) => {
+              setImageBlocks(updateImageBlock(imageBlock.name, {
+                imageCache: imageData
+              }));
+            });
+        }
+
+        switch (imageBlockType)
+        {
+        default:
+        case 'blank':
           return (
             <Skeleton
               key={`image-block-${imageBlock.name}-skeleton`}
               css={imageBlock.cssStyle}
             />
           );
-        }
-        else {
-          if (imageBlock.imageCache) {
-            return (<>
-              <img
-                key={`image-block-${imageBlock.name}-image`}
-                css={imageBlock.cssStyle}
-                src={imageBlock.imageCache}
-                alt=""
-                onClick={() => {
-                  console.log({imageBlock});
+        case 'image':
+          return (<>
+            <img
+              key={`image-block-${imageBlock.name}-image`}
+              css={imageBlock.cssStyle}
+              src={imageBlock.imageCache}
+              alt=""
+              onClick={() => {
+                console.log({imageBlock});
+                setImageBlocks(updateImageBlock(imageBlock.name, {
+                  openClopper: true
+                }));
+              }}
+            />
+            <PopupImageCropper
+              key={`image-block-${imageBlock.name}-clopper-popup`}
+              open={imageBlock.openClopper}
+              onOpenChange={(details: OpenChangeDetails) => {
+                console.log({imageBlock,details});
+                setImageBlocks(updateImageBlock(imageBlock.name, {
+                  openClopper: details.open
+                }));
+              }}
+              image={imageBlock.imageCache || ''}
+              onImageChange={(image) => {
+                if (!image) {
+                  saveImage(imageBlock.name)
+                    .then(() => {
+                      setImageBlocks(updateImageBlock(imageBlock.name, {
+                        imageCache: undefined
+                      }));
+                    });
                   setImageBlocks(updateImageBlock(imageBlock.name, {
-                    openClopper: true
+                    openClopper: false,
                   }));
-                }}
-              />
-              <PopupImageCropper
-                key={`image-block-${imageBlock.name}-clopper-popup`}
-                open={imageBlock.openClopper}
-                onOpenChange={(details: OpenChangeDetails) => {
-                  console.log({imageBlock,details});
-                  setImageBlocks(updateImageBlock(imageBlock.name, {
-                    openClopper: details.open
-                  }));
-                }}
-                image={imageBlock.imageCache}
-                onImageChange={(image) => {
+                }
+                else {
                   saveImage(imageBlock.name, image)
                     .then((imageData) => {
                       setImageBlocks(updateImageBlock(imageBlock.name, {
@@ -371,41 +410,35 @@ function CalenderPreview({
                   setImageBlocks(updateImageBlock(imageBlock.name, {
                     openClopper: false
                   }));
-                }}
-              />
-            </>);
-          }
-          else {
-            getImage(imageBlock.name)
-              .then((imageData) => {
-                setImageBlocks(updateImageBlock(imageBlock.name, {
-                  imageCache: imageData
-                }));
-              });
-            return (
-              <DropZone
-                key={`image-block-${imageBlock.name}-dropzone`}
-                cssStyle={imageBlock.cssStyle}
-                onSelectFile={(file, isDrop) => {
-                  console.log({file,isDrop});
-                  const reader = new FileReader(); // ファイル読み取り用オブジェクト作成
-                  reader.onload = (event: ProgressEvent<FileReader>) => {
-                    console.log({'event.target.result':event.target?.result,openClopper:imageBlock.openClopper});
-                    saveImage(imageBlock.name, event.target?.result as string || '')
-                      .then((imageData) => {
-                        setImageBlocks(updateImageBlock(imageBlock.name, {
-                          imageCache: imageData
-                        }));
-                      });
-                    setImageBlocks(updateImageBlock(imageBlock.name, {
-                      openClopper: true
-                    }));
-                  };
-                  reader.readAsDataURL(file);
-                }}
-              />
-            );
-          }
+                }
+              }}
+              aspectRatio={imageBlock.rect.width / imageBlock.rect.height}
+            />
+          </>);
+        case 'dropzone':
+          return (
+            <DropZone
+              key={`image-block-${imageBlock.name}-dropzone`}
+              cssStyle={imageBlock.cssStyle}
+              onSelectFile={(file, isDrop) => {
+                console.log({file,isDrop});
+                const reader = new FileReader(); // ファイル読み取り用オブジェクト作成
+                reader.onload = (event: ProgressEvent<FileReader>) => {
+                  console.log({'event.target.result':event.target?.result,openClopper:imageBlock.openClopper});
+                  saveImage(imageBlock.name, event.target?.result as string || '')
+                    .then((imageData) => {
+                      setImageBlocks(updateImageBlock(imageBlock.name, {
+                        imageCache: imageData
+                      }));
+                    });
+                  setImageBlocks(updateImageBlock(imageBlock.name, {
+                    openClopper: true
+                  }));
+                };
+                reader.readAsDataURL(file);
+              }}
+            />
+          );
         }
       }))}
     </div>
