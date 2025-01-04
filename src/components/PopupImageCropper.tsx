@@ -1,6 +1,6 @@
 // ポップアップで画像を切り取るコンポーネント
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { IconButton } from "@chakra-ui/react"
 import {
@@ -20,12 +20,12 @@ import { Check as CheckIcon, Eraser as EraserIcon, Trash2 as TrashIcon } from 'l
 
 // 画像切り取りポップアップのプロパティの型
 type PopupImageCropperProps = {
-  open: boolean;
-  onOpenChange: (details: OpenChangeDetails) => void;
   image: string;
   cropState?: CropperState;
-  onCropApply: (croppedImage: string | undefined, cropState: CropperState | undefined) => void;
   aspectRatio: number;
+  open: boolean;
+  onOpenChange: (details: OpenChangeDetails) => void;
+  onCropApply: (croppedImage: string | undefined, cropState: CropperState | undefined) => void;
 }
 
 const cssColorTheme = {
@@ -42,18 +42,25 @@ const cssColorTheme = {
 };
 
 function PopupImageCropper({
-  open, onOpenChange,
-  image, onCropApply,
+  image, cropState,
   aspectRatio,
+  open, onOpenChange,
+  onCropApply,
 }: PopupImageCropperProps) {
 
   const colorMode = useColorMode().colorMode as 'dark' | 'light' | undefined;
-  console.log(colorMode)
+  //console.log(colorMode)
+
+  useEffect(() => {
+    if (cropState) {
+      cropperRef.current?.setState(cropState);
+    }
+  }, [cropState]);
 
   const cropperRef = useRef<CropperRef>(null);
 
   const onChange = (cropper: CropperRef) => {
-    console.log(cropper.getCoordinates(), cropper.getCanvas());
+    //console.log(cropper.getCoordinates(), cropper.getCanvas());
   };
 
   return (
@@ -75,7 +82,7 @@ function PopupImageCropper({
         `}
       >
         <DialogHeader>
-          <DialogTitle>Dialog Title</DialogTitle>
+          <DialogTitle>画像の切り取り</DialogTitle>
           <DialogCloseTrigger />
         </DialogHeader>
         <DialogBody>
@@ -90,6 +97,10 @@ function PopupImageCropper({
             stencilProps={{
               aspectRatio: aspectRatio,
             }}
+            // defaultPosition={cropState?.boundary}
+            // //defaultSize={cropState?.boundary}
+            // defaultVisibleArea={cropState?.visibleArea || undefined}
+            // defaultTransforms={cropState?.transforms}
           />
           <div
             css={css`
@@ -124,7 +135,12 @@ function PopupImageCropper({
             <IconButton
               aria-label="crop-end"
               onClick={() => {
-                onCropApply(cropperRef.current?.getImage()?.src, cropperRef.current?.getState() || undefined); // 画像を適用
+                const canvas = cropperRef.current?.getCanvas();
+                const croppedImage = canvas?.toDataURL('image/png');
+                onCropApply(
+                  croppedImage,
+                  cropperRef.current?.getState() || undefined
+                ); // 画像を適用
               }}
               variant="outline"
             >
