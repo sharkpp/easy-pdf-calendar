@@ -6,13 +6,13 @@ import SVG from 'react-inlinesvg';
 import {
   Skeleton,
 } from "@/components/ui/skeleton"
-import { CALENDER_DESIGNS_BASE_PATH } from '@/common';
+import { CALENDAR_DESIGNS_BASE_PATH } from '@/common';
 import DropZone from '@/components/DropZone';
 import PopupImageCropper from './PopupImageCropper';
 import { ImageBlockState, useImageBlock } from '@/store/image-block';
 
 // カレンダープレビューのプロパティの型
-type CalenderPreviewProps = {
+type CalendarPreviewProps = {
   cssStyle?: SerializedStyles;
   design: string;
   year: number;
@@ -128,29 +128,29 @@ const updateImageBlock = (name: string, imageBlockPart: Partial<Record<keyof Ima
   );
 };
 
-function CalenderPreview({
+function CalendarPreview({
   cssStyle: cssProp,
   design,
   year,
   month,
   readonly = false,
   blankImage = false,
-}: CalenderPreviewProps & import("react").RefAttributes<HTMLDivElement>)
+}: CalendarPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
   const { getImageData, saveImageData } = useImageBlock();
 
-  const refCalender = useRef<SVGElement | null>(null);
-  const [ calenderElm, setCalenderElm ] = useState<SVGElement | null>(null);
+  const refCalendar = useRef<SVGElement | null>(null);
+  const [ calendarElm, setCalendarElm ] = useState<SVGElement | null>(null);
 
   // 画像ブロックの情報
   const [ imageBlocks, setImageBlocks ] = useState({} as {[key: string]: ImageBlockInfoType});
 
-  //console.log({now:Date.now(),refCalender,calenderElm});
+  //console.log({now:Date.now(),refCalendar,calendarElm});
 
   // SVGテンプレート読み込み完了後の書き換え処理
   useEffect(() => {
 
-    if (!calenderElm) {
+    if (!calendarElm) {
       return;
     }
 
@@ -180,7 +180,7 @@ function CalenderPreview({
     //console.log({month,dateItems});
 
     // 年や日を追加
-    calenderElm
+    calendarElm
       .querySelectorAll([
           makeSelector(`year`),
           makeSelector(`month`)
@@ -237,7 +237,7 @@ function CalenderPreview({
 
     // 日付を追加
     dateItems.forEach((date, dateIndex) => {
-      const dateBaseElm = calenderElm.querySelector(makeSelector(`day-${dateIndex}`)) as SVGRectElement;
+      const dateBaseElm = calendarElm.querySelector(makeSelector(`day-${dateIndex}`)) as SVGRectElement;
       addSvgText(
         dateBaseElm,
         ""+Math.abs(date),
@@ -248,7 +248,7 @@ function CalenderPreview({
     });
 
     // 画像アップローダ
-    calenderElm
+    calendarElm
     .querySelectorAll(makeSelector(`image`))
     .forEach((baseElm: Element) => {
       const blockName = (
@@ -283,7 +283,7 @@ function CalenderPreview({
 
     });
 
-  }, [calenderElm, readonly]);
+  }, [calendarElm, readonly]);
 
   return (
     <div
@@ -294,8 +294,8 @@ function CalenderPreview({
       `}
     >
       <SVG
-        innerRef={refCalender}
-        src={`${CALENDER_DESIGNS_BASE_PATH}/${design}/main.svg`}
+        innerRef={refCalendar}
+        src={`${CALENDAR_DESIGNS_BASE_PATH}/${design}/main.svg`}
         width="auto"
         height="auto"
         title="React"
@@ -304,7 +304,7 @@ function CalenderPreview({
             .replace(/-inkscape-.+?:.+?;/g, '')
         }
         onLoad={() => {
-          setCalenderElm(refCalender.current);
+          setCalendarElm(refCalendar.current);
         }}
         css={css`user-select: none;`}
       />
@@ -428,4 +428,4 @@ function CalenderPreview({
   );
 }
 
-export default CalenderPreview;
+export default CalendarPreview;

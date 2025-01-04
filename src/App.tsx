@@ -6,7 +6,7 @@ import 'svg2pdf.js';
 import { useFont } from './hooks/jspdf-usefont';
 import { PageSize } from './utils/jspdf-pagesize';
 import DesignList from './components/DesignList';
-import CalanderDesignPreview from './components/CalanderDesignPreview';
+import CalanderDesignPreview from './components/CalandarDesignPreview';
 
 const MS24H = 24 * 60 * 60 * 1000;
 
@@ -18,7 +18,7 @@ function getSVGLenByMM(n: SVGAnimatedLength) {
 
 const UI = {
   SelectDesign: 0,
-  PreviewCalenderMonth: 1,
+  PreviewCalendarMonth: 1,
 };
 
 function App()
@@ -35,22 +35,22 @@ function App()
       });
       const svgContainer = document.createElement("div");
       svgContainer.innerHTML = tmpl;
-      const svgCalender = svgContainer.firstElementChild;
+      const svgCalendar = svgContainer.firstElementChild;
       await notosans.install(doc);
-      if (svgCalender) {
+      if (svgCalendar) {
         doc.setFont(notosans.name);
         const monthes = new Array(12).fill(0).map((_, i: number) => i + 1);
         for await (const month of monthes) {
           if (1 < month) {
             doc.addPage(PageSize.B6JIS, 'l');
           }
-          const svgCalender_ = svgCalender.cloneNode(true) as SVGElement;
+          const svgCalendar_ = svgCalendar.cloneNode(true) as SVGElement;
           if (refSvgHideContainer.current) {
-            refSvgHideContainer.current.replaceChildren(svgCalender_);
+            refSvgHideContainer.current.replaceChildren(svgCalendar_);
           }
-          //const monthElm = svgCalender_.querySelector('*[id="month"],*[inkscape\\:label="month"]');
+          //const monthElm = svgCalendar_.querySelector('*[id="month"],*[inkscape\\:label="month"]');
           // 月は *[inkscape\\:label="month"] 要素の表示を変える
-          const monthElm: SVGElement | null = svgCalender_.querySelector(`*[id="m-${month}"],*[inkscape\\:label="m-${month}"]`);
+          const monthElm: SVGElement | null = svgCalendar_.querySelector(`*[id="m-${month}"],*[inkscape\\:label="m-${month}"]`);
           if (monthElm) {
             monthElm.style.display = "";
           }
@@ -80,7 +80,7 @@ function App()
           console.log({firstDateOfMonth,firstDayOfWeek,lastDateOfMonth,lastDateOfPrevMonth,dateBox});
 
           dateBox.forEach((date, dateIndex) => {
-            const dateBoxElm = svgCalender_.querySelector(`*[id^="day-${dateIndex}"],*[inkscape\\:label^="day-${dateIndex}"]`);
+            const dateBoxElm = svgCalendar_.querySelector(`*[id^="day-${dateIndex}"],*[inkscape\\:label^="day-${dateIndex}"]`);
             console.log({date,dateIndex,dateBoxElm,x:getSVGLenByMM((dateBoxElm as SVGRectElement).x),y:getSVGLenByMM((dateBoxElm as SVGRectElement).y)});
             doc.text(
               ""+Math.abs(date),
@@ -92,7 +92,7 @@ function App()
               });
           });
 
-          await doc.svg(svgCalender_);
+          await doc.svg(svgCalendar_);
         }
 
 
@@ -119,10 +119,10 @@ function App()
           year={year}
           onSelect={(designName) => {
             setDesign(designName);
-            setUi(UI.PreviewCalenderMonth);
+            setUi(UI.PreviewCalendarMonth);
           }}
         />}
-        {ui == UI.PreviewCalenderMonth && <CalanderDesignPreview
+        {ui == UI.PreviewCalendarMonth && <CalanderDesignPreview
           design={design}
           year={year}
           month={month}

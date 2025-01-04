@@ -3,25 +3,25 @@
 import { JSX } from '@emotion/react/jsx-runtime';
 import { create } from 'zustand'
 
-// type CalenderState = {
+// type CalendarState = {
 //   elm: JSX.Element;
 // };
 
-type CalenderStoreState = {
+type CalendarStoreState = {
   cache: Map<string, JSX.Element>;
-  getCalender: (name: string) => JSX.Element | null;
-  setCalender: (name: string, data: JSX.Element) => JSX.Element;
+  getCalendar: (name: string) => JSX.Element | null;
+  setCalendar: (name: string, data: JSX.Element) => JSX.Element;
 };
 
-export const useCalender = create((set, get: () => CalenderStoreState) => ({
+export const useCalendar = create((set, get: () => CalendarStoreState) => ({
   cache: new Map<string, JSX.Element>(),
-  getCalender: (name: string): JSX.Element | null => {
+  getCalendar: (name: string): JSX.Element | null => {
     return get().cache.get(name) || null;
   },
-  setCalender: (name: string, elm: JSX.Element): JSX.Element => {
+  setCalendar: (name: string, elm: JSX.Element): JSX.Element => {
     set((prev) => ({
       cache: new Map(prev.cache).set(name, elm),
     }))
     return elm;
   }
-} as CalenderStoreState))
+} as CalendarStoreState))

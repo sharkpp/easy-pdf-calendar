@@ -4,9 +4,9 @@ import { Suspense, use } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import { CardRoot as Card, CardHeader, CardBody, Heading } from '@chakra-ui/react'
-import { CALENDER_DESIGNS_BASE_PATH, DesignsIndexItemType, DesignsIndexList } from '@/common';
+import { CALENDAR_DESIGNS_BASE_PATH, DesignsIndexItemType, DesignsIndexList } from '@/common';
 import { fetchData } from '@/fetch';
-import CalenderPreview from '@/components/CalenderPreview';
+import CalendarPreview from '@/components/CalendarPreview';
 
 type DesignListProps = {
   design: string;
@@ -17,7 +17,7 @@ type DesignListProps = {
 function DesignListCore({ design, year, onSelect }: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
 {
   const designsList: DesignsIndexList = use(
-    fetchData(`${CALENDER_DESIGNS_BASE_PATH}/index.json`, async (res) => res.json())
+    fetchData(`${CALENDAR_DESIGNS_BASE_PATH}/index.json`, async (res) => res.json())
   );
   return (
     <SimpleGrid minChildWidth="sm" gap={"1rem"}>
@@ -33,7 +33,7 @@ function DesignListCore({ design, year, onSelect }: DesignListProps & import("re
             </CardHeader>
             <CardBody>
               {/*<Text>View a summary of all your customers over the last month.</Text>*/}
-              <CalenderPreview
+              <CalendarPreview
                 design={designItem.id}
                 year={year}
                 month={1}

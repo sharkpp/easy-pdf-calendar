@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid, IconButton } from '@chakra-ui/react';
-import CalenderPreview from '@/components/CalenderPreview';
+import CalendarPreview from '@/components/CalendarPreview';
 import { Printer as PrinterIcon } from 'lucide-react';
 import { useMeasure } from "@uidotdev/usehooks";
 import PopupPrintPreview from '@/components/PopupPrintPreview';
@@ -46,10 +46,10 @@ function CalanderDesignPreview({
           grid-template-areas: 
             ".        .        design-p2 .        .      "
             ".        .        design-p1 .        .      "
-            "month-p2 month-p1 calender  month-n1 month-n2"
+            "month-p2 month-p1 calendar  month-n1 month-n2"
             ".        .        design-n1 .        .      "
             ".        .        design-n2 .        .      "; 
-          .calender { grid-area: calender; }
+          .calendar { grid-area: calendar; }
           .design-p1 {
             justify-self: center; 
             grid-area: design-p1; 
@@ -84,8 +84,8 @@ function CalanderDesignPreview({
           }
         `}
       >
-        <Box ref={ref} className="calender" width="100%" padding="4" color="white">
-          <CalenderPreview
+        <Box ref={ref} className="calendar" width="100%" padding="4" color="white">
+          <CalendarPreview
             key={`${design}-${year}-${month}-preview`}
             //cssStyle={css`width: 80%;`}
             design={design}
@@ -109,7 +109,7 @@ function CalanderDesignPreview({
           className="month-p1" width="100%" padding="4" color="white"
           onClick={() => (1<=month-1&&onChangeMonth&&onChangeMonth(month-1))}
         >
-          {1<=month-1&&<CalenderPreview
+          {1<=month-1&&<CalendarPreview
             key={`${design}-${year}-${month-1}-preview`}
             //cssStyle={css`width: 80%;`}
             design={design}
@@ -122,7 +122,7 @@ function CalanderDesignPreview({
           className="month-n1" width="100%" padding="4" color="white"
           onClick={() => (month+1<=12&&onChangeMonth&&onChangeMonth(month+1))}
         >
-        {month+1<=12&&<CalenderPreview
+        {month+1<=12&&<CalendarPreview
             key={`${design}-${year}-${month+1}-preview`}
             //cssStyle={css`width: 80%;`}
             design={design}
@@ -176,14 +176,14 @@ function CalanderDesignPreview({
           }
         `}
       >
-        <Box className="calender" width="100%" padding="4" color="white">
+        <Box className="calendar" width="100%" padding="4" color="white">
         </Box>
 
         <Box className="area-tl" width="100%" padding="4" color="white">
         </Box>
         <Box className="print-action" width="100%" padding="4" color="white">
           <IconButton
-            aria-label="print-calender"
+            aria-label="print-calendar"
             onClick={() => {
               setOpenPrintPreview(true);
             }}
