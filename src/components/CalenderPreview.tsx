@@ -1,12 +1,11 @@
 // カレンダーの一月分をデザインと月を指定し描画する
 
-import { use, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
 import SVG from 'react-inlinesvg';
 import {
   Skeleton,
 } from "@/components/ui/skeleton"
-import { OpenChangeDetails } from '@zag-js/dialog';
 import { CALENDER_DESIGNS_BASE_PATH } from '@/common';
 import DropZone from '@/components/DropZone';
 import PopupImageCropper from './PopupImageCropper';
@@ -357,10 +356,10 @@ function CalenderPreview({
             <PopupImageCropper
               key={`image-block-${imageBlock.name}-cropper-popup`}
               open={imageBlock.openCropper}
-              onOpenChange={(details: OpenChangeDetails) => {
-                console.log({imageBlock,details});
+              onOpenChange={(open) => {
+                console.log({imageBlock,open});
                 setImageBlocks(updateImageBlock(imageBlock.name, {
-                  openCropper: details.open
+                  openCropper: open
                 }));
               }}
               image={imageBlock.state?.image || ''}

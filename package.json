@@ -12,6 +12,7 @@
   "dependencies": {
     "@chakra-ui/react": "^3.2.3",
     "@emotion/react": "^11.14.0",
+    "@uidotdev/usehooks": "^2.4.1",
     "idb-keyval": "^6.2.1",
     "jspdf": "^2.5.2",
     "lucide-react": "^0.469.0",

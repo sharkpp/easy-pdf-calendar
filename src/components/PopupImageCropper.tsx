@@ -24,7 +24,7 @@ type PopupImageCropperProps = {
   cropState?: CropperState;
   aspectRatio: number;
   open: boolean;
-  onOpenChange: (details: OpenChangeDetails) => void;
+  onOpenChange: (open: boolean) => void;
   onCropApply: (croppedImage: string | undefined, cropState: CropperState | undefined) => void;
 }
 
@@ -67,7 +67,7 @@ function PopupImageCropper({
     <Dialog 
       size="cover"
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={(details: OpenChangeDetails) => onOpenChange(details.open)}
       placement="center"
       motionPreset="slide-in-bottom"
     >
