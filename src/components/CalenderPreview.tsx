@@ -10,7 +10,7 @@ import { OpenChangeDetails } from '@zag-js/dialog';
 import { CALENDER_DESIGNS_BASE_PATH } from '@/common';
 import DropZone from '@/components/DropZone';
 import PopupImageCropper from './PopupImageCropper';
-import { ImageBlockState, useImageBlock } from '@/store/useImageBlock';
+import { ImageBlockState, useImageBlock } from '@/store/image-block';
 
 // カレンダープレビューのプロパティの型
 type CalenderPreviewProps = {
