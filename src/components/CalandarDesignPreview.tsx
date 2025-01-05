@@ -168,10 +168,6 @@ function CalanderDesignPreview({
           .print-action {
             grid-area: print-action;
             pointer-events: auto;
-            button {
-              width: 100%;
-              height: 100%;
-            }
           }
           .area-bl {background: rgba(0,255,0,0.3);
             grid-area: area-bl;
@@ -180,8 +176,14 @@ function CalanderDesignPreview({
           .config-action {
             grid-area: config-action;
             pointer-events: auto;
-            button {
-              width: 100%;
+          }
+
+          button {
+            width: 100%;
+            height: 100%;
+            padding: 0.5rem;
+            svg {
+              width: auto;
               height: 100%;
             }
           }
@@ -196,7 +198,8 @@ function CalanderDesignPreview({
           <IconButton
             aria-label="print-calendar"
             onClick={() => setOpenPrintPreview(true)}
-            variant="outline"
+            variant="ghost"
+            size="lg"
           >
             <PrinterIcon />
           </IconButton>
@@ -207,7 +210,8 @@ function CalanderDesignPreview({
           <IconButton
             aria-label="print-calendar"
             onClick={() => setOpenPrintOption(true)}
-            variant="outline"
+            variant="ghost"
+            size="lg"
           >
             <CalendarCogIcon />
           </IconButton>
