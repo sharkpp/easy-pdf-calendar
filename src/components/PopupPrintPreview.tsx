@@ -1,7 +1,8 @@
 // 印刷プレビュー画面
 
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { css } from '@emotion/react';
+import { Printer as PrinterIcon } from 'lucide-react';
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -114,7 +115,17 @@ function PopupPrintPreview({
         `}
       >
         <DialogHeader>
-          <DialogTitle>カレンダーの印刷</DialogTitle>
+          <DialogTitle
+            css={css`
+              > * {
+                display: inline-block;
+              }
+                display: flex;
+                gap: 0.5rem;
+            `}>
+            <PrinterIcon /> 
+            カレンダーの印刷
+          </DialogTitle>
           <DialogCloseTrigger />
         </DialogHeader>
         <DialogBody

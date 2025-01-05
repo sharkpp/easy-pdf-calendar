@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid, IconButton } from '@chakra-ui/react';
-import CalendarPreview from '@/components/CalendarPreview';
 import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon } from 'lucide-react';
 import { useMeasure } from "@uidotdev/usehooks";
+import CalendarPreview from '@/components/CalendarPreview';
 import PopupPrintPreview from '@/components/PopupPrintPreview';
 import PopupPrintOption from '@/components/PopupPrintOption';
 

@@ -1,6 +1,7 @@
 // 印刷オプション画面
 
 import { css } from '@emotion/react';
+import { CalendarCog as CalendarCogIcon } from 'lucide-react';
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -42,7 +43,17 @@ function PopupPrintPreview({
         `}
       >
         <DialogHeader>
-          <DialogTitle>カレンダーの印刷オプション</DialogTitle>
+          <DialogTitle
+            css={css`
+              > * {
+                display: inline-block;
+              }
+                display: flex;
+                gap: 0.5rem;
+            `}>
+            <CalendarCogIcon /> 
+            カレンダーの印刷オプション
+          </DialogTitle>
           <DialogCloseTrigger />
         </DialogHeader>
         <DialogBody>
