@@ -1,6 +1,6 @@
 // カレンダーの一月分をデザインと月を指定し描画する
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
 import {
   Skeleton,
@@ -150,42 +150,42 @@ function CalendarPreview({
   // 画像ブロックの情報
   const [ imageBlocks, setImageBlocks ] = useState({} as {[key: string]: ImageBlockInfoType});
 
-  const refSvgContainer = useRef<HTMLDivElement | null>(null);
-
   //console.log({now:Date.now(),refCalendar,calendarElm});
 
-  useEffect(() => {
-    if (!refSvgContainer.current) {
-      return;
-    }
+  const refSvgContainer = useMemo(() => {
+    return (svgContainer: HTMLDivElement | null) => {
+      if (!svgContainer) {
+        return;
+      }
 
-    let calendarElm_ = getCalendar(`${design}:${year}:${month}`);
-    if (calendarElm_) {
-      setCalendarElm(calendarElm_);
-      return;
-    }
-
-    //refSvgContainer.current.firstElementChild
-    fetch(`${CALENDAR_DESIGNS_BASE_PATH}/${design}/main.svg`)
-      .then((response) => response.text())
-      .then((svgText) => {
-        const parser = new DOMParser();
-        calendarElm_ = parser.parseFromString(svgText, "image/svg+xml").documentElement as unknown as SVGElement;
-        // サイズを自動で調整
-        calendarElm_.removeAttribute('width');
-        calendarElm_.removeAttribute('height');
-
+      let calendarElm_ = getCalendar(`${design}:${year}:${month}`);
+      if (calendarElm_) {
+        svgContainer.firstElementChild?.replaceWith(calendarElm_);
         setCalendarElm(calendarElm_);
-      });
-  }, [refSvgContainer.current]);
+        return;
+      }
 
+      // カレンダーデザインのSVGファイルを読み込む
+      fetch(`${CALENDAR_DESIGNS_BASE_PATH}/${design}/main.svg`)
+        .then((response) => response.text())
+        .then((svgText) => {
+          const parser = new DOMParser();
+          calendarElm_ = parser.parseFromString(svgText, "image/svg+xml").documentElement as unknown as SVGElement;
+          // 不要な属性を削除
+          calendarElm_.removeAttribute('id');
+          calendarElm_.removeAttribute('width');
+          calendarElm_.removeAttribute('height');
+
+          svgContainer.firstElementChild?.replaceWith(calendarElm_);
+          setCalendarElm(calendarElm_);
+        });
+    };
+  }, []);
 
   useEffect(() => {
     if (!calendarElm) {
       return;
     }
-
-    refSvgContainer.current?.firstElementChild?.replaceWith(calendarElm);
 
     // SVGテンプレート読み込み完了後の書き換え処理
 
