@@ -154,15 +154,18 @@ function CalanderDesignPreview({
             "area-tl .        print-action"
             ".       calendar ."
             "area-bl .        area-br";
+          pointer-events: none;
 
-          .calendar {background: rgba(255,255,0,0.3);
+          .calendar {
             grid-area: calendar;
           }
           .area-tl {background: rgba(255,0,255,0.3);
             grid-area: area-tl;
+            pointer-events: auto;
           }
           .print-action {
             grid-area: print-action;
+            pointer-events: auto;
             button {
               width: 100%;
               height: 100%;
@@ -170,9 +173,11 @@ function CalanderDesignPreview({
           }
           .area-bl {background: rgba(0,255,0,0.3);
             grid-area: area-bl;
+            pointer-events: auto;
           }
           .area-br {background: rgba(0,0,255,0.3);
             grid-area: area-br;
+            pointer-events: auto;
           }
         `}
       >

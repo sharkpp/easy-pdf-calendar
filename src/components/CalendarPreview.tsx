@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
-import SVG from 'react-inlinesvg';
 import {
   Skeleton,
 } from "@/components/ui/skeleton"
@@ -10,6 +9,7 @@ import { CALENDAR_DESIGNS_BASE_PATH } from '@/common';
 import DropZone from '@/components/DropZone';
 import PopupImageCropper from './PopupImageCropper';
 import { ImageBlockState, useImageBlock } from '@/store/image-block';
+import { useCalendar } from '@/store/calendar';
 
 // カレンダープレビューのプロパティの型
 type CalendarPreviewProps = {
@@ -77,7 +77,9 @@ const MonthShortEn = [
   'Dec',
 ];
 
-const makeSelector = (id: string) => `*[id^="${id}"],*[inkscape\\:label^="${id}"]`;
+// Is it possible to use HTML's .querySelector() to select by xlink attribute in an SVG?
+// >> https://stackoverflow.com/questions/23034283/
+const makeSelector = (id: string) => `*[id^="${id}"],*[*|label^="${id}"]`;
 
 // テキストを追加
 function addSvgText(
@@ -128,6 +130,8 @@ const updateImageBlock = (name: string, imageBlockPart: Partial<Record<keyof Ima
   );
 };
 
+
+
 function CalendarPreview({
   cssStyle: cssProp,
   design,
@@ -138,21 +142,52 @@ function CalendarPreview({
 }: CalendarPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
   const { getImageData, saveImageData } = useImageBlock();
+  const { getCalendar, setCalendar } = useCalendar();
 
-  const refCalendar = useRef<SVGElement | null>(null);
+  //const refCalendar = useRef<SVGElement | null>(null);
   const [ calendarElm, setCalendarElm ] = useState<SVGElement | null>(null);
 
   // 画像ブロックの情報
   const [ imageBlocks, setImageBlocks ] = useState({} as {[key: string]: ImageBlockInfoType});
 
+  const refSvgContainer = useRef<HTMLDivElement | null>(null);
+
   //console.log({now:Date.now(),refCalendar,calendarElm});
 
-  // SVGテンプレート読み込み完了後の書き換え処理
   useEffect(() => {
+    if (!refSvgContainer.current) {
+      return;
+    }
 
+    let calendarElm_ = getCalendar(`${design}:${year}:${month}`);
+    if (calendarElm_) {
+      setCalendarElm(calendarElm_);
+      return;
+    }
+
+    //refSvgContainer.current.firstElementChild
+    fetch(`${CALENDAR_DESIGNS_BASE_PATH}/${design}/main.svg`)
+      .then((response) => response.text())
+      .then((svgText) => {
+        const parser = new DOMParser();
+        calendarElm_ = parser.parseFromString(svgText, "image/svg+xml").documentElement as unknown as SVGElement;
+        // サイズを自動で調整
+        calendarElm_.removeAttribute('width');
+        calendarElm_.removeAttribute('height');
+
+        setCalendarElm(calendarElm_);
+      });
+  }, [refSvgContainer.current]);
+
+
+  useEffect(() => {
     if (!calendarElm) {
       return;
     }
+
+    refSvgContainer.current?.firstElementChild?.replaceWith(calendarElm);
+
+    // SVGテンプレート読み込み完了後の書き換え処理
 
     const firstDateOfMonth = new Date(year, month-1, 1); // 今月の最初の日
     const firstDayOfWeek = firstDateOfMonth.getDay(); // 今月最初の日の曜日(日曜:0 - 土曜:6)
@@ -236,78 +271,67 @@ function CalendarPreview({
       });
 
     // 日付を追加
-    dateItems.forEach((date, dateIndex) => {
-      const dateBaseElm = calendarElm.querySelector(makeSelector(`day-${dateIndex}`)) as SVGRectElement;
-      addSvgText(
-        dateBaseElm,
-        ""+Math.abs(date),
-        {
-          textColor: 0 < date ? "rgb(0, 0, 0)" : "rgb(160, 160, 160)"
-        }
-      );
-    });
+    dateItems
+      .forEach((date, dateIndex) => {
+        const dateBaseElm = calendarElm?.querySelector(makeSelector(`day-${dateIndex}`)) as SVGRectElement;
+        addSvgText(
+          dateBaseElm,
+          ""+Math.abs(date),
+          {
+            textColor: 0 < date ? "rgb(0, 0, 0)" : "rgb(160, 160, 160)"
+          }
+        );
+      });
 
     // 画像アップローダ
     calendarElm
-    .querySelectorAll(makeSelector(`image`))
-    .forEach((baseElm: Element) => {
-      const blockName = (
-          baseElm.getAttribute('inkscape:label') ||
-          baseElm.getAttribute('id') ||
-          ''
-        );
-      const name = `${(/^(.*)\[(.*)\]$/.exec(blockName) || ['', '', ''])[2] || ''}:${month}`; // {ブロック名}:{月}
-      const svgBBox = (baseElm as SVGGraphicsElement).ownerSVGElement?.getBoundingClientRect() ||
-                      { x: 0, y: 0, width: 0, height: 0 };
-      const baseBBox = baseElm.getBoundingClientRect();
-      //console.log({baseBBox});
+      .querySelectorAll(makeSelector(`image`))
+      .forEach((baseElm: Element) => {
+        const blockName = (
+            baseElm.getAttribute('inkscape:label') ||
+            baseElm.getAttribute('id') ||
+            ''
+          );
+        const name = `${(/^(.*)\[(.*)\]$/.exec(blockName) || ['', '', ''])[2] || ''}:${month}`; // {ブロック名}:{月}
+        const svgBBox = (baseElm as SVGGraphicsElement).ownerSVGElement?.getBoundingClientRect() ||
+                        { x: 0, y: 0, width: 0, height: 0 };
+        const baseBBox = baseElm.getBoundingClientRect();
+  
+        const cssImageArea = css`
+            position: absolute;
+            left:   ${baseBBox.x - svgBBox.x}px;
+            top:    ${baseBBox.y - svgBBox.y}px;
+            width:  ${baseBBox.width}px;
+            height: ${baseBBox.height}px;
+          `;
+  
+        setImageBlocks((curImageBlocks) => ({
+          ...curImageBlocks,
+          [name]: {
+            name: name,
+            rect: baseBBox,
+            cssStyle: cssImageArea,
+            baseElm: baseElm as SVGGraphicsElement,
+            openCropper: false
+          }
+        }));
+  
+      });
 
-      const cssImageArea = css`
-          position: absolute;
-          left:   ${baseBBox.x - svgBBox.x}px;
-          top:    ${baseBBox.y - svgBBox.y}px;
-          width:  ${baseBBox.width}px;
-          height: ${baseBBox.height}px;
-        `;
+    setCalendar(`${design}:${year}:${month}`, calendarElm);
 
-      setImageBlocks((curImageBlocks) => ({
-        ...curImageBlocks,
-        [name]: {
-          name: name,
-          rect: baseBBox,
-          cssStyle: cssImageArea,
-          baseElm: baseElm as SVGGraphicsElement,
-          openCropper: false
-        }
-      }));
-
-    });
-
-  }, [calendarElm, readonly]);
+  }, [calendarElm]);
 
   return (
     <div
+      ref={refSvgContainer}
       css={css`${cssProp||""}
         background: white;
         border: 1px solid rgb(240,240,240);
         position: relative;
       `}
     >
-      <SVG
-        innerRef={refCalendar}
-        src={`${CALENDAR_DESIGNS_BASE_PATH}/${design}/main.svg`}
-        width="auto"
-        height="auto"
-        title="React"
-        preProcessor={(code) => 
-          code
-            .replace(/-inkscape-.+?:.+?;/g, '')
-        }
-        onLoad={() => {
-          setCalendarElm(refCalendar.current);
-        }}
-        css={css`user-select: none;`}
-      />
+      <svg />
       {Object.values(imageBlocks).map(((imageBlock) => {
         let imageBlockType: 'blank' | 'image' | 'dropzone' = 'blank';
         let requestImage = false;
@@ -344,7 +368,7 @@ function CalendarPreview({
             <img
               key={`image-block-${imageBlock.name}-image`}
               css={imageBlock.cssStyle}
-              src={imageBlock.state?.croppedImage || imageBlock.imageBlockData?.image || ''}
+              src={imageBlock.state?.croppedImage || imageBlock.state?.image || ''}
               alt=""
               onClick={() => {
                 console.log({imageBlock});
