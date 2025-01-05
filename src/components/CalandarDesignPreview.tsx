@@ -4,9 +4,10 @@ import { useState } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid, IconButton } from '@chakra-ui/react';
 import CalendarPreview from '@/components/CalendarPreview';
-import { Printer as PrinterIcon } from 'lucide-react';
+import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon } from 'lucide-react';
 import { useMeasure } from "@uidotdev/usehooks";
 import PopupPrintPreview from '@/components/PopupPrintPreview';
+import PopupPrintOption from '@/components/PopupPrintOption';
 
 type CalanderDesignPreviewProps = {
   design: string;
@@ -30,6 +31,7 @@ function CalanderDesignPreview({
 {
   const [ ref, { width, height } ] = useMeasure();
   const [ openPrintPreview, setOpenPrintPreview ] = useState(false);
+  const [ openPrintOption, setOpenPrintOption ] = useState(false);
 
   return (
     <>
@@ -153,7 +155,7 @@ function CalanderDesignPreview({
           grid-template-areas:
             "area-tl .        print-action"
             ".       calendar ."
-            "area-bl .        area-br";
+            "area-bl .        config-action";
           pointer-events: none;
 
           .calendar {
@@ -175,9 +177,13 @@ function CalanderDesignPreview({
             grid-area: area-bl;
             pointer-events: auto;
           }
-          .area-br {background: rgba(0,0,255,0.3);
-            grid-area: area-br;
+          .config-action {
+            grid-area: config-action;
             pointer-events: auto;
+            button {
+              width: 100%;
+              height: 100%;
+            }
           }
         `}
       >
@@ -189,9 +195,7 @@ function CalanderDesignPreview({
         <Box className="print-action" width="100%" padding="4" color="white">
           <IconButton
             aria-label="print-calendar"
-            onClick={() => {
-              setOpenPrintPreview(true);
-            }}
+            onClick={() => setOpenPrintPreview(true)}
             variant="outline"
           >
             <PrinterIcon />
@@ -199,18 +203,44 @@ function CalanderDesignPreview({
         </Box>
         <Box className="area-bl" width="100%" padding="4" color="white">
         </Box>
-        <Box className="area-br" width="100%" padding="4" color="white">
+        <Box className="config-action" width="100%" padding="4" color="white">
+          <IconButton
+            aria-label="print-calendar"
+            onClick={() => setOpenPrintOption(true)}
+            variant="outline"
+          >
+            <CalendarCogIcon />
+          </IconButton>
         </Box>
 
       </SimpleGrid>
 
       <PopupPrintPreview
+        design={design}
+        year={year}
         open={openPrintPreview}
-        onOpenChange={(open) => {
-          setOpenPrintPreview(open);
-        }}
+        onOpenChange={(open) => setOpenPrintPreview(open)}
       />
 
+      <PopupPrintOption
+        open={openPrintOption}
+        onOpenChange={(open) => setOpenPrintOption(open)}
+      />
+
+      <div css={css`width: 0px; height: 0px;`}>
+        {MonthList.reduce((r, month_) => {
+          if ([month-1, month, month+1].indexOf(month_) < 0) {
+            r.push(
+              <CalendarPreview
+                design={design}
+                year={year}
+                month={month_}
+              />
+            );
+          }
+          return r;
+        }, [] as any)}
+      </div>
     </>
   );
 }

@@ -15,7 +15,6 @@ type CalendarStoreState = {
 export const useCalendar = create((set, get: () => CalendarStoreState) => ({
   cache: new Map<string, SVGElement>(),
   getCalendar: (name: string): SVGElement | null => {
-    console.log({name, cache: get().cache});
     const elm = get().cache.get(name);
     if (elm) {
       return elm.cloneNode(true) as SVGElement;
