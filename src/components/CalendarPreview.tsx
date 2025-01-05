@@ -329,6 +329,10 @@ function CalendarPreview({
         background: white;
         border: 1px solid rgb(240,240,240);
         position: relative;
+        svg {
+          user-select: none;
+          pointer-events: none;
+        }
       `}
     >
       <svg />

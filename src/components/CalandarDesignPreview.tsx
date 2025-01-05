@@ -157,6 +157,7 @@ function CalanderDesignPreview({
             ".       calendar ."
             "area-bl .        config-action";
           pointer-events: none;
+          user-select: none;
 
           .calendar {
             grid-area: calendar;
@@ -164,18 +165,22 @@ function CalanderDesignPreview({
           .area-tl {background: rgba(255,0,255,0.3);
             grid-area: area-tl;
             pointer-events: auto;
+            user-select: auto;
           }
           .print-action {
             grid-area: print-action;
             pointer-events: auto;
+            user-select: auto;
           }
           .area-bl {background: rgba(0,255,0,0.3);
             grid-area: area-bl;
             pointer-events: auto;
+            user-select: auto;
           }
           .config-action {
             grid-area: config-action;
             pointer-events: auto;
+            user-select: auto;
           }
 
           button {
