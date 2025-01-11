@@ -24,6 +24,7 @@ type CalendarPreviewProps = {
 // 画像ブロックの情報の型
 type ImageBlockInfoType = {
   name: string;
+  id: string;
   rect: DOMRect;
   cssStyle: SerializedStyles;
   baseElm: SVGGraphicsElement;
@@ -292,7 +293,7 @@ function CalendarPreview({
             baseElm.getAttribute('id') ||
             ''
           );
-        const name = `${(/^(.*)\[(.*)\]$/.exec(blockName) || ['', '', ''])[2] || ''}:${month}`; // {ブロック名}:{月}
+        const name = `${(/^(.*)\[(.*)\]$/.exec(blockName) || ['', '', ''])[2] || ''}-${month}`; // {ブロック名}:{月}
         const svgBBox = (baseElm as SVGGraphicsElement).ownerSVGElement?.getBoundingClientRect() ||
                         { x: 0, y: 0, width: 0, height: 0 };
         const baseBBox = baseElm.getBoundingClientRect();
@@ -309,12 +310,20 @@ function CalendarPreview({
           ...curImageBlocks,
           [name]: {
             name: name,
+            id: baseElm.getAttribute('id') || '',
             rect: baseBBox,
             cssStyle: cssImageArea,
             baseElm: baseElm as SVGGraphicsElement,
             openCropper: false
           }
         }));
+
+        getImageData(name)
+        .then((imageBlockData) => {
+          setImageBlocks(updateImageBlock(name, {
+            state: imageBlockData
+          }));
+        });
   
       });
 
@@ -368,8 +377,44 @@ function CalendarPreview({
             />
           );
         case 'image':
+
+          if (calendarElm) {
+            const imageBlockElm = document.createElement('image');
+            imageBlockElm.setAttribute('x', ''+imageBlock.rect.x);
+            imageBlockElm.setAttribute('y', ''+imageBlock.rect.y);
+            imageBlockElm.setAttribute('width', ''+imageBlock.rect.width);
+            imageBlockElm.setAttribute('height', ''+imageBlock.rect.height);
+            imageBlockElm.setAttribute('xlink:href', imageBlock.state?.croppedImage || imageBlock.state?.image || '');
+            const curImageBlockElm: Element | null = calendarElm.querySelector(`#image-${imageBlock.name}`);
+            if (curImageBlockElm) {
+              curImageBlockElm.replaceWith(imageBlockElm);
+            }
+            else {
+              calendarElm.appendChild(imageBlockElm);
+            }
+
+
+            // const xx = document.createElement('react');
+            // xx.setAttribute('x', 'fill: #f00');
+            // xx.setAttribute('x', ''+imageBlock.rect.x);
+            // xx.setAttribute('y', ''+imageBlock.rect.y);
+            // xx.setAttribute('width', ''+imageBlock.rect.width);
+            // xx.setAttribute('height', ''+imageBlock.rect.height);
+            // const xxx: Element | null = calendarElm.querySelector(`#rect-${imageBlock.name}`);
+            // if (xxx) {
+            //   xxx.replaceWith(xx);
+            // }
+            // else {
+            //   calendarElm.appendChild(xx);
+            // }
+
+            console.log({calendarElm,imageBlockElm});
+            setTimeout(() => {
+              //setCalendar(`${design}:${year}:${month}`, calendarElm);
+            }, 0)
+          }
           return (<>
-            <img
+            {/* <img
               key={`image-block-${imageBlock.name}-image`}
               css={imageBlock.cssStyle}
               src={imageBlock.state?.croppedImage || imageBlock.state?.image || ''}
@@ -380,7 +425,7 @@ function CalendarPreview({
                   openCropper: true
                 }));
               }}
-            />
+            /> */}
             <PopupImageCropper
               key={`image-block-${imageBlock.name}-cropper-popup`}
               open={imageBlock.openCropper}
@@ -404,6 +449,13 @@ function CalendarPreview({
                   setImageBlocks(updateImageBlock(imageBlock.name, {
                     openCropper: false,
                   }));
+                  if (calendarElm) {
+                    let imageBlockElm = calendarElm.querySelector(`#image-${imageBlock.name}`);
+                    if (imageBlockElm) {
+                      imageBlockElm.parentElement?.removeChild(imageBlockElm);
+                    }
+                    setCalendar(`${design}:${year}:${month}`, calendarElm);
+                  }
                 }
                 else {
                   saveImageData(imageBlock.name, {
