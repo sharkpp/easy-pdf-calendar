@@ -42,7 +42,7 @@ function PopupPrintPreview({
   open, onOpenChange,
 }: PopupImageCropperProps) {
 
-  const { getCalendar, setCalendar } = useCalendar();
+  const { getCalendar } = useCalendar();
 
   const notosans = useFont("Noto Sans Gothic", "/assets/fonts/NotoSansJP-Medium.ttf")
   
@@ -53,7 +53,7 @@ function PopupPrintPreview({
     return (div: HTMLDivElement | null) => {
       if (div) {
         const calendars = new Array(12).fill(0).map((_, i) => (
-          getCalendar(`${design}:${year}:${i+1}`)
+          getCalendar(design, year, i+1)
         ));
         console.log({calendars})
         div.replaceChildren.apply(div, calendars as Node[]);
@@ -81,7 +81,7 @@ function PopupPrintPreview({
               doc.addPage(PageSize.B6JIS, 'l');
             }
             // カレンダーのSVGを取得
-            calendarOfMonth = getCalendar(`${design}:${year}:${month}`);
+            calendarOfMonth = getCalendar(design, year, month);console.log({calendarOfMonth})
             // SVGをPDFに変換
             if (calendarOfMonth) {
               await doc.svg(calendarOfMonth as Element);

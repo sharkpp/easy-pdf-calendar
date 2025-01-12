@@ -7,24 +7,42 @@ import { create } from 'zustand'
 // };
 
 type CalendarStoreState = {
-  cache: Map<string, SVGElement>;
-  getCalendar: (name: string) => SVGElement | null;
-  setCalendar: (name: string, data: SVGElement) => SVGElement;
-};
+  cache: Map<string, SVGElement | null>;
+}
 
-export const useCalendar = create((set, get: () => CalendarStoreState) => ({
-  cache: new Map<string, SVGElement>(),
-  getCalendar: (name: string): SVGElement | null => {
-    const elm = get().cache.get(name);
-    if (elm) {
-      return elm.cloneNode(true) as SVGElement;
+type CalendarStoreAction = {
+  getCalendar: ((design: string, year: number, month: number) => SVGElement | null) |
+               ((design: string) => SVGElement | null);
+  setCalendar:  (design: string, yearOrElm: number | SVGElement, month?: number, elm?: SVGElement) => SVGElement | null;
+}
+
+export const useCalendar = create<CalendarStoreState & CalendarStoreAction>(
+  (set, get) => ({
+    cache: new Map<string, SVGElement>(),
+    getCalendar: (design: string, year?: number, month?: number): SVGElement | null => {
+      const elm = get().cache.get(`${design}:${year||-1}:${month||-1}:`);
+      if (elm) {
+        return elm.cloneNode(true) as SVGElement;
+      }
+      return null;
+    },
+    setCalendar: (design: string, yearOrElm: number | SVGElement, month?: number, elm?: SVGElement): SVGElement | null => {
+      if (typeof yearOrElm === "object" && undefined === month && undefined === elm) {
+        elm = yearOrElm;
+        yearOrElm = -1;
+      }
+      set((prev) => ({
+        cache: new Map(prev.cache).set(`${design}:${yearOrElm||-1}:${month||-1}:`, elm || null),
+      }))
+      return elm || null;
     }
-    return null;
-  },
-  setCalendar: (name: string, elm: SVGElement): SVGElement => {
-    set((prev) => ({
-      cache: new Map(prev.cache).set(name, elm),
-    }))
-    return elm;
-  }
-} as CalendarStoreState))
+  })
+);
+
+export const calenderSelector =
+  (design: string, year?: number, month?: number) => 
+    (state: CalendarStoreState) => state.cache.get(`${design}:${year||-1}:${month||-1}:`) ;
+
+export const setCalenderSelector =
+  () => 
+    (state: CalendarStoreAction) => state.setCalendar ;
