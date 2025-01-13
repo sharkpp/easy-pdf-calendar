@@ -9,7 +9,7 @@ import { CALENDAR_DESIGNS_BASE_PATH } from '@/common';
 import DropZone from '@/components/DropZone';
 import PopupImageCropper from './PopupImageCropper';
 import { ImageBlockState, useImageBlock } from '@/store/image-block';
-import { calenderSelector, setCalenderSelector, useCalendar } from '@/store/calendar';
+import { calendarSelector, setCalendarSelector, useCalendar } from '@/store/calendar';
 import { useShallow } from 'zustand/react/shallow'
 
 // カレンダープレビューのプロパティの型
@@ -266,9 +266,9 @@ function CalendarPreview({
   // カレンダーを埋め込むコンテナ要素
   const [ svgContainerElm, setSvgContainerElm ] = useState<HTMLDivElement | null>(null);
   // カレンダーのsvg
-  const cachedCalendarTemplateElm = useCalendar(useShallow(calenderSelector(design)));
-  const cachedCalendarElm = useCalendar(useShallow(calenderSelector(design, year, month)));
-  const setCachedCalendarElm = useCalendar(useShallow(setCalenderSelector()));
+  const cachedCalendarTemplateElm = useCalendar(useShallow(calendarSelector(design)));
+  const cachedCalendarElm = useCalendar(useShallow(calendarSelector(design, year, month)));
+  const setCachedCalendarElm = useCalendar(useShallow(setCalendarSelector()));
   // 画像を含めたsvg要素
   const [ calendarElm, setCalendarElm ] = useState<SVGElement | null>(null);
 
