@@ -109,7 +109,7 @@ display: inline;
 fill: ${textColor};
 fill-opacity: 1;
 stroke: none;
-dominant-baseline: central;"
+dominant-baseline: alphabetic;"
       x="0"
       y="0"
     >${text}</text>
@@ -118,7 +118,7 @@ dominant-baseline: central;"
   if (textElm) {
     const rect: SVGRect = textElm.getBBox();
     textElm.setAttribute("x", "" + (baseElm.x.baseVal.value + baseElm.width.baseVal.value / 2 - rect.width / 2));
-    textElm.setAttribute("y", "" + (baseElm.y.baseVal.value + baseElm.height.baseVal.value / 2));
+    textElm.setAttribute("y", "" + (baseElm.y.baseVal.value + baseElm.height.baseVal.value));
   }
 }
 
