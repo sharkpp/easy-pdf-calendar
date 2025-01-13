@@ -41,8 +41,9 @@ export const useCalendar = create<CalendarStoreState & CalendarStoreAction>(
 
 export const calendarSelector =
   (design: string, year?: number, month?: number) => 
-    (state: CalendarStoreState) => state.cache.get(`${design}:${year||-1}:${month||-1}:`) ;
+    (state: CalendarStoreState) => state.cache.get(`${design}:${year||-1}:${month||-1}:`)
+  ;
 
 export const setCalendarSelector =
-  () => 
-    (state: CalendarStoreAction) => state.setCalendar ;
+  (state: CalendarStoreAction) => state.setCalendar
+  ;

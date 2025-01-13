@@ -1,0 +1,20 @@
+{
+  "name":"シンプル２ 明色 画像付き",
+  "templates": {
+    "month": "main.svg"
+  },
+  "colors": {
+    "date":          "#000",
+    "sundayDate":    "#F00",
+    "mondayDate":    "#000",
+    "tuesdayDate":   "#000",
+    "wednesdayDate": "#000",
+    "thursdayDate":  "#000",
+    "fridayDate":    "#000",
+    "saturdayDate":  "#00F",
+    "holidayDate":   "#F00"
+  },
+  "config": {
+    "": ""
+  }
+}

@@ -1,12 +1,18 @@
 // カレンダーのデザインの一覧
 
-import { Suspense, use } from 'react';
+import { Suspense, use, useEffect } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import { CardRoot as Card, CardHeader, CardBody, Heading } from '@chakra-ui/react'
-import { CALENDAR_DESIGNS_BASE_PATH, DesignsIndexItemType, DesignsIndexList } from '@/common';
+import { useShallow } from 'zustand/react/shallow';
+import { CALENDAR_DESIGNS_BASE_PATH } from '@/common';
 import { fetchData } from '@/fetch';
 import CalendarPreview from '@/components/CalendarPreview';
+import { designsSelector, useDesign, DesignInfoType } from '@/store/design';
+
+type DesignsIndexList = {
+  index: DesignInfoType[];
+};
 
 type DesignListProps = {
   design: string;
@@ -16,25 +22,33 @@ type DesignListProps = {
 
 function DesignListCore({ design, year, onSelect }: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
 {
-  const designsList: DesignsIndexList = use(
+  const designs = useDesign(useShallow(designsSelector()));
+  const { setDesigns } = useDesign();
+
+  const indexJson: DesignsIndexList = use(
     fetchData(`${CALENDAR_DESIGNS_BASE_PATH}/index.json`, async (res) => res.json())
   );
+
+  useEffect(() => {
+    setDesigns(indexJson.index);
+  }, [indexJson])
+
   return (
     <SimpleGrid minChildWidth="sm" gap={"1rem"}>
-      {designsList.index.map((designItem: DesignsIndexItemType) => (
-        <Box key={designItem.id}>
+      {designs.map((designInfo: DesignInfoType) => (
+        <Box key={designInfo.id}>
           <Card
             size="sm"
-            onClick={() => (onSelect && onSelect(designItem.id))}
-            {...(design !== designItem.id ? {} : { bg: "orange", variant: "subtle" })}
+            onClick={() => (onSelect && onSelect(designInfo.id))}
+            {...(design !== designInfo.id ? {} : { bg: "orange", variant: "subtle" })}
           >
             <CardHeader>
-              <Heading size='sm'>{designItem.id}</Heading>
+              <Heading size='sm'>{designInfo.name}</Heading>
             </CardHeader>
             <CardBody>
               {/*<Text>View a summary of all your customers over the last month.</Text>*/}
               <CalendarPreview
-                design={designItem.id}
+                design={designInfo.id}
                 year={year}
                 month={1}
                 blankImage={true}
