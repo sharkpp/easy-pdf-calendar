@@ -433,7 +433,7 @@ console.warn(`${calendarKey} Loaded image data`,{imageBlocks,imageBlockData});
           imageElm.setAttributeNS(
             'http://www.w3.org/1999/xlink',
             'xlink:href',
-            imageBlock.state ? (imageBlock.state.croppedImage || imageBlock.state.image || '') : ''
+            imageBlock.state ? (imageBlock.state.croppedImageUrl || imageBlock.state.imageUrl || '') : ''
             //'https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png'
           );
           // imageElm.addEventListener('click', () => {
@@ -450,7 +450,7 @@ console.warn(`${calendarKey} Loaded image data`,{imageBlocks,imageBlockData});
       });
     // カレンダーを更新
     setCalendarElm(calendarElm_ as SVGElement);
-    //setCachedCalendarElm(design, year, month, calendarElm_);
+    setCachedCalendarElm(design, year, month, calendarElm_);
     console.warn(`${calendarKey} Combining calendar SVG with images`, {imageBlocks});
   }, [cachedCalendarElm, imageBlocks, blankImage]);
 
@@ -526,7 +526,7 @@ console.warn(`${calendarKey} Loaded image data`,{imageBlocks,imageBlockData});
                   openCropper: open
                 }));
               }}
-              image={imageBlock.state ? imageBlock.state.image : ''}
+              image={imageBlock.state ? imageBlock.state.imageUrl || '' : ''}
               cropState={imageBlock.state ? imageBlock.state.cropState : undefined}
               onCropApply={(croppedImage, cropState) => {
                 console.log("onCropApply",{croppedImage,cropState});
@@ -545,16 +545,12 @@ console.warn(`${calendarKey} Loaded image data`,{imageBlocks,imageBlockData});
                     croppedImage: croppedImage,
                     cropState: cropState
                   })
-                    .then((imageBlockData) => {
+                    .then((/*imageBlockData*/) => {
                       setImageBlocks(updateImageBlock(imageBlock.name, {
-                        //state: imageBlockData,
                         state: false,
                         openCropper: false
                       }));
                     });
-                  // setImageBlocks(updateImageBlock(imageBlock.name, {
-                  //   openCropper: false
-                  // }));
                 }
               }}
               aspectRatio={imageBlock.rectByPixel.width / imageBlock.rectByPixel.height}

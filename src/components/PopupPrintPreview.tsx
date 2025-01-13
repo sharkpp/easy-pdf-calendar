@@ -89,7 +89,7 @@ function PopupPrintPreview({
           }
   
           if (iframe) {
-            iframe.src = doc.output('datauristring');
+            iframe.src = doc.output('bloburi').toString();
           }
         }
         makePdf();

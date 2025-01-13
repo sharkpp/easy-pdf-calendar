@@ -136,6 +136,12 @@ function PopupImageCropper({
               aria-label="crop-end"
               onClick={() => {
                 const canvas = cropperRef.current?.getCanvas();
+                // canvas?.toBlob((blob) => {
+                //   blob && onCropApply(
+                //       URL.createObjectURL(blob).toString(),
+                //       cropperRef.current?.getState() || undefined
+                //     ); // 画像を適用
+                //   });
                 const croppedImage = canvas?.toDataURL('image/png');
                 onCropApply(
                   croppedImage,
