@@ -586,7 +586,7 @@ console.warn(`${calendarKey} Loaded image data`,{imageBlocks,imageBlockData});
                 console.log({file,isDrop});
                 const reader = new FileReader(); // ファイル読み取り用オブジェクト作成
                 reader.onload = (event: ProgressEvent<FileReader>) => {
-                  console.log({'event.target.result':event.target?.result,openCropper:imageBlock.openCropper});
+                  console.log(calendarKey,{'event.target.result':event.target?.result,openCropper:imageBlock.openCropper});
                   if (event.target?.result && event.target?.result.constructor  === ArrayBuffer) {
                     saveImageData(imageBlock.name, {
                       image: new Blob([event.target?.result]),
