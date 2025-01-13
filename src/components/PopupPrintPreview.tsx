@@ -178,8 +178,11 @@ function PopupPrintPreview({
               `}
           />
 
-          <Button alignSelf="stretch">
-            完了
+          <Button
+            alignSelf="stretch"
+            onClick={() => onOpenChange(false)}
+          >
+            閉じる
           </Button>
         </DialogBody>
       </DialogContent>
