@@ -141,12 +141,7 @@ function PopupImageCropper({
                       blob,
                       cropperRef.current?.getState() || undefined
                     ); // 画像を適用
-                  });
-                // const croppedImage = canvas?.toDataURL('image/png');
-                // onCropApply(
-                //   croppedImage,
-                //   cropperRef.current?.getState() || undefined
-                // ); // 画像を適用
+                  }, 'image/jpeg', 98);
               }}
               variant="outline"
             >
