@@ -5,8 +5,8 @@ import { CropperState } from 'react-advanced-cropper';
 import { get as getIdb, set as setIdb, del as delIdb } from 'idb-keyval';
 
 export type ImageBlockState = {
-  image:             string; // 画像
-  croppedImage?:     string; // 切り取られた画像
+  image:             Blob; // 画像
+  croppedImage?:     Blob; // 切り取られた画像
   imageUrl?:         string; // 画像のBlob URL
   croppedImageUrl?:  string; // 切り取られた画像のBlob URL
   cropState?:        CropperState; // 切り取り状態
@@ -43,8 +43,8 @@ export const useImageBlock = create<ImageBlockStoreState & ImageBlockStoreAction
     if (!state) {
       state = await getIdb(IDB_PREFIX+name);
       if (state) {
-        state.imageUrl = await blobUrlFromDataUrl(state.image);
-        state.croppedImageUrl = await blobUrlFromDataUrl(state.croppedImage);
+        state.imageUrl = URL.createObjectURL(state.image).toString();
+        state.croppedImageUrl = state.croppedImage && URL.createObjectURL(state.croppedImage).toString();
         cache.set(name, state);
       }
     }
@@ -63,8 +63,8 @@ export const useImageBlock = create<ImageBlockStoreState & ImageBlockStoreAction
       croppedImage: state.croppedImage,
       cropState: state.cropState,
     });
-    state.imageUrl = await blobUrlFromDataUrl(state.image);
-    state.croppedImageUrl = await blobUrlFromDataUrl(state.croppedImage);
+    state.imageUrl = URL.createObjectURL(state.image).toString();
+    state.croppedImageUrl = state.croppedImage && URL.createObjectURL(state.croppedImage).toString();
     cache.set(name, state);
     return state;
   },

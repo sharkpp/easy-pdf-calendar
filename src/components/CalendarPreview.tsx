@@ -335,7 +335,7 @@ console.warn(`${calendarKey} Loading the calendar template SVG`);
 
   // カレンダーのsvgを読み込む
   useEffect(() => {
-    if (!cachedCalendarTemplateElm || !svgContainerElm) {
+    if (!cachedCalendarTemplateElm || !svgContainerElm || !designInfo) {
       return;
     }
     // テンプレートから月の内容を反映
@@ -346,7 +346,7 @@ console.warn(`${calendarKey} Loading the calendar template SVG`);
     // 更新
     setCachedCalendarElm(design, year, month, calendarElm_);
 console.warn(`${calendarKey} Reflecting the month's content from the template`);
-  }, [cachedCalendarTemplateElm, svgContainerElm]);
+  }, [cachedCalendarTemplateElm, svgContainerElm, designInfo]);
 
   // 画像埋め込み枠を列挙
   useEffect(() => {
@@ -560,9 +560,9 @@ console.warn(`${calendarKey} Loaded image data`,{imageBlocks,imageBlockData});
                       }));
                     });
                 }
-                else {
+                else if (imageBlock.state) {
                   saveImageData(imageBlock.name, {
-                    image: imageBlock.state ? imageBlock.state.image : '',
+                    image: imageBlock.state.image,
                     croppedImage: croppedImage,
                     cropState: cropState
                   })
@@ -587,19 +587,21 @@ console.warn(`${calendarKey} Loaded image data`,{imageBlocks,imageBlockData});
                 const reader = new FileReader(); // ファイル読み取り用オブジェクト作成
                 reader.onload = (event: ProgressEvent<FileReader>) => {
                   console.log({'event.target.result':event.target?.result,openCropper:imageBlock.openCropper});
-                  saveImageData(imageBlock.name, {
-                    image: event.target?.result as string || '',
-                  })
-                    .then((imageBlockData) => {
-                      setImageBlocks(updateImageBlock(imageBlock.name, {
-                        state: imageBlockData
-                      }));
-                    });
-                  setImageBlocks(updateImageBlock(imageBlock.name, {
-                    openCropper: true
-                  }));
+                  if (event.target?.result && event.target?.result.constructor  === ArrayBuffer) {
+                    saveImageData(imageBlock.name, {
+                      image: new Blob([event.target?.result]),
+                    })
+                      .then((imageBlockData) => {
+                        setImageBlocks(updateImageBlock(imageBlock.name, {
+                          state: imageBlockData
+                        }));
+                      });
+                    setImageBlocks(updateImageBlock(imageBlock.name, {
+                      openCropper: true
+                    }));
+                  }
                 };
-                reader.readAsDataURL(file);
+                reader.readAsArrayBuffer(file);
               }}
             />
           );

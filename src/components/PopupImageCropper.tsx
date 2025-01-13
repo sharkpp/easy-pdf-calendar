@@ -25,7 +25,7 @@ type PopupImageCropperProps = {
   aspectRatio: number;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onCropApply: (croppedImage: string | undefined, cropState: CropperState | undefined) => void;
+  onCropApply: (croppedImage: Blob | undefined, cropState: CropperState | undefined) => void;
 }
 
 const cssColorTheme = {
@@ -136,17 +136,17 @@ function PopupImageCropper({
               aria-label="crop-end"
               onClick={() => {
                 const canvas = cropperRef.current?.getCanvas();
-                // canvas?.toBlob((blob) => {
-                //   blob && onCropApply(
-                //       URL.createObjectURL(blob).toString(),
-                //       cropperRef.current?.getState() || undefined
-                //     ); // 画像を適用
-                //   });
-                const croppedImage = canvas?.toDataURL('image/png');
-                onCropApply(
-                  croppedImage,
-                  cropperRef.current?.getState() || undefined
-                ); // 画像を適用
+                canvas?.toBlob((blob) => {
+                  blob && onCropApply(
+                      blob,
+                      cropperRef.current?.getState() || undefined
+                    ); // 画像を適用
+                  });
+                // const croppedImage = canvas?.toDataURL('image/png');
+                // onCropApply(
+                //   croppedImage,
+                //   cropperRef.current?.getState() || undefined
+                // ); // 画像を適用
               }}
               variant="outline"
             >
