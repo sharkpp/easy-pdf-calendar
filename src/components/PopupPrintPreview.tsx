@@ -1,6 +1,6 @@
 // 印刷プレビュー画面
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { css } from '@emotion/react';
 import { Printer as PrinterIcon } from 'lucide-react';
 import {
@@ -18,6 +18,7 @@ import 'svg2pdf.js';
 import { PageSize } from '@/utils/jspdf-pagesize';
 import { useFont } from '@/hooks/jspdf-usefont';
 import { useCalendar } from '@/store/calendar';
+import Spinner from '@/components/Spinner';
 
 // 画像切り取りポップアップのプロパティの型
 type PopupImageCropperProps = {
@@ -43,6 +44,7 @@ function PopupPrintPreview({
 }: PopupImageCropperProps) {
 
   const { getCalendar } = useCalendar();
+  const [ pdfVisible, setPdfVisible ] = useState(false);
 
   const notosans = useFont("Noto Sans Gothic", "/assets/fonts/NotoSansJP-Medium.ttf")
   
@@ -90,6 +92,7 @@ function PopupPrintPreview({
   
           if (iframe) {
             iframe.src = doc.output('bloburi').toString();
+            setPdfVisible(true);
           }
         }
         makePdf();
@@ -141,10 +144,29 @@ function PopupPrintPreview({
           `}
         >
 
-          <iframe
-           ref={refPdf}
-          />
+          <div
+            css={css`
+              visibility: ${!pdfVisible?'visible':'hidden'};
+              position: absolute;
+              top: var(--chakra-spacing-2);
+              left: 0px;
+              width: 100%;
+              height: calc(100% - var(--chakra-sizes-10) - var(--chakra-spacing-2) * 2 - 1rem * 2);
+              display: flex;
+              justify-content: space-evenly;
+              align-items: center;
+            `}
+          >
+            <Spinner />
+          </div>
           
+          <iframe
+            ref={refPdf}
+            css={css`
+              visibility: ${pdfVisible?'visible':'hidden'};
+            `}
+          />
+
           <div
             ref={refContener}
             css={css`
