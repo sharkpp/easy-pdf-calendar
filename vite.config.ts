@@ -4,7 +4,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { resolve } from 'path';
-import { Dirent, readdirSync, writeFileSync } from 'fs';
+import { Dirent, readdirSync, readFileSync, writeFileSync } from 'fs';
 
 type viteStaticCopyTargetType = {
   src: string;
@@ -33,7 +33,8 @@ const {
           dest: `assets/designs/${dirent.name}`
         });
         r.designsIndexContent.index.push({
-          id: dirent.name
+          id: dirent.name,
+          ...JSON.parse(readFileSync(`${DESIGNS_PATH}/${dirent.name}/info.json`, { encoding: 'utf8' }))
         });
       }
       return r;

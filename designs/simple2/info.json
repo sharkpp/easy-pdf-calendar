@@ -4,15 +4,12 @@
     "month": "main.svg"
   },
   "colors": {
-    "date":          "#000",
-    "sundayDate":    "#F00",
-    "mondayDate":    "#000",
-    "tuesdayDate":   "#000",
-    "wednesdayDate": "#000",
-    "thursdayDate":  "#000",
-    "fridayDate":    "#000",
-    "saturdayDate":  "#00F",
-    "holidayDate":   "#F00"
+    "date":               "#000000",
+    "sundayDate":         "#FF0000",
+    "saturdayDate":       "#0066ff",
+    "holidayDate":        "#FF0000",
+    "previousMonthDate":  "#A0A0A0",
+    "nextMonthDate":      "#A0A0A0"
   },
   "config": {
     "": ""

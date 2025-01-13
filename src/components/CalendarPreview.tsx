@@ -11,6 +11,7 @@ import DropZone from '@/components/DropZone';
 import PopupImageCropper from './PopupImageCropper';
 import { ImageBlockState, useImageBlock } from '@/store/image-block';
 import { calendarSelector, setCalendarSelector, useCalendar } from '@/store/calendar';
+import { DesignInfoType, designSelector, useDesign } from '@/store/design';
 
 // カレンダープレビューのプロパティの型
 type CalendarPreviewProps = {
@@ -137,9 +138,25 @@ const updateImageBlock = (name: string, imageBlockPart: Partial<Record<keyof Ima
 };
 
 // カレンダーを構築
-function buildCalendar(svgElm: SVGElement, year: number, month: number)
+function buildCalendar(svgElm: SVGElement, year: number, month: number, designInfo: DesignInfoType)
 {
   // SVGテンプレート読み込み完了後の書き換え処理
+
+  const dateColor               = designInfo.colors.date; // その他の日付の色
+  const previousMonthDateColor  = designInfo.colors.previousMonthDate || dateColor; // 先月の日付の色
+  const nextMonthDateColor      = designInfo.colors.nextMonthDate || dateColor; // 来月の日付の色
+  const dayOfWeekColors = [
+    designInfo.colors.sundayDate    || dateColor, // 日曜の日付の色
+    designInfo.colors.mondayDate    || dateColor, // 月曜の日付の色
+    designInfo.colors.tuesdayDate   || dateColor, // 火曜の日付の色
+    designInfo.colors.wednesdayDate || dateColor, // 水曜の日付の色
+    designInfo.colors.thursdayDate  || dateColor, // 木曜の日付の色
+    designInfo.colors.fridayDate    || dateColor, // 金曜の日付の色
+    designInfo.colors.saturdayDate  || dateColor, // 土曜の日付の色
+    designInfo.colors.holidayDate   || dateColor, // 祝日の日付の色
+  ];
+
+
 
   const firstDateOfMonth = new Date(year, month-1, 1); // 今月の最初の日
   const firstDayOfWeek = firstDateOfMonth.getDay(); // 今月最初の日の曜日(日曜:0 - 土曜:6)
@@ -220,11 +237,14 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number)
   dateItems
     .forEach((date, dateIndex) => {
       const dateBaseElm = svgElm?.querySelector(makeSelector(`day-${dateIndex}`)) as SVGRectElement;
+      const dayOfWeek = 0 < date ? (date - 1 + firstDayOfWeek) % 7 : -1;
+      const textColor = 0 < date ? dayOfWeekColors[dayOfWeek] : previousMonthDateColor;
+
       addSvgText(
         dateBaseElm,
         ""+Math.abs(date),
         {
-          textColor: 0 < date ? "rgb(0, 0, 0)" : "rgb(160, 160, 160)"
+          textColor: textColor
         }
       );
     });
@@ -263,6 +283,8 @@ function CalendarPreview({
   //                                   |  svgContainerElm  | ------+
   //                                   +-------------------+
 
+  const designInfo = useDesign(useShallow(designSelector(design)));
+
   // カレンダーを埋め込むコンテナ要素
   const [ svgContainerElm, setSvgContainerElm ] = useState<HTMLDivElement | null>(null);
   // カレンダーのsvg
@@ -276,7 +298,6 @@ function CalendarPreview({
   const { getImageData, saveImageData } = useImageBlock();
   // 画像ブロックの情報
   const [ imageBlocks, setImageBlocks ] = useState({} as {[key: string]: ImageBlockInfoType});
-
 
 console.log(calendarKey,Date.now(),{cachedCalendarTemplateElm,cachedCalendarElm,calendarElm,svgContainerElm,[`imageBlocks[data-${month}]`]:imageBlocks[`data-${month}`]});
 
@@ -321,7 +342,7 @@ console.warn(`${calendarKey} Loading the calendar template SVG`);
     let calendarElm_ = cachedCalendarTemplateElm.cloneNode(true) as SVGElement;
     // カレンダーを構築
     svgContainerElm.firstElementChild?.replaceWith(calendarElm_);
-    calendarElm_ = buildCalendar(calendarElm_, year, month);
+    calendarElm_ = buildCalendar(calendarElm_, year, month, designInfo);
     // 更新
     setCachedCalendarElm(design, year, month, calendarElm_);
 console.warn(`${calendarKey} Reflecting the month's content from the template`);

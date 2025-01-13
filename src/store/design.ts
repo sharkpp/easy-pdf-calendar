@@ -16,15 +16,20 @@ export type DesignInfoType = {
     cover?: string; // 表紙のテンプレートのSVGのパス
   };
   colors: {
-    date:           Color; // その他の日付の色
-    sundayDate?:    Color; // 日曜の日付の色
-    mondayDate?:    Color; // 月曜の日付の色
-    tuesdayDate?:   Color; // 火曜の日付の色
-    wednesdayDate?: Color; // 水曜の日付の色
-    thursdayDate?:  Color; // 木曜の日付の色
-    fridayDate?:    Color; // 金曜の日付の色
-    saturdayDate?:  Color; // 土曜の日付の色
-    holidayDate?:   Color; // 祝日の日付の色
+    date:                 Color; // その他の日付の色
+
+    sundayDate?:          Color; // 日曜の日付の色
+    mondayDate?:          Color; // 月曜の日付の色
+    tuesdayDate?:         Color; // 火曜の日付の色
+    wednesdayDate?:       Color; // 水曜の日付の色
+    thursdayDate?:        Color; // 木曜の日付の色
+    fridayDate?:          Color; // 金曜の日付の色
+    saturdayDate?:        Color; // 土曜の日付の色
+
+    holidayDate?:         Color; // 祝日の日付の色
+
+    previousMonthDate?:   Color; // 先月の日付の色
+    nextMonthDate?:       Color; // 来月の日付の色
   };
 }
 
