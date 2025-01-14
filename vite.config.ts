@@ -6,6 +6,8 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { resolve } from 'path';
 import { Dirent, readdirSync, readFileSync, writeFileSync } from 'fs';
 
+import getHolidaysJson from './tools/update-holiday-jp';
+
 type viteStaticCopyTargetType = {
   src: string;
   dest: string;
@@ -17,6 +19,9 @@ type designsResultType = {
   designsCopyList: viteStaticCopyTargetType[];
   designsIndexContent: { index: designsIndexItemType[] };
 }
+
+const HOLIDAYS_JSON_PATH = './holidays.json';
+await getHolidaysJson(HOLIDAYS_JSON_PATH);
 
 // カレンダーデザインの一覧を取得
 const DESIGNS_PATH = './designs';
