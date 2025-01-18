@@ -1,0 +1,17 @@
+{
+  "name":"シンプル３ 明色 画像付き",
+  "templates": {
+    "month": "main.svg"
+  },
+  "colors": {
+    "date":               "#000000",
+    "sundayDate":         "#FF0000",
+    "saturdayDate":       "#0066ff",
+    "holidayDate":        "#FF0000",
+    "previousMonthDate":  "#A0A0A0",
+    "nextMonthDate":      "#A0A0A0"
+  },
+  "config": {
+    "": ""
+  }
+}
