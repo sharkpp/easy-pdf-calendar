@@ -90,8 +90,9 @@ const makeSelector = (id: string) => `*[*|label^="${id}"]`;
 function addSvgText(
   baseElm: SVGRectElement,
   text: string,
-  { textColor,  }: {
+  { textColor, align = 'center' }: {
     textColor?: string,
+    align?: string
   }
 ): void {
   const fontSize = baseElm.height.baseVal.value;
@@ -110,7 +111,7 @@ display: inline;
 fill: ${textColor};
 fill-opacity: 1;
 stroke: none;
-dominant-baseline: alphabetic;"
+dominant-baseline: alphabetic;
       x="0"
       y="0"
     >${text}</text>
@@ -118,7 +119,17 @@ dominant-baseline: alphabetic;"
   const textElm: SVGTextElement | null = baseElm.ownerSVGElement?.lastElementChild as SVGTextElement;
   if (textElm) {
     const rect: SVGRect = textElm.getBBox();
-    textElm.setAttribute("x", "" + (baseElm.x.baseVal.value + baseElm.width.baseVal.value / 2 - rect.width / 2));
+    switch (align) {
+    case 'left':
+      textElm.setAttribute("x", "" + (baseElm.x.baseVal.value));
+      break;
+    case 'right':
+      textElm.setAttribute("x", "" + (baseElm.x.baseVal.value + baseElm.width.baseVal.value - rect.width));
+      break;
+    default:
+      textElm.setAttribute("x", "" + (baseElm.x.baseVal.value + baseElm.width.baseVal.value / 2 - rect.width / 2));
+      break;
+    }
     textElm.setAttribute("y", "" + (baseElm.y.baseVal.value + baseElm.height.baseVal.value));
   }
 }
@@ -235,12 +246,15 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
   // 日付を追加
   dateItems
     .forEach((date, dateIndex) => {
+      const holidayText = 0 < date ? (holidays[date] || false) : false;
+      let name;
+      // 日付を追加
       const dateBaseElm = svgElm?.querySelector(makeSelector(`day-${dateIndex}`)) as SVGRectElement;
       const dayOfWeek = 0 < date ? (date - 1 + firstDayOfWeek) % 7 : -1;
       const textColor = (
         date <= 0
           ? previousMonthDateColor
-          : (holidays[date]
+          : (holidayText
             ? holidayColor
             : dayOfWeekColors[dayOfWeek]
           ));
@@ -248,10 +262,27 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
       addSvgText(
         dateBaseElm,
         ""+Math.abs(date),
-        {
-          textColor: textColor
-        }
+        { textColor: textColor }
       );
+
+      // 祝日名を追加
+      const holidayBaseElm = svgElm?.querySelector(makeSelector(`holiday-${dateIndex}`)) as SVGRectElement;
+      if (holidayBaseElm && holidayText) {
+        name = (holidayBaseElm.getAttribute('inkscape:label') || '');
+        // format
+        const [ _, kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', ''];
+        const formats = formats_.split(',');
+        const align = (
+          0<=formats.indexOf('left') ? 'left' :
+          0<=formats.indexOf('right')? 'right' :
+          'center'
+        );
+        addSvgText(
+          holidayBaseElm,
+          holidayText,
+          { textColor: holidayColor, align }
+        );
+      }
     });
 
   return svgElm;
@@ -306,7 +337,7 @@ function CalendarPreview({
   // 画像ブロックの情報
   const [ imageBlocks, setImageBlocks ] = useState({} as {[key: string]: ImageBlockInfoType});
 
-console.log(calendarKey,Date.now(),{cachedCalendarTemplateElm,cachedCalendarElm,calendarElm,svgContainerElm,[`imageBlocks[data-${month}]`]:imageBlocks[`data-${month}`]});
+//console.log(calendarKey,Date.now(),{cachedCalendarTemplateElm,cachedCalendarElm,calendarElm,svgContainerElm,[`imageBlocks[data-${month}]`]:imageBlocks[`data-${month}`]});
 
   // コンテナ要素を取得
   const refSvgContainer = useMemo(() => {
@@ -315,7 +346,7 @@ console.log(calendarKey,Date.now(),{cachedCalendarTemplateElm,cachedCalendarElm,
         return;
       }
       setSvgContainerElm(svgContainer);
-console.warn(`${calendarKey} Obtaining container element`)
+//console.warn(`${calendarKey} Obtaining container element`)
     };
   }, []);
 
@@ -336,7 +367,7 @@ console.warn(`${calendarKey} Obtaining container element`)
         calendarElm_.removeAttribute('height');
         // 更新
         setCachedCalendarElm(design, calendarElm_);
-console.warn(`${calendarKey} Loading the calendar template SVG`);
+//console.warn(`${calendarKey} Loading the calendar template SVG`);
       });
   }, [cachedCalendarTemplateElm]);
 
@@ -352,7 +383,7 @@ console.warn(`${calendarKey} Loading the calendar template SVG`);
     calendarElm_ = buildCalendar(calendarElm_, year, month, designInfo, holidays);
     // 更新
     setCachedCalendarElm(design, year, month, calendarElm_);
-console.warn(`${calendarKey} Reflecting the month's content from the template`);
+//console.warn(`${calendarKey} Reflecting the month's content from the template`);
   }, [cachedCalendarTemplateElm, svgContainerElm, designInfo]);
 
   // 画像埋め込み枠を列挙
@@ -408,7 +439,7 @@ console.warn(`${calendarKey} Reflecting the month's content from the template`);
       }));
     }
 
-console.warn(`${calendarKey} Enumerating image embedding frames`);
+//console.warn(`${calendarKey} Enumerating image embedding frames`);
   }, [cachedCalendarElm, svgContainerElm]);
 
   // 画像データの読み込み
@@ -418,10 +449,10 @@ console.warn(`${calendarKey} Enumerating image embedding frames`);
       if (false !== imageBlock.state) {
         return;
       }
-console.warn(`${calendarKey} Loading image data`);
+//console.warn(`${calendarKey} Loading image data`);
       getImageData(imageBlock.name)
       .then((imageBlockData) => {
-console.warn(`${calendarKey} Loaded image data`,{imageBlocks,imageBlockData});
+//console.warn(`${calendarKey} Loaded image data`,{imageBlocks,imageBlockData});
         setImageBlocks(updateImageBlock(imageBlock.name, {
           state: imageBlockData
         }));
