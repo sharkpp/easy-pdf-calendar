@@ -1,3 +1,5 @@
+// 内閣府の「国民の祝日」についてからJSONを生成
+// Mapで利用できるように [ [ key, value ], ... ] の形式にする
 'use strict'
 
 import iconv from 'iconv-lite';
@@ -5,6 +7,7 @@ import fs from 'node:fs/promises';
 import https from 'node:https';
 import { fileURLToPath } from 'url';
 
+// https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html
 const CSV_URL = 'https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv';
 
 async function https_get(url) {
@@ -36,7 +39,7 @@ async function main(outpath) {
     const holidayCsvSJIS = await https_get(CSV_URL);
     const holidayCsv = iconv.decode(holidayCsvSJIS, 'sjis');
 
-    let holidays = {};
+    let holidays = [];
 
     // CSVをSONに変換
     holidayCsv
@@ -45,9 +48,10 @@ async function main(outpath) {
       .forEach((csvLine) => {
         const [, year, month, date, name] = /^([0-9]+)\/([0-9]+)\/([0-9]+),(.+)$/.exec(csvLine) || [];
         if (year && month && date && name) {
-          holidays[year] = holidays[year] || {};
-          holidays[year][month] = holidays[year][month] || {};
-          holidays[year][month][date] = name;
+          holidays.push([
+            `${("0000"+year).substr(-4)}/${("00"+month).substr(-2)}/${("00"+date).substr(-2)}`,
+            { date:+date, name }
+          ]);
         }
       })
 

@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import legacy from '@vitejs/plugin-legacy';
 import { resolve } from 'path';
 import { Dirent, readdirSync, readFileSync, writeFileSync } from 'fs';
 
@@ -71,6 +72,9 @@ export default defineConfig({
         },
         ...designsCopyList
       ],
+    }),
+    legacy({
+      targets: ['defaults', 'not IE 11'],
     }),
   ],
 })
