@@ -246,6 +246,21 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
   // 日付を追加
   dateItems
     .forEach((date, dateIndex) => {
+      if (date < -15) { // 前月
+        if (designInfo.options?.disablePreviousMonthDate) {
+          return;
+        }
+      }
+      else if (date < 0) { // 次月
+        if (designInfo.options?.disableNextMonthDate) {
+          return;
+        }
+      }
+      else {
+        if (designInfo.options?.disablePreviousMonthDate) {
+          dateIndex -= firstDayOfWeek;
+        }
+      }
       const holidayText = 0 < date ? (holidays[date] || false) : false;
       let name;
       // 日付を追加

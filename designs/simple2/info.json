@@ -11,7 +11,6 @@
     "previousMonthDate":  "#A0A0A0",
     "nextMonthDate":      "#A0A0A0"
   },
-  "config": {
-    "": ""
+  "options": {
   }
 }
