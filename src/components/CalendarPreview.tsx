@@ -498,18 +498,28 @@ function CalendarPreview({
 
         if (imageBlock.rectBySVG) {
           const imageElm = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+          let imageUrl = '';
+          if (imageBlock.state) {
+            if (imageBlock.state.croppedImageUrl) {
+              imageUrl = (
+                imageBlock.state.croppedImageUrl
+                  + '#.' + (imageBlock.state.croppedImage?.type.split('/')[1] || '')
+              );
+            }
+            else if (imageBlock.state.imageUrl) {
+              imageUrl = (
+                imageBlock.state.imageUrl
+                  + '#.' + (imageBlock.state.image.type.split('/')[1] || '')
+              );
+            }
+          }
           imageElm.setAttribute('id', `image-${imageBlock.name}`);
           imageElm.setAttribute('x', ''+imageBlock.rectBySVG.x);
           imageElm.setAttribute('y', ''+imageBlock.rectBySVG.y);
           imageElm.setAttribute('width', ''+imageBlock.rectBySVG.width);
           imageElm.setAttribute('height', ''+imageBlock.rectBySVG.height);
           imageElm.setAttribute('preserveAspectRatio', 'none');
-          imageElm.setAttributeNS(
-            'http://www.w3.org/1999/xlink',
-            'xlink:href',
-            imageBlock.state ? (imageBlock.state.croppedImageUrl || imageBlock.state.imageUrl || '') : ''
-            //'https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png'
-          );
+          imageElm.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', imageUrl);
           // imageElm.addEventListener('click', () => {
           //   console.error("**");
           // });
@@ -525,7 +535,7 @@ function CalendarPreview({
     // カレンダーを更新
     setCalendarElm(calendarElm_ as SVGElement);
     setCachedCalendarElm(design, year, month, calendarElm_);
-    console.warn(`${calendarKey} Combining calendar SVG with images`, {imageBlocks});
+    //console.warn(`${calendarKey} Combining calendar SVG with images`, {imageBlocks});
   }, [cachedCalendarElm, imageBlocks, blankImage]);
 
   // カレンダーをコンテナに追加し表示を更新
@@ -534,7 +544,7 @@ function CalendarPreview({
       return;
     }
     svgContainerElm.firstElementChild?.replaceWith(calendarElm);
-    console.warn(`${calendarKey} Updating and displaying the calendar in the container`);
+    //console.warn(`${calendarKey} Updating and displaying the calendar in the container`);
   }, [calendarElm, svgContainerElm]);
 
   return (
@@ -567,7 +577,7 @@ function CalendarPreview({
         else if (imageBlock.state) { imageBlockType = 'image'; }
         else                     { imageBlockType = 'dropzone'; }
 
-        console.log(calendarKey,{imageBlock,imageBlockType});
+        //console.log(calendarKey,{imageBlock,imageBlockType});
 
         switch (imageBlockType)
         {
@@ -585,17 +595,17 @@ function CalendarPreview({
               key={`image-block-${imageBlock.name}-image`}
               css={imageBlock.cssStyle}
               onClick={() => {
-                console.log(calendarKey,{imageBlock});
+                //console.log(calendarKey,{imageBlock});
                 setImageBlocks(updateImageBlock(imageBlock.name, {
                   openCropper: true
                 }));
               }}
             />
-            <PopupImageCropper
+            {!blankImage && !readonly && <PopupImageCropper
               key={`image-block-${imageBlock.name}-cropper-popup`}
               open={imageBlock.openCropper}
               onOpenChange={(open) => {
-                console.log({imageBlock,open});
+                //console.log({imageBlock,open});
                 setImageBlocks(updateImageBlock(imageBlock.name, {
                   openCropper: open
                 }));
@@ -603,7 +613,7 @@ function CalendarPreview({
               image={imageBlock.state ? imageBlock.state.imageUrl || '' : ''}
               cropState={imageBlock.state ? imageBlock.state.cropState : undefined}
               onCropApply={(croppedImage, cropState) => {
-                console.log("onCropApply",{croppedImage,cropState});
+                //console.log("onCropApply",{croppedImage,cropState});
                 if (!croppedImage) {
                   saveImageData(imageBlock.name, null)
                     .then(() => {
@@ -628,9 +638,12 @@ function CalendarPreview({
                 }
               }}
               aspectRatio={imageBlock.rectByPixel.width / imageBlock.rectByPixel.height}
-            />
+            />}
           </>);
         case 'dropzone':
+          if (blankImage || readonly) {
+            return <div />;
+          }
           return (
             <DropZone
               key={`image-block-${imageBlock.name}-dropzone`}
@@ -642,7 +655,7 @@ function CalendarPreview({
                   console.log(calendarKey,{'event.target.result':event.target?.result,openCropper:imageBlock.openCropper});
                   if (event.target?.result && event.target?.result.constructor  === ArrayBuffer) {
                     saveImageData(imageBlock.name, {
-                      image: new Blob([event.target?.result]),
+                      image: new Blob([event.target?.result], { type: file.type }),
                     })
                       .then((imageBlockData) => {
                         setImageBlocks(updateImageBlock(imageBlock.name, {
