@@ -124,7 +124,7 @@ function CalanderDesignPreview({
           className="month-n1" width="100%" padding="4" color="white"
           onClick={() => (month+1<=12&&onChangeMonth&&onChangeMonth(month+1))}
         >
-        {month+1<=12&&<CalendarPreview
+          {month+1<=12&&<CalendarPreview
             key={`${design}-${year}-${month+1}-preview`}
             //cssStyle={css`width: 80%;`}
             design={design}

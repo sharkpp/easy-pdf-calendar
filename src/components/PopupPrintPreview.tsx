@@ -83,7 +83,8 @@ function PopupPrintPreview({
               doc.addPage(PageSize.B6JIS, 'l');
             }
             // カレンダーのSVGを取得
-            calendarOfMonth = getCalendar(design, year, month);console.log({calendarOfMonth})
+            calendarOfMonth = getCalendar(design, year, month);
+            //console.log({calendarOfMonth})
             // SVGをPDFに変換
             if (calendarOfMonth) {
               await doc.svg(calendarOfMonth as Element);

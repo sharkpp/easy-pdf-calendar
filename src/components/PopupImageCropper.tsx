@@ -49,7 +49,8 @@ function PopupImageCropper({
 }: PopupImageCropperProps) {
 
   const colorMode = useColorMode().colorMode as 'dark' | 'light' | undefined;
-  //console.log(colorMode)
+  
+  //console.log({image,cropState,aspectRatio,open})
 
   useEffect(() => {
     if (cropState) {
@@ -60,7 +61,7 @@ function PopupImageCropper({
   const cropperRef = useRef<CropperRef>(null);
 
   const onChange = (cropper: CropperRef) => {
-    //console.log(cropper.getCoordinates(), cropper.getCanvas());
+    console.log(cropper.getCoordinates(), cropper.getCanvas());
   };
 
   return (
@@ -89,7 +90,7 @@ function PopupImageCropper({
           <Cropper
             ref={cropperRef}
             src={image}
-            onChange={onChange}
+            //onChange={onChange}
             css={css`
                 /*height: 200px;*/
                 max-height: 100%;
@@ -97,6 +98,22 @@ function PopupImageCropper({
             stencilProps={{
               aspectRatio: aspectRatio,
             }}
+
+// onChange={(cropper)=>console.log('onChange',{cropper,'status':cropper.getState()})}
+// onUpdate={(cropper)=>console.log('onUpdate',{cropper,'status':cropper.getState()})}
+// onReady={(cropper)=>console.log('onReady',{cropper,'status':cropper.getState()})}
+// onError={(cropper)=>console.log('onError',{cropper,'status':cropper.getState()})}
+// onTransitionsStart={(cropper)=>console.log('onTransitionsStart',{cropper,'status':cropper.getState()})}
+// onTransitionsEnd={(cropper)=>console.log('onTransitionsEnd',{cropper,'status':cropper.getState()})}
+// onResize={(cropper)=>console.log('onResize',{cropper,'status':cropper.getState()})}
+// onResizeEnd={(cropper)=>console.log('onResizeEnd',{cropper,'status':cropper.getState()})}
+// onMove={(cropper)=>console.log('onMove',{cropper,'status':cropper.getState()})}
+// onMoveEnd={(cropper)=>console.log('onMoveEnd',{cropper,'status':cropper.getState()})}
+// onTransformImage={(cropper)=>console.log('onTransformImage',{cropper,'status':cropper.getState()})}
+// onTransformImageEnd={(cropper)=>console.log('onTransformImageEnd',{cropper,'status':cropper.getState()})}
+// onInteractionStart={(cropper)=>console.log('onInteractionStart',{cropper,'status':cropper.getState()})}
+// onInteractionEnd={(cropper)=>console.log('onInteractionEnd',{cropper,'status':cropper.getState()})}
+
             // defaultPosition={cropState?.boundary}
             // //defaultSize={cropState?.boundary}
             // defaultVisibleArea={cropState?.visibleArea || undefined}
