@@ -16,24 +16,22 @@ const cssStyle = css`
   --shadow-color: rgba(0, 0, 0, 0.1); /* シャドウの色 */
 
   /* 全体のスタイル */
-  .calendar-spinner {
-    width: 120px;
-    height: 140px;
-    border: 2px solid var(--border-color);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background-color: var(--bg-color);
-    box-shadow: 0 4px 8px var(--shadow-color);
-  }
+  width: 120px;
+  height: 116px;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: var(--bg-color);
+  box-shadow: 0 4px 8px var(--shadow-color);
 
   /* カレンダーのヘッダー部分 */
   .calendar-header {
     width: 100%;
-    height: 16px;
+    height: max(16px, 20%);
     background-color: var(--header-color);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -42,7 +40,7 @@ const cssStyle = css`
   /* 日付部分の配置 */
   .calendar-dates {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 5px;
     padding: 5px;
     width: 100%;
@@ -55,8 +53,6 @@ const cssStyle = css`
 
   /* 各日付セル */
   .calendar-dates > div {
-    width: 15px;
-    height: 15px;
     background-color: var(--date-color);
     border-radius: 4px;
     animation: blink 1.5s infinite ease-in-out;
@@ -73,16 +69,18 @@ const cssStyle = css`
   }
 
   /* 各日付セルのアニメーション遅延 */
-  .calendar-dates > div:nth-of-type(1) { animation-delay: 0s; }
-  .calendar-dates > div:nth-of-type(2) { animation-delay: 0.2s; }
-  .calendar-dates > div:nth-of-type(3) { animation-delay: 0.4s; }
+  .calendar-dates > div:nth-of-type(1) { animation-delay: 0.3s; }
+  .calendar-dates > div:nth-of-type(2) { animation-delay: 0.5s; }
+  .calendar-dates > div:nth-of-type(3) { animation-delay: 1.1s; }
   .calendar-dates > div:nth-of-type(4) { animation-delay: 0.6s; }
-  .calendar-dates > div:nth-of-type(5) { animation-delay: 0.8s; }
-  .calendar-dates > div:nth-of-type(6) { animation-delay: 1s; }
-  .calendar-dates > div:nth-of-type(7) { animation-delay: 1.2s; }
+  .calendar-dates > div:nth-of-type(5) { animation-delay: 1.7s; }
+  .calendar-dates > div:nth-of-type(6) { animation-delay: 0.9s; }
+  .calendar-dates > div:nth-of-type(7) { animation-delay: 0.4s; }
   .calendar-dates > div:nth-of-type(8) { animation-delay: 1.4s; }
-  .calendar-dates > div:nth-of-type(9) { animation-delay: 1.6s; }
-
+  .calendar-dates > div:nth-of-type(9) { animation-delay: 1.3s; }
+  .calendar-dates > div:nth-of-type(10){ animation-delay: 0.2s; }
+  .calendar-dates > div:nth-of-type(12){ animation-delay: 0.7s; }
+  .calendar-dates > div:nth-of-type(12){ animation-delay: 0.8s; }
 `;
 
 function Spinner({
@@ -92,6 +90,9 @@ function Spinner({
     <div css={cssStyle}>
       <div className="calendar-header"></div>
       <div className="calendar-dates">
+        <div />
+        <div />
+        <div />
         <div />
         <div />
         <div />

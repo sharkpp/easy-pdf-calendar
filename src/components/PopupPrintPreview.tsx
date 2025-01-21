@@ -11,7 +11,17 @@ import {
   DialogRoot as Dialog,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@chakra-ui/react"
+import { Button, Stack, Fieldset } from "@chakra-ui/react"
+import { createListCollection } from "@chakra-ui/react"
+import {
+  SelectContent,
+  SelectItem,
+  SelectLabel,
+  SelectRoot,
+  SelectTrigger,
+  SelectValueText,
+} from "@/components/ui/select"
+import { Field } from "@/components/ui/field"
 import { OpenChangeDetails } from '@zag-js/dialog';
 import { jsPDF } from 'jspdf';
 import 'svg2pdf.js';
@@ -28,9 +38,70 @@ type PopupImageCropperProps = {
   onOpenChange: (open: boolean) => void;
 }
 
+const printSizes = createListCollection({
+  items: [
+    { label: "A4 (２ヶ月分を１枚にまとめます)", value: "A4" },
+    { label: "B6 JIS", value: "B6JIS" },
+  ],
+});
+
 const MS24H = 24 * 60 * 60 * 1000;
 
 const MONTH_LIST = new Array(12).fill(0).map((_, i: number) => i + 1);
+
+const cssStyles = css`
+
+height: 100%;
+
+.chakra-dialog__title {
+  > * {
+    display: inline-block;
+  }
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chakra-dialog__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chakra-dialog__body > .pdf-preview {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-grow: 1;
+
+  > .spinner-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  > iframe {
+    width: 100%;
+    flex-grow: 1;
+    height: 100%;
+  }
+
+  > .svg-pdf-temp {
+    display: flex;
+    display: none;
+    & svg {
+      width: 320px;
+    }
+  }
+}
+`;
+
 
 function getSVGLenByMM(n: SVGAnimatedLength) {
   const tmp = n.baseVal;
@@ -110,74 +181,58 @@ function PopupPrintPreview({
       motionPreset="slide-in-bottom"
     >
       <DialogContent
-        css={css`
-          .chakra-dialog__body {
-            position: relative;
-            height:     calc(100% - 1.75rem - var(--chakra-spacing-6) - var(--chakra-spacing-4));
-            max-height: calc(100% - 1.75rem - var(--chakra-spacing-6) - var(--chakra-spacing-4));
-          }
-        `}
+        css={cssStyles}
       >
         <DialogHeader>
-          <DialogTitle
-            css={css`
-              > * {
-                display: inline-block;
-              }
-                display: flex;
-                gap: 0.5rem;
-            `}>
+          <DialogTitle>
             <PrinterIcon /> 
             カレンダーの印刷
           </DialogTitle>
           <DialogCloseTrigger />
         </DialogHeader>
-        <DialogBody
-          css={css`
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            & > iframe {
-              flex-grow: 1;
-              width: 100%;
-              height: 100%;
-            }
-          `}
-        >
+        <DialogBody>
 
-          <div
-            css={css`
-              visibility: ${!pdfVisible?'visible':'hidden'};
-              position: absolute;
-              top: var(--chakra-spacing-2);
-              left: 0px;
-              width: 100%;
-              height: calc(100% - var(--chakra-sizes-10) - var(--chakra-spacing-2) * 2 - 1rem * 2);
-              display: flex;
-              justify-content: space-evenly;
-              align-items: center;
-            `}
-          >
-            <Spinner />
-          </div>
-          
-          <iframe
-            ref={refPdf}
-            css={css`
-              visibility: ${pdfVisible?'visible':'hidden'};
-            `}
-          />
+          <Fieldset.Root size="lg" maxW="md">
+            <Stack>
+              <Field orientation="horizontal" label="印刷サイズ">
+                <SelectRoot collection={printSizes} size="sm" width="320px">
+                  <SelectTrigger>
+                    <SelectValueText placeholder="印刷サイズを選択してください" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {printSizes.items.map((printSize) => (
+                      <SelectItem item={printSize} key={printSize.value}>
+                        {printSize.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </SelectRoot>
+              </Field>
+            </Stack>
+          </Fieldset.Root>
 
-          <div
-            ref={refContener}
-            css={css`
-                display: flex;
-                display: none;
-                & svg {
-                  width: 320px;
-                }
+          <div className="pdf-preview">
+
+            <div
+              className="spinner-container"
+              css={css` visibility: ${!pdfVisible?'visible':'hidden'}; `}
+            >
+              <Spinner />
+            </div>
+            
+            <iframe
+              ref={refPdf}
+              css={css`
+                visibility: ${pdfVisible?'visible':'hidden'};
               `}
-          />
+            />
+
+            <div // svgからPDFへのレンダリング用
+              className="svg-pdf-temp"
+              ref={refContener}
+            />
+            
+          </div>
 
           <Button
             alignSelf="stretch"
