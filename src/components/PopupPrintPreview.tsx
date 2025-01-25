@@ -47,7 +47,9 @@ const MONTH_LIST = new Array(12).fill(0).map((_, i: number) => i + 1);
 
 const cssStyles = css`
 
+/* .chakra-dialog__content */
 height: 100%;
+overflow: hidden;
 
 .chakra-dialog__title {
   > * {
@@ -111,7 +113,7 @@ const makeSelector = (id: string) => `*[*|label^="${id}"]`;
 
 // PDF構築
 async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: Font[], designInfo: DesignInfoType, pageLayout: any, layoutSvgElm: SVGElement | null): Promise<{ workId: string, pdfContent: string }> {
-console.log({calendars,fonts,designInfo,pageLayout,layoutSvgElm,size:PageSize[pageLayout.size]});
+  //console.log({calendars,fonts,designInfo,pageLayout,layoutSvgElm,size:PageSize[pageLayout.size]});
   const pageSizeMM = PageSize[pageLayout.size];
   if (!pageSizeMM) {
     return { workId, pdfContent: "" };
@@ -246,7 +248,7 @@ function PopupPrintPreview({
         const calendars = new Array(12).fill(0).map((_, i) => (
           getCalendar(design, year, i+1)
         ));
-        console.log({calendars})
+        //console.log({calendars})
         div.replaceChildren.apply(div, calendars as Node[]);
       }
     };
