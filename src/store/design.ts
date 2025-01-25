@@ -10,6 +10,10 @@ type Color = RGB | RGBA | HEX;
 export type DesignInfoType = {
   id: string;
   name: string;
+  layout: {
+    orientation: "landscape" | "portrait";
+    size: "A4" | "A5" | "A6" | "B6JIS" | "Postcard" | "L" | "2L";
+  };
   templates: {
     month: string; // 月のテンプレートのSVGのパス
     year?: string; // 年間のテンプレートのSVGのパス

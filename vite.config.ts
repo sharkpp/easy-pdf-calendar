@@ -70,6 +70,10 @@ export default defineConfig({
           src: normalizePath(resolve(__dirname, './fonts') + "/*.ttf"),
           dest: 'assets/fonts'
         },
+        {
+          src: normalizePath(resolve(__dirname, './layouts') + "/*.svg"),
+          dest: 'assets/layouts'
+        },
         ...designsCopyList
       ],
     }),

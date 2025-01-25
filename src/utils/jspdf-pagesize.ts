@@ -1,21 +1,32 @@
+// jsPDF用のページサイズの定数定義
 
 export type PageSizeType = [number, number];
 
-const makePageSize = (w: number, h: number): PageSizeType => [
-  w,// /25.4*72,
-  h,// /25.4*72,
-];
-
+// ページサイズ(単位はmm)
 export const PageSize: { [key:  string]: PageSizeType } = {
-  B0JIS: makePageSize(1030,1456),
-  B1JIS: makePageSize( 728,1030),
-  B2JIS: makePageSize( 515, 728),
-  B3JIS: makePageSize( 364, 515),
-  B4JIS: makePageSize( 257, 364),
-  B5JIS: makePageSize( 182, 257),
-  B6JIS: makePageSize( 128, 182),
-  B7JIS: makePageSize(  91, 128),
-  B8JIS: makePageSize(  64,  91),
-  B9JIS: makePageSize(  45,  64),
-  B10JIS:makePageSize(  32,  45),
+  // A判
+  A0:  [ 841, 1189 ],
+  A1:  [ 594,  841 ],
+  A2:  [ 420,  594 ],
+  A3:  [ 297,  420 ],
+  A4:  [ 210,  297 ],
+  A5:  [ 148,  210 ],
+  A6:  [ 105,  148 ],
+  A7:  [  74,  105 ],
+  A8:  [  52,   74 ],
+  A9:  [  52,   37 ],
+  A10: [  37,   26 ],
+  // JIS B判
+  B0JIS: [ 1030, 1456 ],
+  B1JIS: [  728, 1030 ],
+  B2JIS: [  515,  728 ],
+  B3JIS: [  364,  515 ],
+  B4JIS: [  257,  364 ],
+  B5JIS: [  182,  257 ],
+  B6JIS: [  128,  182 ],
+  B7JIS: [   91,  128 ],
+  B8JIS: [   64,   91 ],
+  B9JIS: [   45,   64 ],
+  B10JIS:[   32,   45 ],
+
 } as const;

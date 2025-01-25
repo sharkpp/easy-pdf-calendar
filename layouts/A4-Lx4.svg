@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="A4-L.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.49575348"
+     inkscape:cx="370.14365"
+     inkscape:cy="702.97036"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
+     inkscape:window-y="353"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2"
+     showgrid="false" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="layouts"
+     inkscape:groupmode="layer"
+     id="layer1"
+     sodipodi:insensitive="true"
+     style="display:none">
+    <rect
+       style="fill:#ffaaaa;stroke-width:0.529167;stroke-linejoin:round;paint-order:stroke fill markers"
+       id="rect1"
+       width="89"
+       height="127"
+       x="11"
+       y="15"
+       inkscape:label="1" />
+    <rect
+       style="fill:#aafff7;fill-opacity:1;stroke-width:0.529167;stroke-linejoin:round;paint-order:stroke fill markers"
+       id="rect2"
+       width="89"
+       height="127"
+       x="11"
+       y="155"
+       inkscape:label="2" />
+    <rect
+       style="fill:#aaffba;fill-opacity:1;stroke-width:0.529167;stroke-linejoin:round;paint-order:stroke fill markers"
+       id="rect1-2"
+       width="89"
+       height="127"
+       x="110"
+       y="15"
+       inkscape:label="3" />
+    <rect
+       style="fill:#ffe3aa;fill-opacity:1;stroke-width:0.529167;stroke-linejoin:round;paint-order:stroke fill markers"
+       id="rect2-4"
+       width="89"
+       height="127"
+       x="110"
+       y="155"
+       inkscape:label="4" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="tombo">
+    <path
+       id="path1-4-2-5-5-4"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 105.5,285 h 4.5 v 7 m -4.5,-10 h 1.49999 v 10 M 104.5,285 H 100 v 7 m 4.5,-10 h -1.49999 v 10 M 105.5,152.00004 H 110 V 149 m -4.5,6.00006 h 1.49999 V 149 M 104.5,152.00004 H 100 V 149 m 4.5,6.00006 h -1.49999 V 149 M 209,285 h -10 v 7 m 10,-10 h -7 v 10 M 1,285 h 9.999999 v 7 M 1,282 h 7 v 10 M 209,152.00004 H 199 V 149 m 10,6.00006 h -7 V 149 M 1,152.00004 H 11 V 149 M 1,155.00006 H 8 V 149 m 97.5,-4 h 4.5 v 3 m -4.5,-6 h 1.49999 v 6 M 104.5,145 H 100 v 3 m 4.5,-6 h -1.49999 v 6 M 105.5,11.999999 H 110 V 5 m -4.5,9.999999 h 1.49999 V 5 M 104.5,11.999999 H 100 V 5 m 4.5,9.999999 h -1.49999 V 5 M 209,145 h -10 v 3 m 10,-6 h -7 v 6 M 1,145 h 9.999999 v 3 M 1,142 h 7 v 6 M 209,12.000001 H 199 V 5 m 10,10.000001 h -7 V 5 M 1,12 H 11 V 5 M 1,15 H 8 V 5"
+       inkscape:label="corner" />
+    <path
+       id="path2-4-8-3-4-0"
+       style="fill:none;stroke:#000000;stroke-width:0.0999998;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 132.25,289.5 h 44.5 m -143.5,0 h 44.5 m 54.5,-141 h 44.5 m -121.25,-2 v 4 m 99,-4 v 4 M 55.5,5.4999999 v 4 m 99,-4 v 4 M 154.5,287.5 v 4 m -99,-4 v 4 m -52,-73 h 4 m 195.1,0 h 4 M 3.5,78.500001 h 4 m 195.1,0 h 4 m -103.6,0 h 4 M 103,218.5 h 4 m -73.75,-70 h 44.5 M 132.25,7.4999999 h 44.5 m -143.5,0 h 44.5 M 204.6,186.74985 v 63.5003 M 105,186.74985 v 63.5003 M 5.5,186.74985 v 63.5003 M 204.6,46.750002 V 110.25 M 105,46.750006 V 110.25 M 5.5,46.750001 V 110.25"
+       inkscape:label="center" />
+  </g>
+</svg>

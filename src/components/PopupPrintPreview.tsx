@@ -1,6 +1,6 @@
 // 印刷プレビュー画面
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { Printer as PrinterIcon } from 'lucide-react';
 import {
@@ -26,9 +26,14 @@ import { OpenChangeDetails } from '@zag-js/dialog';
 import { jsPDF } from 'jspdf';
 import 'svg2pdf.js';
 import { PageSize } from '@/utils/jspdf-pagesize';
-import { useFont } from '@/hooks/jspdf-usefont';
+import { useFont, Font } from '@/hooks/jspdf-usefont';
+import { PRINT_LAYOUT_BASE_PATH } from '@/common';
 import { useCalendar } from '@/store/calendar';
 import Spinner from '@/components/Spinner';
+import PrintSizeList from '@/../layouts/info.json';
+//import type { LayoutsInfoItem } from '@/../layouts/info.json';
+import { DesignInfoType, designSelector, useDesign } from '@/store/design';
+import { useShallow } from 'zustand/react/shallow';
 
 // 画像切り取りポップアップのプロパティの型
 type PopupImageCropperProps = {
@@ -37,15 +42,6 @@ type PopupImageCropperProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
-
-const printSizes = createListCollection({
-  items: [
-    { label: "A4 (２ヶ月分を１枚にまとめます)", value: "A4" },
-    { label: "B6 JIS", value: "B6JIS" },
-  ],
-});
-
-const MS24H = 24 * 60 * 60 * 1000;
 
 const MONTH_LIST = new Array(12).fill(0).map((_, i: number) => i + 1);
 
@@ -92,11 +88,11 @@ height: 100%;
     height: 100%;
   }
 
-  > .svg-pdf-temp {
-    display: flex;
-    display: none;
+  > .svg-pdf-temp,
+  > .svg-layout-temp {
+    width: 0px;
+    height: 0px;
     & svg {
-      width: 320px;
     }
   }
 }
@@ -107,6 +103,103 @@ function getSVGLenByMM(n: SVGAnimatedLength) {
   const tmp = n.baseVal;
   tmp.convertToSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_MM);
   return tmp.valueInSpecifiedUnits;
+}
+
+// Is it possible to use HTML's .querySelector() to select by xlink attribute in an SVG?
+// >> https://stackoverflow.com/questions/23034283/
+const makeSelector = (id: string) => `*[*|label^="${id}"]`;
+
+// PDF構築
+async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: Font[], designInfo: DesignInfoType, pageLayout: any, layoutSvgElm: SVGElement | null): Promise<{ workId: string, pdfContent: string }> {
+console.log({calendars,fonts,designInfo,pageLayout,layoutSvgElm,size:PageSize[pageLayout.size]});
+  const pageSizeMM = PageSize[pageLayout.size];
+  if (!pageSizeMM) {
+    return { workId, pdfContent: "" };
+  }
+
+  // PDFドキュメントを準備
+  const doc = new jsPDF({
+    unit: 'mm',
+    orientation: 'landscape' === pageLayout.orientation ? 'l' : 'p',
+    format: pageSizeMM,
+  });
+
+  // フォントをインストール
+  for await (const font of fonts) {
+    await font.install(doc);
+    doc.setFont(font.name);
+  }
+
+  const pageRect = layoutSvgElm?.getBoundingClientRect();
+
+  let layoutElmAndMetrics = [];
+  for (let j = 0; j < pageLayout.blockNum; ++j) {
+    const elm = layoutSvgElm?.querySelector(makeSelector('layout-'+j)) as (Element | null);
+    const rect = elm&&elm.getBoundingClientRect();
+    layoutElmAndMetrics.push({
+      elm,
+      rect: {
+        x:      rect&&pageRect&&(rect.x - pageRect.x) || 0,
+        y:      rect&&pageRect&&(rect.y - pageRect.y) || 0,
+        width:  rect&&(rect.width)  || 0,
+        height: rect&&(rect.height) || 0,
+      }
+    });
+    //console.log(">>",elm,elm&&(elm as SVGGraphicsElement).getBBox(),elm&&elm.getBoundingClientRect(),layoutSvgElm?.parentElement);
+  }
+
+  let pageContents = [];
+  for (let i = 0; i < 12;) {
+    let pageContents_ = [];
+    for (let j = 0; i < 12 && j < pageLayout.blockNum; ++j, ++i) {
+      pageContents_.push(calendars[i]);
+    }
+    pageContents.push(pageContents_);
+  }
+
+  // カレンダーを取得
+  let pageIndex = 1;
+  for await (const pageContent of pageContents) {
+    if (1 < pageIndex) { // 最初のみページを追加しない
+      doc.addPage();
+    }
+
+    if (layoutSvgElm) {
+      await doc.svg(
+        layoutSvgElm as Element
+      );
+    }
+
+    let layoutIndex = 0;
+    for await (const calendarOfMonth of pageContent) {
+      if (!calendarOfMonth) {
+        continue;
+      }
+      const { rect: layoutRect } = layoutElmAndMetrics[layoutIndex];
+      // SVGをPDFに変換
+      if (!layoutSvgElm || !layoutRect || !pageRect) {
+        await doc.svg(calendarOfMonth as Element);
+      }
+      else {
+        await doc.svg(
+          calendarOfMonth as Element, {
+            x:      (layoutRect.x      * (pageSizeMM[0] / pageRect.width )),
+            y:      (layoutRect.y      * (pageSizeMM[1] / pageRect.height)),
+            width:  (layoutRect.width  * (pageSizeMM[0] / pageRect.width )),
+            height: (layoutRect.height * (pageSizeMM[1] / pageRect.height)),
+          }
+        );
+      }
+      layoutIndex++;
+    }
+
+    pageIndex++;
+  }
+
+  return {
+    workId,
+    pdfContent: doc.output('bloburi').toString()
+  };
 }
 
 function PopupPrintPreview({
@@ -122,6 +215,31 @@ function PopupPrintPreview({
   //const colorMode = useColorMode().colorMode as 'dark' | 'light' | undefined;
   //console.log(colorMode)
 
+  const designInfo = useDesign(useShallow(designSelector(design)));
+
+  const [pageLayoutIndex, setPageLayoutIndex] = useState<number[]>([0]);
+
+  const printSizeList = useMemo(() => {
+    if (!designInfo) {
+      return [];
+    }
+    return PrintSizeList[designInfo.layout.size][designInfo.layout.orientation];
+  }, [designInfo]);
+
+  const pageLayoutIndexList = useMemo(() => {
+    //setPageLayoutIndex([0]); // 初期選択
+    return createListCollection({
+      items: printSizeList.map((sizeInfo: { name: any; }, i: any) => ({
+                    label: sizeInfo.name,
+                    value: i,
+                  }))
+    });
+  }, [designInfo, printSizeList]);
+
+  const pageLayout = printSizeList[pageLayoutIndex[0]]||undefined;
+
+//console.log({pageLayoutIndex,pageLayoutIndexList,printSizeList,pageLayout});
+
   const refContener = useMemo(() => {
     return (div: HTMLDivElement | null) => {
       if (div) {
@@ -134,43 +252,62 @@ function PopupPrintPreview({
     };
   }, []);
 
-  const refPdf = useMemo(() => {
-    return (iframe: HTMLIFrameElement | null) => {
-      if (iframe) {
-        // PDF構築
-        async function makePdf() {
-          // PDFドキュメントを準備
-          const doc = new jsPDF({
-            orientation: 'l',
-            format: PageSize.B6JIS
-          });
-          // フォントをインストール
-          await notosans.install(doc);
-          doc.setFont(notosans.name);
-          // カレンダーを取得
-          let calendarOfMonth;
-          for await (const month of MONTH_LIST) {
-            if (1 < month) { // 最初の月のみページを追加しない
-              doc.addPage(PageSize.B6JIS, 'l');
-            }
-            // カレンダーのSVGを取得
-            calendarOfMonth = getCalendar(design, year, month);
-            //console.log({calendarOfMonth})
-            // SVGをPDFに変換
-            if (calendarOfMonth) {
-              await doc.svg(calendarOfMonth as Element);
-            }
-          }
-  
-          if (iframe) {
-            iframe.src = doc.output('bloburi').toString();
+  const [layoutSvgElm, setLayoutSvgElm] = useState<SVGElement | null>(null);
+  const refMakePdfWork = useRef<{ [key: string]: boolean }>({});
+
+  const refPdf = useMemo(() => (iframe: HTMLIFrameElement | null) => {
+    if (iframe) {
+      if (designInfo) {
+        // 並行して処理が走る場合があるので最後の処理のみを利用できるようにフラグをつける
+        const workId = Date.now().toString(36) + Math.random().toString(36);
+        refMakePdfWork.current =
+          Object.keys(refMakePdfWork.current)
+          .reduce((r: { [key: string]: boolean }, key) => {
+            r[key] = false;
+            return r;
+          }, {});
+        refMakePdfWork.current[workId] = true;
+        // PDF作成
+        setPdfVisible(false);
+        makePdf(
+          workId,
+          // カレンダーのSVGを取得
+          MONTH_LIST.map(month => getCalendar(design, year, month)),
+          [notosans],
+          designInfo,
+          pageLayout, layoutSvgElm
+        ).then(({ workId, pdfContent }) => {
+          if (refMakePdfWork.current[workId]) {
+            iframe.src = pdfContent;
             setPdfVisible(true);
           }
-        }
-        makePdf();
+          delete refMakePdfWork.current[workId];
+        })
       }
-    };
-  }, []);
+    }
+  }, [pageLayout, designInfo, layoutSvgElm]);
+
+  const refLayout = useMemo(() => (div: HTMLDivElement | null) => {
+    if (!pageLayout.layout) {
+      setLayoutSvgElm(null);
+    }
+    else if (div) {
+      // レイアウトのSVGファイルを読み込む
+      fetch(`${PRINT_LAYOUT_BASE_PATH}/${pageLayout.layout}`)
+      .then((response) => response.text())
+      .then((svgText) => {
+        const parser = new DOMParser();
+        let layoutElm_ = parser.parseFromString(svgText, "image/svg+xml").documentElement as unknown as SVGElement;
+        // 不要な属性を削除
+        layoutElm_.removeAttribute('id');
+        //layoutElm_.removeAttribute('width');
+        //layoutElm_.removeAttribute('height');
+        // 更新
+        div.firstElementChild?.replaceWith(layoutElm_ as Node);
+        setLayoutSvgElm(layoutElm_);
+      });
+    }
+  }, [pageLayout]);
 
   return (
     <Dialog 
@@ -195,12 +332,18 @@ function PopupPrintPreview({
           <Fieldset.Root size="lg" maxW="md">
             <Stack>
               <Field orientation="horizontal" label="印刷サイズ">
-                <SelectRoot collection={printSizes} size="sm" width="320px">
+                <SelectRoot
+                    collection={pageLayoutIndexList}
+                    size="sm"
+                    width="320px"
+                    value={pageLayoutIndex}
+                    onValueChange={(e) => setPageLayoutIndex(e.value)}
+                  >
                   <SelectTrigger>
                     <SelectValueText placeholder="印刷サイズを選択してください" />
                   </SelectTrigger>
                   <SelectContent>
-                    {printSizes.items.map((printSize) => (
+                    {pageLayoutIndexList.items.map((printSize) => (
                       <SelectItem item={printSize} key={printSize.value}>
                         {printSize.label}
                       </SelectItem>
@@ -231,7 +374,12 @@ function PopupPrintPreview({
               className="svg-pdf-temp"
               ref={refContener}
             />
-            
+
+            <div // svgからPDFへのレンダリング用
+              className="svg-layout-temp"
+              ref={refLayout}
+            ><svg/></div>
+
           </div>
 
           <Button
@@ -240,6 +388,7 @@ function PopupPrintPreview({
           >
             閉じる
           </Button>
+
         </DialogBody>
       </DialogContent>
     </Dialog>

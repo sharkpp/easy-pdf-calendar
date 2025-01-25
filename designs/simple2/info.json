@@ -1,5 +1,9 @@
 {
   "name":"シンプル２ 明色 画像付き",
+  "layout": {
+    "orientation": "landscape",
+    "size": "B6JIS"
+  },
   "templates": {
     "month": "main.svg"
   },
