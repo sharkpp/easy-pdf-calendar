@@ -74,8 +74,3 @@ html, body, #root, .chakra-theme {
   height: 100%;
   overflow: hidden;
 }
-
-/* SelectRootのリストがDialogより後ろに来てしまうので */
-.chakra-select__positioner {
-  z-index: 1500 !important;
-}

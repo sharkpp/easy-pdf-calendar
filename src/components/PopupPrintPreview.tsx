@@ -1,6 +1,6 @@
 // 印刷プレビュー画面
 
-import { useMemo, useRef, useState } from 'react';
+import { RefObject, useMemo, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { Printer as PrinterIcon } from 'lucide-react';
 import {
@@ -113,8 +113,8 @@ const makeSelector = (id: string) => `*[*|label^="${id}"]`;
 
 // PDF構築
 async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: Font[], designInfo: DesignInfoType, pageLayout: any, layoutSvgElm: SVGElement | null): Promise<{ workId: string, pdfContent: string }> {
-  //console.log({calendars,fonts,designInfo,pageLayout,layoutSvgElm,size:PageSize[pageLayout.size]});
-  const pageSizeMM = PageSize[pageLayout.size];
+  console.log({calendars,fonts,designInfo,pageLayout,layoutSvgElm});
+  const pageSizeMM = pageLayout && PageSize[pageLayout.size];
   if (!pageSizeMM) {
     return { workId, pdfContent: "" };
   }
@@ -209,6 +209,8 @@ function PopupPrintPreview({
   open, onOpenChange,
 }: PopupImageCropperProps) {
 
+  const dialogContentRef = useRef<HTMLDivElement>(null);
+
   const { getCalendar } = useCalendar();
   const [ pdfVisible, setPdfVisible ] = useState(false);
 
@@ -242,7 +244,7 @@ function PopupPrintPreview({
 
 //console.log({pageLayoutIndex,pageLayoutIndexList,printSizeList,pageLayout});
 
-  const refContener = useMemo(() => {
+  const contenerRef = useMemo(() => {
     return (div: HTMLDivElement | null) => {
       if (div) {
         const calendars = new Array(12).fill(0).map((_, i) => (
@@ -255,20 +257,20 @@ function PopupPrintPreview({
   }, []);
 
   const [layoutSvgElm, setLayoutSvgElm] = useState<SVGElement | null>(null);
-  const refMakePdfWork = useRef<{ [key: string]: boolean }>({});
+  const makePdfWorkRef = useRef<{ [key: string]: boolean }>({});
 
-  const refPdf = useMemo(() => (iframe: HTMLIFrameElement | null) => {
+  const pdfRef = useMemo(() => (iframe: HTMLIFrameElement | null) => {
     if (iframe) {
       if (designInfo) {
         // 並行して処理が走る場合があるので最後の処理のみを利用できるようにフラグをつける
         const workId = Date.now().toString(36) + Math.random().toString(36);
-        refMakePdfWork.current =
-          Object.keys(refMakePdfWork.current)
+        makePdfWorkRef.current =
+          Object.keys(makePdfWorkRef.current)
           .reduce((r: { [key: string]: boolean }, key) => {
             r[key] = false;
             return r;
           }, {});
-        refMakePdfWork.current[workId] = true;
+        makePdfWorkRef.current[workId] = true;
         // PDF作成
         setPdfVisible(false);
         makePdf(
@@ -279,17 +281,17 @@ function PopupPrintPreview({
           designInfo,
           pageLayout, layoutSvgElm
         ).then(({ workId, pdfContent }) => {
-          if (refMakePdfWork.current[workId]) {
+          if (makePdfWorkRef.current[workId]) {
             iframe.src = pdfContent;
             setPdfVisible(true);
           }
-          delete refMakePdfWork.current[workId];
+          delete makePdfWorkRef.current[workId];
         })
       }
     }
   }, [pageLayout, designInfo, layoutSvgElm]);
 
-  const refLayout = useMemo(() => (div: HTMLDivElement | null) => {
+  const layoutRef = useMemo(() => (div: HTMLDivElement | null) => {
     if (!pageLayout.layout) {
       setLayoutSvgElm(null);
     }
@@ -321,6 +323,7 @@ function PopupPrintPreview({
     >
       <DialogContent
         css={cssStyles}
+        ref={dialogContentRef}
       >
         <DialogHeader>
           <DialogTitle>
@@ -338,13 +341,15 @@ function PopupPrintPreview({
                     collection={pageLayoutIndexList}
                     size="sm"
                     width="320px"
+                    // @ts-ignore なんか定義がおかしい？ string[] を要求しているが実際には number[] が返ってくる...
                     value={pageLayoutIndex}
+                    // @ts-ignore なんか定義がおかしい？サンプル通りにやっても数値の配列で返ってくる...
                     onValueChange={(e) => setPageLayoutIndex(e.value)}
                   >
                   <SelectTrigger>
                     <SelectValueText placeholder="印刷サイズを選択してください" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent portalRef={dialogContentRef.current ? dialogContentRef as RefObject<HTMLElement> : undefined}>
                     {pageLayoutIndexList.items.map((printSize) => (
                       <SelectItem item={printSize} key={printSize.value}>
                         {printSize.label}
@@ -366,7 +371,7 @@ function PopupPrintPreview({
             </div>
             
             <iframe
-              ref={refPdf}
+              ref={pdfRef}
               css={css`
                 visibility: ${pdfVisible?'visible':'hidden'};
               `}
@@ -374,12 +379,12 @@ function PopupPrintPreview({
 
             <div // svgからPDFへのレンダリング用
               className="svg-pdf-temp"
-              ref={refContener}
+              ref={contenerRef}
             />
 
             <div // svgからPDFへのレンダリング用
               className="svg-layout-temp"
-              ref={refLayout}
+              ref={layoutRef}
             ><svg/></div>
 
           </div>
