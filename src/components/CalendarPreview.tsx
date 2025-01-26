@@ -572,10 +572,9 @@ function CalendarPreview({
         //const imageBlockData = use(getImageData(imageBlock.name));
         //console.log({imageBlockData});
 
-        if      (blankImage)     { imageBlockType = 'blank'; }
-        else if (readonly)       { imageBlockType = 'blank'; }
+        if      (blankImage)       { imageBlockType = 'blank'; }
         else if (imageBlock.state) { imageBlockType = 'image'; }
-        else                     { imageBlockType = 'dropzone'; }
+        else                       { imageBlockType = 'dropzone'; }
 
         //console.log(calendarKey,{imageBlock,imageBlockType});
 
@@ -593,7 +592,7 @@ function CalendarPreview({
           return (<>
             <div
               key={`image-block-${imageBlock.name}-image`}
-              css={imageBlock.cssStyle}
+              css={readonly ? imageBlock.cssStyle : css`cursor: pointer; ${imageBlock.cssStyle}`}
               onClick={() => {
                 //console.log(calendarKey,{imageBlock});
                 setImageBlocks(updateImageBlock(imageBlock.name, {

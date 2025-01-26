@@ -8,6 +8,8 @@ import { useMeasure } from "@uidotdev/usehooks";
 import CalendarPreview from '@/components/CalendarPreview';
 import PopupPrintPreview from '@/components/PopupPrintPreview';
 import PopupPrintOption from '@/components/PopupPrintOption';
+import { designNextSelector, designPrevSelector, useDesign } from '@/store/design';
+import { useShallow } from 'zustand/react/shallow';
 
 type CalanderDesignPreviewProps = {
   design: string;
@@ -15,10 +17,122 @@ type CalanderDesignPreviewProps = {
   month: number;
   onChangeDesign?: (name: string) => void;
   onChangeMonth?: (month: number) => void;
-  onPrint?: (design: string, year: number, month: number) => void;
 }
 
 const MonthList = [ 1,2,3,4,5,6,7,8,9,10,11,12 ];
+
+const cssStyles = css`
+width: 250vw;
+height: 250vh;
+margin-left: calc(-75vw - 1rem);
+margin-top:  calc(-75vh - 1rem);
+grid-template-columns: 1fr 1fr min(60vw, 100vh) 1fr 1fr;
+grid-template-rows:    1fr 1fr max-content      1fr 1fr;
+grid-template-areas: 
+  ".        .        design-p2 .        .      "
+  ".        .        design-p1 .        .      "
+  "month-p2 month-p1 calendar  month-n1 month-n2"
+  ".        .        design-n1 .        .      "
+  ".        .        design-n2 .        .      "; 
+.calendar { grid-area: calendar; }
+.design-p1 {
+  display: flex;
+  justify-content: center;
+  align-content: flex-end;
+  flex-wrap: wrap;
+  grid-area: design-p1; 
+}
+.design-p2 {
+  display: flex;
+  justify-content: center;
+  align-content: flex-end;
+  flex-wrap: wrap;
+  grid-area: design-p2; 
+}
+.design-n1 {
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  grid-area: design-n1; 
+}
+.design-n2 {
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  grid-area: design-n2; 
+}
+.month-p1 {
+  align-self: center; 
+  grid-area: month-p1; 
+}
+.month-p2 {
+  align-self: center; 
+  grid-area: month-p2; 
+}
+.month-n1 {
+  align-self: center; 
+  grid-area: month-n1; 
+}
+.month-n2 {
+  align-self: center; 
+  grid-area: month-n2; 
+}
+`;
+
+const cssStyles2 = css`
+position: absolute;
+width: 100vw;
+height: 100vh;
+left: 0px;
+top: 0px;
+display: grid;
+/*grid-template-columns: 1fr 0px  1fr;
+grid-template-rows:    1fr 0px 1fr;*/
+gap: 0px 0px;
+grid-auto-flow: row;
+grid-template-areas:
+  "area-tl .        print-action"
+  ".       calendar ."
+  "area-bl .        config-action";
+pointer-events: none;
+user-select: none;
+
+.calendar {
+  grid-area: calendar;
+}
+.area-tl {
+  grid-area: area-tl;
+  pointer-events: auto;
+  user-select: auto;
+}
+.print-action {
+  grid-area: print-action;
+  pointer-events: auto;
+  user-select: auto;
+}
+.area-bl {
+  grid-area: area-bl;
+  pointer-events: auto;
+  user-select: auto;
+}
+.config-action {
+  grid-area: config-action;
+  pointer-events: auto;
+  user-select: auto;
+}
+
+button {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  svg {
+    width: auto;
+    height: 100%;
+  }
+}
+`;
 
 function CalanderDesignPreview({
   design,
@@ -26,9 +140,11 @@ function CalanderDesignPreview({
   month,
   onChangeDesign,
   onChangeMonth,
-  onPrint,
   }: CalanderDesignPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
+  const prevDesignName = useDesign(useShallow(designPrevSelector(design)));
+  const nextDesignName = useDesign(useShallow(designNextSelector(design)));
+
   const [ ref, { width, height } ] = useMeasure();
   const [ openPrintPreview, setOpenPrintPreview ] = useState(false);
   const [ openPrintOption, setOpenPrintOption ] = useState(false);
@@ -38,53 +154,7 @@ function CalanderDesignPreview({
       <SimpleGrid
         columns={5}
         //gap="1rem"
-        css={css`
-          width: 250vw;
-          height: 250vh;
-          margin-left: calc(-75vw - 1rem);
-          margin-top:  calc(-75vh - 1rem);
-          grid-template-columns: 1fr 1fr min(60vw, 100vh) 1fr 1fr;
-          grid-template-rows:    1fr 1fr max-content      1fr 1fr;
-          grid-template-areas: 
-            ".        .        design-p2 .        .      "
-            ".        .        design-p1 .        .      "
-            "month-p2 month-p1 calendar  month-n1 month-n2"
-            ".        .        design-n1 .        .      "
-            ".        .        design-n2 .        .      "; 
-          .calendar { grid-area: calendar; }
-          .design-p1 {
-            justify-self: center; 
-            grid-area: design-p1; 
-          }
-          .design-p2 {
-            justify-self: center; 
-            grid-area: design-p2; 
-          }
-          .design-n1 {
-            justify-self: center; 
-            grid-area: design-n1; 
-          }
-          .design-n2 {
-            justify-self: center; 
-            grid-area: design-n2; 
-          }
-          .month-p1 {
-            align-self: center; 
-            grid-area: month-p1; 
-          }
-          .month-p2 {
-            align-self: center; 
-            grid-area: month-p2; 
-          }
-          .month-n1 {
-            align-self: center; 
-            grid-area: month-n1; 
-          }
-          .month-n2 {
-            align-self: center; 
-            grid-area: month-n2; 
-          }
-        `}
+        css={cssStyles}
       >
         <Box ref={ref} className="calendar" width="100%" padding="4" color="white">
           <CalendarPreview
@@ -98,9 +168,31 @@ function CalanderDesignPreview({
 
         <Box className="design-p2" width="100%" padding="4" color="white">
         </Box>
-        <Box className="design-p1" width="100%" padding="4" color="white">
+        <Box
+          className="design-p1" width="100%" padding="4" color="white"
+          onClick={() => (prevDesignName&&onChangeDesign&&onChangeDesign(prevDesignName))}
+        >
+          <CalendarPreview
+              key={`${prevDesignName}-${year}-${month}-preview`}
+              cssStyle={css`width: 80%;`}
+              design={prevDesignName}
+              year={year}
+              month={month}
+              readonly={true}
+            />
         </Box>
-        <Box className="design-n1" width="100%" padding="4" color="white">
+        <Box
+          className="design-n1" width="100%" padding="4" color="white"
+          onClick={() => (nextDesignName&&onChangeDesign&&onChangeDesign(nextDesignName))}
+        >
+          <CalendarPreview
+              key={`${nextDesignName}-${year}-${month}-preview`}
+              cssStyle={css`width: 80%;`}
+              design={nextDesignName}
+              year={year}
+              month={month}
+              readonly={true}
+            />
         </Box>
         <Box className="design-n2" width="100%" padding="4" color="white">
         </Box>
@@ -142,56 +234,9 @@ function CalanderDesignPreview({
         columns={5}
         //gap="1rem"
         css={css`
-          position: absolute;
-          width: 100vw;
-          height: 100vh;
-          left: 0px;
-          top: 0px;
-          display: grid;
+          ${cssStyles2}
           grid-template-columns: 1fr ${width}px  1fr;
           grid-template-rows:    1fr ${height}px 1fr;
-          gap: 0px 0px;
-          grid-auto-flow: row;
-          grid-template-areas:
-            "area-tl .        print-action"
-            ".       calendar ."
-            "area-bl .        config-action";
-          pointer-events: none;
-          user-select: none;
-
-          .calendar {
-            grid-area: calendar;
-          }
-          .area-tl {background: rgba(255,0,255,0.3);
-            grid-area: area-tl;
-            pointer-events: auto;
-            user-select: auto;
-          }
-          .print-action {
-            grid-area: print-action;
-            pointer-events: auto;
-            user-select: auto;
-          }
-          .area-bl {background: rgba(0,255,0,0.3);
-            grid-area: area-bl;
-            pointer-events: auto;
-            user-select: auto;
-          }
-          .config-action {
-            grid-area: config-action;
-            pointer-events: auto;
-            user-select: auto;
-          }
-
-          button {
-            width: 100%;
-            height: 100%;
-            padding: 0.5rem;
-            svg {
-              width: auto;
-              height: 100%;
-            }
-          }
         `}
       >
         <Box className="calendar" width="100%" padding="4" color="white">

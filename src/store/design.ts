@@ -64,6 +64,22 @@ export const useDesign = create<DesignStoreState & DesignStoreAction>(
       }))
       return designInfo || null;
     },
+    getPrevDesignName: (name: string): string | null => {
+      const keys = Array.from(get().cache.keys());
+      const found = keys.findIndex((k) => k === name);
+      if (undefined === found) {
+        return null;
+      }
+      return keys[(found + keys.length - 1) % keys.length];
+    },
+    getNextDesignName: (name: string): string | null => {
+      const keys = Array.from(get().cache.keys());
+      const found = keys.findIndex((k) => k === name);
+      if (undefined === found) {
+        return null;
+      }
+      return keys[(found + 1) % keys.length];
+    },
     getDesigns: (): DesignInfoType[] | [] => {
       return Array.from(get().cache).map(a => a[1]);
     },
@@ -86,6 +102,15 @@ export const designSelector =
   (name: string) => 
     (state: DesignStoreAction) => state.getDesign(name)
   ;
+
+export const designPrevSelector =
+  (name: string) => 
+    (state: DesignStoreAction) => state.getPrevDesignName(name)
+;
+export const designNextSelector =
+  (name: string) => 
+    (state: DesignStoreAction) => state.getNextDesignName(name)
+;
 
 export const setDesignSelector =
   (state: DesignStoreAction) => state.setDesign
