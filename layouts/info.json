@@ -10,7 +10,7 @@
         "rotate": 0
       },
       {
-        "name": "A4用紙に２か月分配置",
+        "name": "A4用紙に２か月分を配置",
         "orientation": "portrait",
         "size": "A4",
         "layout": "A4-B6JISx2.svg",
@@ -28,11 +28,125 @@
         "rotate": 0
       },
       {
-        "name": "A4用紙に２か月分配置",
+        "name": "A4用紙に２か月分を配置",
         "orientation": "landscape",
         "size": "A4",
         "layout": "A4-B6JISx2.svg",
         "blockNum": 2,
+        "rotate": 90
+      }
+    ]
+  },
+  "A5": {
+    "landscape": [
+      {
+        "name": "A5用紙で印刷",
+        "orientation": "landscape",
+        "size": "A5",
+        "layout": null,
+        "blockNum": 1,
+        "rotate": 0
+      },
+      {
+        "name": "A4用紙に２か月分を配置",
+        "orientation": "portrait",
+        "size": "A4",
+        "layout": "A4-A5x2.svg",
+        "blockNum": 2,
+        "rotate": 0
+      }
+    ],
+    "portrait": [
+      {
+        "name": "A5用紙で印刷",
+        "orientation": "portrait",
+        "size": "A5",
+        "layout": null,
+        "blockNum": 1,
+        "rotate": 0
+      },
+      {
+        "name": "A4用紙に２か月分を配置",
+        "orientation": "landscape",
+        "size": "A4",
+        "layout": "A4-A5x2.svg",
+        "blockNum": 2,
+        "rotate": 90
+      }
+    ]
+  },
+  "A6": {
+    "landscape": [
+      {
+        "name": "A6用紙で印刷",
+        "orientation": "landscape",
+        "size": "A6",
+        "layout": null,
+        "blockNum": 1,
+        "rotate": 0
+      },
+      {
+        "name": "A4用紙に４か月分を配置",
+        "orientation": "portrait",
+        "size": "A4",
+        "layout": "A4-A6x4.svg",
+        "blockNum": 4,
+        "rotate": 0
+      }
+    ],
+    "portrait": [
+      {
+        "name": "A6用紙で印刷",
+        "orientation": "portrait",
+        "size": "A6",
+        "layout": null,
+        "blockNum": 1,
+        "rotate": 0
+      },
+      {
+        "name": "A4用紙に４か月分を配置",
+        "orientation": "landscape",
+        "size": "A4",
+        "layout": "A4-A6x4.svg",
+        "blockNum": 4,
+        "rotate": 90
+      }
+    ]
+  },
+  "L": {
+    "landscape": [
+      {
+        "name": "L判で印刷",
+        "orientation": "landscape",
+        "size": "L",
+        "layout": null,
+        "blockNum": 1,
+        "rotate": 0
+      },
+      {
+        "name": "A4用紙に４か月分を配置",
+        "orientation": "portrait",
+        "size": "A4",
+        "layout": "A4-Lx4.svg",
+        "blockNum": 4,
+        "rotate": 0
+      }
+    ],
+    "portrait": [
+      {
+        "name": "L判で印刷",
+        "orientation": "portrait",
+        "size": "L",
+        "layout": null,
+        "blockNum": 1,
+        "rotate": 0
+      },
+      {
+        "name": "A4用紙に４か月分を配置",
+        "orientation": "landscape",
+        "size": "A4",
+        "layout": "A4-Lx4.svg",
+        "blockNum": 4,
         "rotate": 90
       }
     ]
