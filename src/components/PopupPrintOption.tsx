@@ -9,11 +9,14 @@ import {
   DialogHeader,
   DialogRoot as Dialog,
   DialogTitle,
+  DialogActionTrigger,
 } from "@/components/ui/dialog";
 import { OpenChangeDetails } from '@zag-js/dialog';
 import { Button, Stack, Fieldset } from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
 import { Switch } from "@/components/ui/switch"
+import { optionsSelector, useOptions } from '@/store/options';
+import { useShallow } from 'zustand/react/shallow';
 
 // 画像切り取りポップアップのプロパティの型
 type PopupImageCropperProps = {
@@ -24,6 +27,10 @@ type PopupImageCropperProps = {
 function PopupPrintPreview({
   open, onOpenChange,
 }: PopupImageCropperProps) {
+  
+  const useYearlyCalendar = useOptions(useShallow(optionsSelector('useYearlyCalendar')));
+  const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril')));
+  const setOption = useOptions(useShallow((state) => state.setOption));
 
   return (
     <Dialog 
@@ -52,19 +59,19 @@ function PopupPrintPreview({
                 gap: 0.5rem;
             `}>
             <CalendarCogIcon /> 
-            カレンダーの印刷オプション
+            カレンダーの生成オプション
           </DialogTitle>
           <DialogCloseTrigger />
         </DialogHeader>
         <DialogBody>
 
           <Fieldset.Root size="lg" maxW="md">
-            <Stack>
+            {/* <Stack>
               <Fieldset.Legend>カレンダー生成時のオプション</Fieldset.Legend>
               <Fieldset.HelperText>
                 カレンダーを生成する際のオプションを設定します。
               </Fieldset.HelperText>
-            </Stack>
+            </Stack> */}
 
             <Fieldset.Content>
               <Stack gap="4" maxW="sm" css={css`
@@ -73,7 +80,10 @@ function PopupPrintPreview({
                   --field-label-width: auto;
                 `}>
                 <Field orientation="horizontal" label="年間カレンダーを追加する">
-                  <Switch />
+                  <Switch
+                    checked={useYearlyCalendar || false}
+                    onCheckedChange={(e) => setOption('useYearlyCalendar', e.checked)}
+                  />
                 </Field>
                 <Field orientation="horizontal" label={<span
                     css={css`
@@ -82,14 +92,18 @@ function PopupPrintPreview({
                       overflow-wrap: anywhere;
                     `}
                   >４月始まりとする<wbr />（１月〜３月は翌年の月となります）</span>}>
-                  <Switch />
+                  <Switch
+                    checked={firstMonthIsApril || false}
+                    onCheckedChange={(e) => setOption('firstMonthIsApril', e.checked)}
+                  />
                 </Field>
               </Stack>
             </Fieldset.Content>
 
-            <Button type="submit" alignSelf="stretch">
-              オプションを保存
-            </Button>
+            <DialogActionTrigger asChild>
+              <Button type="submit" alignSelf="stretch">閉じる</Button>
+            </DialogActionTrigger>
+            
           </Fieldset.Root>
 
         </DialogBody>
