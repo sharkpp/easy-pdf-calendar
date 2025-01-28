@@ -50,6 +50,8 @@ type DesignStoreAction = {
   setDesign: (name: string, designInfo: DesignInfoType) => DesignInfoType | null;
   getDesigns: () => DesignInfoType[] | [];
   setDesigns: (designsInfo: DesignInfoType[]) => DesignInfoType[] | [];
+  getPrevDesignName: (name: string) => string | null;
+  getNextDesignName: (name: string) => string | null;
 }
 
 export const useDesign = create<DesignStoreState & DesignStoreAction>(
