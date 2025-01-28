@@ -121,10 +121,12 @@ async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: 
     return { workId, pdfContent: "" };
   }
 
+  const isLandscape = 'landscape' === pageLayout.orientation; // 横向きか？
+
   // PDFドキュメントを準備
   const doc = new jsPDF({
     unit: 'mm',
-    orientation: 'landscape' === pageLayout.orientation ? 'l' : 'p',
+    orientation: isLandscape ? 'l' : 'p',
     format: pageSizeMM,
   });
 
@@ -187,10 +189,10 @@ async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: 
       else {
         await doc.svg(
           calendarOfMonth as Element, {
-            x:      (layoutRect.x      * (pageSizeMM[0] / pageRect.width )),
-            y:      (layoutRect.y      * (pageSizeMM[1] / pageRect.height)),
-            width:  (layoutRect.width  * (pageSizeMM[0] / pageRect.width )),
-            height: (layoutRect.height * (pageSizeMM[1] / pageRect.height)),
+            x:      (layoutRect.x      * (isLandscape ? pageSizeMM[1] : pageSizeMM[0]) / pageRect.width ),
+            y:      (layoutRect.y      * (isLandscape ? pageSizeMM[0] : pageSizeMM[1]) / pageRect.height),
+            width:  (layoutRect.width  * (isLandscape ? pageSizeMM[1] : pageSizeMM[0]) / pageRect.width ),
+            height: (layoutRect.height * (isLandscape ? pageSizeMM[0] : pageSizeMM[1]) / pageRect.height),
           }
         );
       }

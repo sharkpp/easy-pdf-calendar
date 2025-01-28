@@ -10,6 +10,14 @@
         "rotate": 0
       },
       {
+        "name": "はがきサイズに印刷",
+        "orientation": "landscape",
+        "size": "POSTCARD",
+        "layout": "PC-B6JISx1.svg",
+        "blockNum": 1,
+        "rotate": 0
+      },
+      {
         "name": "A4用紙に２か月分を配置",
         "orientation": "portrait",
         "size": "A4",
