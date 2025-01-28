@@ -1,6 +1,6 @@
 // カレンダーの一月分をデザインと月を指定し描画する
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid, IconButton } from '@chakra-ui/react';
 import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon } from 'lucide-react';
@@ -10,6 +10,8 @@ import PopupPrintPreview from '@/components/PopupPrintPreview';
 import PopupPrintOption from '@/components/PopupPrintOption';
 import { designNextSelector, designPrevSelector, useDesign } from '@/store/design';
 import { useShallow } from 'zustand/react/shallow';
+import { optionsSelector, useOptions } from '@/store/options';
+import { normalizeYearAndMonth } from '@/utils/calendar';
 
 type CalanderDesignPreviewProps = {
   design: string;
@@ -142,6 +144,9 @@ function CalanderDesignPreview({
   onChangeMonth,
   }: CalanderDesignPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
+  const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril'))) || false;
+  const { year: yearR, month: monthR } = normalizeYearAndMonth(year, month, firstMonthIsApril);
+
   const prevDesignName = useDesign(useShallow(designPrevSelector(design)));
   const nextDesignName = useDesign(useShallow(designNextSelector(design)));
 
@@ -158,11 +163,11 @@ function CalanderDesignPreview({
       >
         <Box ref={ref} className="calendar" width="100%" padding="4" color="white">
           <CalendarPreview
-            key={`${design}-${year}-${month}-preview`}
+            key={`${design}-${yearR}-${monthR}-preview`}
             //cssStyle={css`width: 80%;`}
             design={design}
-            year={year}
-            month={month}
+            year={yearR}
+            month={monthR}
           />
         </Box>
 
@@ -172,27 +177,27 @@ function CalanderDesignPreview({
           className="design-p1" width="100%" padding="4" color="white"
           onClick={() => (prevDesignName&&onChangeDesign&&onChangeDesign(prevDesignName))}
         >
-          <CalendarPreview
-              key={`${prevDesignName}-${year}-${month}-preview`}
+          {prevDesignName && <CalendarPreview
+              key={`${prevDesignName}-${yearR}-${monthR}-preview`}
               cssStyle={css`width: 80%;`}
               design={prevDesignName}
-              year={year}
-              month={month}
+              year={yearR}
+              month={monthR}
               readonly={true}
-            />
+            />}
         </Box>
         <Box
           className="design-n1" width="100%" padding="4" color="white"
           onClick={() => (nextDesignName&&onChangeDesign&&onChangeDesign(nextDesignName))}
         >
-          <CalendarPreview
-              key={`${nextDesignName}-${year}-${month}-preview`}
+          {nextDesignName && <CalendarPreview
+              key={`${nextDesignName}-${yearR}-${monthR}-preview`}
               cssStyle={css`width: 80%;`}
               design={nextDesignName}
-              year={year}
-              month={month}
+              year={yearR}
+              month={monthR}
               readonly={true}
-            />
+            />}
         </Box>
         <Box className="design-n2" width="100%" padding="4" color="white">
         </Box>
@@ -207,8 +212,8 @@ function CalanderDesignPreview({
             key={`${design}-${year}-${month-1}-preview`}
             //cssStyle={css`width: 80%;`}
             design={design}
-            year={year}
-            month={month-1}
+            year={ normalizeYearAndMonth(year, month-1, firstMonthIsApril).year}
+            month={normalizeYearAndMonth(year, month-1, firstMonthIsApril).month}
             readonly={true}
           />}
         </Box>
@@ -220,8 +225,8 @@ function CalanderDesignPreview({
             key={`${design}-${year}-${month+1}-preview`}
             //cssStyle={css`width: 80%;`}
             design={design}
-            year={year}
-            month={month+1}
+            year={ normalizeYearAndMonth(year, month-1, firstMonthIsApril).year}
+            month={normalizeYearAndMonth(year, month+1, firstMonthIsApril).month}
             readonly={true}
           />}
         </Box>
@@ -282,13 +287,13 @@ function CalanderDesignPreview({
       />
 
       <div css={css`width: 0px; height: 0px;`}>
-        {MonthList.reduce((r, month_) => {
+        {MonthList.reduce((r, month_) => { // カレンダーなどを生成するため非表示で残りの月も作る
           if ([month-1, month, month+1].indexOf(month_) < 0) {
             r.push(
               <CalendarPreview
                 design={design}
-                year={year}
-                month={month_}
+                year={ normalizeYearAndMonth(year, month_, firstMonthIsApril).year}
+                month={normalizeYearAndMonth(year, month_, firstMonthIsApril).month}
               />
             );
           }

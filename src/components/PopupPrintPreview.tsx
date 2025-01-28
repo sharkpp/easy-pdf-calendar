@@ -34,6 +34,8 @@ import PrintSizeList from '@/../layouts/info.json';
 //import type { LayoutsInfoItem } from '@/../layouts/info.json';
 import { DesignInfoType, designSelector, useDesign } from '@/store/design';
 import { useShallow } from 'zustand/react/shallow';
+import { optionsSelector, useOptions } from '@/store/options';
+import { normalizeYearAndMonth } from '@/utils/calendar';
 
 // 画像切り取りポップアップのプロパティの型
 type PopupImageCropperProps = {
@@ -113,7 +115,7 @@ const makeSelector = (id: string) => `*[*|label^="${id}"]`;
 
 // PDF構築
 async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: Font[], designInfo: DesignInfoType, pageLayout: any, layoutSvgElm: SVGElement | null): Promise<{ workId: string, pdfContent: string }> {
-  console.log({calendars,fonts,designInfo,pageLayout,layoutSvgElm});
+  //console.log({calendars,fonts,designInfo,pageLayout,layoutSvgElm});
   const pageSizeMM = pageLayout && PageSize[pageLayout.size];
   if (!pageSizeMM) {
     return { workId, pdfContent: "" };
@@ -207,7 +209,9 @@ async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: 
 function PopupPrintPreview({
   design, year,
   open, onOpenChange,
-}: PopupImageCropperProps) {
+}: PopupImageCropperProps)
+{
+  const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril'))) || false;
 
   const dialogContentRef = useRef<HTMLDivElement>(null);
 
@@ -247,14 +251,15 @@ function PopupPrintPreview({
   const contenerRef = useMemo(() => {
     return (div: HTMLDivElement | null) => {
       if (div) {
-        const calendars = new Array(12).fill(0).map((_, i) => (
-          getCalendar(design, year, i+1)
-        ));
+        const calendars = new Array(12).fill(0).map((_, i) => {
+          const { year: yearR, month: monthR } = normalizeYearAndMonth(year, i+1, firstMonthIsApril);
+          return getCalendar(design, yearR, monthR);
+        });
         //console.log({calendars})
         div.replaceChildren.apply(div, calendars as Node[]);
       }
     };
-  }, []);
+  }, [firstMonthIsApril]);
 
   const [layoutSvgElm, setLayoutSvgElm] = useState<SVGElement | null>(null);
   const makePdfWorkRef = useRef<{ [key: string]: boolean }>({});
@@ -276,7 +281,10 @@ function PopupPrintPreview({
         makePdf(
           workId,
           // カレンダーのSVGを取得
-          MONTH_LIST.map(month => getCalendar(design, year, month)),
+          MONTH_LIST.map(month => {
+            const { year: yearR, month: monthR } = normalizeYearAndMonth(year, month, firstMonthIsApril);
+            return getCalendar(design, yearR, monthR)
+          }),
           [notosans],
           designInfo,
           pageLayout, layoutSvgElm
@@ -289,7 +297,7 @@ function PopupPrintPreview({
         })
       }
     }
-  }, [pageLayout, designInfo, layoutSvgElm]);
+  }, [pageLayout, designInfo, layoutSvgElm, firstMonthIsApril]);
 
   const layoutRef = useMemo(() => (div: HTMLDivElement | null) => {
     if (!pageLayout.layout) {
