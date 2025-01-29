@@ -32,7 +32,7 @@ jobs:
       run: npm ci
 
     - name: update holiday data
-      run: node tools/update-holiday-jp.js
+      run: node tools/update-holiday-jp.js > holidays.json
 
     - name: build 
       run: npm run build
