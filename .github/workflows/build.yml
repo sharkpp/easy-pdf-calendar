@@ -31,6 +31,9 @@ jobs:
     - name: install packages
       run: npm ci
 
+    - name: update holiday data
+      run: node tools/update-holiday-jp.js
+
     - name: build 
       run: npm run build
 #      env:
