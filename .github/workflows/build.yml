@@ -1,0 +1,54 @@
+name: build
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-24.04
+    steps:
+
+    - name: setup node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+
+    - name: Checkout master
+      uses: actions/checkout@v4
+
+    - name: Cache npm packages
+      uses: actions/cache@v4
+      id: npm-cache
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: install packages
+      run: npm ci
+
+    - name: build 
+      run: npm run build
+#      env:
+#        REPO_SLUG: sharkpp/www.sharkpp.net
+
+    - name: Upload static files as artifact
+      id: deployment
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: dist/
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
