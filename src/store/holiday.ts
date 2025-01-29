@@ -22,7 +22,7 @@ type HolidayStoreAction = {
 };
 
 export const useHoliday = create<HolidayStoreState & HolidayStoreAction>(
-  (set, get) => ({
+  (_set, get) => ({
     holidays: new Map<string, HolidayInfoType>(holidaysJSON as HolidaysJpFileType),
     getHolidays: (year: number, month: number): HolidaysType => {
       const selector = `${("0000"+year).substr(-4)}/${("00"+month).substr(-2)}/`;

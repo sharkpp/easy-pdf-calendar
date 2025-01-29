@@ -12,7 +12,7 @@
       {
         "name": "はがきサイズに印刷",
         "orientation": "landscape",
-        "size": "POSTCARD",
+        "size": "PostCard",
         "layout": "PC-B6JISx1.svg",
         "blockNum": 1,
         "rotate": 0
@@ -45,6 +45,7 @@
       }
     ]
   },
+  "A4": {"landscape":[],"portrait":[]},
   "A5": {
     "landscape": [
       {
@@ -158,5 +159,7 @@
         "rotate": 90
       }
     ]
-  }
+  },
+  "2L": {"landscape":[],"portrait":[]},
+  "PostCard": {"landscape":[],"portrait":[]}
 }

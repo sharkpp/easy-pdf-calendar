@@ -12,7 +12,7 @@ export type DesignInfoType = {
   name: string;
   layout: {
     orientation: "landscape" | "portrait";
-    size: "A4" | "A5" | "A6" | "B6JIS" | "Postcard" | "L" | "2L";
+    size: "A4" | "A5" | "A6" | "B6JIS" | "PostCard" | "L" | "2L";
   };
   templates: {
     month: string; // 月のテンプレートのSVGのパス

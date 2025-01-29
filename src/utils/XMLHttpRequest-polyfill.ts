@@ -9,7 +9,7 @@ type XMLHttpRequestResponseType = "" | "arraybuffer" | "blob" | "document" | "js
 class FetchXMLHttpRequest {
   private _method: string = '';
   private _url: string = '';
-  private _async: boolean = true;
+  //private _async: boolean = true;
   private _headers: Record<string, string> = {};
   private _responseText: string = '';
   private _responseBlob: Blob | null = null;
@@ -99,10 +99,10 @@ class FetchXMLHttpRequest {
   }
 
   // メソッド
-  open(method: string, url: string, async: boolean = true): void {
+  open(method: string, url: string, _async: boolean = true): void {
     this._method = method;
     this._url = url;
-    this._async = async;
+    //this._async = async;
     this.readyState = 1;
   }
 

@@ -1,6 +1,6 @@
 // カレンダーの一月分をデザインと月を指定し描画する
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid, IconButton } from '@chakra-ui/react';
 import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon } from 'lucide-react';

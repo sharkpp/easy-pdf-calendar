@@ -23,17 +23,7 @@ type ImageBlockStoreAction = {
 
 const IDB_PREFIX = 'image-block-';
 
-// Blob URL を Data URL から生成
-async function blobUrlFromDataUrl(dataUrl: string | undefined): Promise<string> {
-  console.log({dataUrl});
-  return (
-    dataUrl
-      ? URL.createObjectURL(await (await fetch(dataUrl)).blob()).toString()
-      : ''
-  );
-}
-
-export const useImageBlock = create<ImageBlockStoreState & ImageBlockStoreAction>((set, get) => ({
+export const useImageBlock = create<ImageBlockStoreState & ImageBlockStoreAction>((_set, get) => ({
 
   cache: new Map<string, ImageBlockState>(),
 

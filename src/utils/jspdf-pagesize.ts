@@ -36,9 +36,9 @@ export const PageSize: { [key:  string]: PageSizeType } = {
   L:     [   89,  127 ], // L判
 
   // はがき 比率：1.48
-  POSTCARD:[  100,  148 ],
+  PostCard:[  100,  148 ],
 
   // 名刺
-  BUSINESS_CARD_4:[ 55, 91 ], // 名刺４号サイズ
+  BusinessCard4:[ 55, 91 ], // 名刺４号サイズ
 
 } as const;

@@ -16,7 +16,7 @@ import { createListCollection } from "@chakra-ui/react"
 import {
   SelectContent,
   SelectItem,
-  SelectLabel,
+  //SelectLabel,
   SelectRoot,
   SelectTrigger,
   SelectValueText,
@@ -102,19 +102,12 @@ overflow: hidden;
 }
 `;
 
-
-function getSVGLenByMM(n: SVGAnimatedLength) {
-  const tmp = n.baseVal;
-  tmp.convertToSpecifiedUnits(SVGLength.SVG_LENGTHTYPE_MM);
-  return tmp.valueInSpecifiedUnits;
-}
-
 // Is it possible to use HTML's .querySelector() to select by xlink attribute in an SVG?
 // >> https://stackoverflow.com/questions/23034283/
 const makeSelector = (id: string) => `*[*|label^="${id}"]`;
 
 // PDF構築
-async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: Font[], designInfo: DesignInfoType, pageLayout: any, layoutSvgElm: SVGElement | null): Promise<{ workId: string, pdfContent: string }> {
+async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: Font[], _designInfo: DesignInfoType, pageLayout: any, layoutSvgElm: SVGElement | null): Promise<{ workId: string, pdfContent: string }> {
   //console.log({calendars,fonts,designInfo,pageLayout,layoutSvgElm});
   const pageSizeMM = pageLayout && PageSize[pageLayout.size];
   if (!pageSizeMM) {

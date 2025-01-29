@@ -10,8 +10,8 @@ type OptionsStoreState = {
 type OptionsStoreStateKey = keyof OptionsStoreState;
 
 type OptionsStoreAction = {
-  getOption: (name: keyof OptionsStoreState) => boolean | null;
-  setOption: (name: keyof OptionsStoreState, value: any) => any | null;
+  getOption: (name: OptionsStoreStateKey) => boolean | null;
+  setOption: (name: OptionsStoreStateKey, value: any) => any | null;
 }
 
 export const useOptions = create(
@@ -19,10 +19,10 @@ export const useOptions = create(
     (set, get: () => OptionsStoreState & OptionsStoreAction): OptionsStoreState & OptionsStoreAction => ({
       useYearlyCalendar: false,
       firstMonthIsApril: false,
-      getOption: (name: keyof OptionsStoreState): boolean | null => {
+      getOption: (name: OptionsStoreStateKey): boolean | null => {
         return get()[name];
       },
-      setOption: (name: keyof OptionsStoreState, value: any): any | null => {
+      setOption: (name: OptionsStoreStateKey, value: any): any | null => {
         set({ [name]: value });
       },
     }),
@@ -34,6 +34,6 @@ export const useOptions = create(
 )
 
 export const optionsSelector =
-  (name: keyof OptionsStoreState) => 
+  (name: OptionsStoreStateKey) => 
     (state: OptionsStoreAction) => state.getOption(name)
   ;

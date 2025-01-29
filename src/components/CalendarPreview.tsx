@@ -156,7 +156,7 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
 
   const dateColor               = designInfo.colors.date; // その他の日付の色
   const previousMonthDateColor  = designInfo.colors.previousMonthDate || dateColor; // 先月の日付の色
-  const nextMonthDateColor      = designInfo.colors.nextMonthDate || dateColor; // 来月の日付の色
+  //const nextMonthDateColor      = designInfo.colors.nextMonthDate || dateColor; // 来月の日付の色
   const dayOfWeekColors = [
     designInfo.colors.sundayDate    || dateColor, // 日曜の日付の色
     designInfo.colors.mondayDate    || dateColor, // 月曜の日付の色
@@ -285,7 +285,7 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
       if (holidayBaseElm && holidayText) {
         name = (holidayBaseElm.getAttribute('inkscape:label') || '');
         // format
-        const [ _, kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', ''];
+        const [ _, _kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', ''];
         const formats = formats_.split(',');
         const align = (
           0<=formats.indexOf('left') ? 'left' :
@@ -312,7 +312,6 @@ function CalendarPreview({
   blankImage = false,
 }: CalendarPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
-  const calendarTemplateKey = `${design}:${-1}:${-1}:`;
   const calendarKey = `${design}:${year}:${month}:`;
 
   // # https://dot-to-ascii.ggerganov.com/

@@ -12,7 +12,7 @@ const UI = {
 function App()
 {
   const [ design, setDesign ] = useState("");
-  const [ year, setYear ] = useState(2025);
+  const [ year, _setYear ] = useState(2025);
   const [ month, setMonth ] = useState(1);
   const [ ui, setUi ] = useState(UI.SelectDesign);
 
