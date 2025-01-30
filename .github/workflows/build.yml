@@ -34,8 +34,10 @@ jobs:
     - name: update holiday data
       run: node tools/update-holiday-jp.js > holidays.json
 
+    - run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}"
+
     - name: build 
-      run: npm run build -- --base=https://sharkpp.github.io/online-calander-maker/
+      run: npm run build -- --base=https://${GITHUB_REPOSITORY_OWNER}.github.io/${{ env.REPOSITORY_NAME }}/
 #      env:
 #        REPO_SLUG: sharkpp/www.sharkpp.net
 
