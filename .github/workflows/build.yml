@@ -34,7 +34,7 @@ jobs:
     - name: update holiday data
       run: node tools/update-holiday-jp.js > holidays.json
 
-    - run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}"
+    - run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
 
     - name: build 
       run: npm run build -- --base=https://${GITHUB_REPOSITORY_OWNER}.github.io/${{ env.REPOSITORY_NAME }}/
