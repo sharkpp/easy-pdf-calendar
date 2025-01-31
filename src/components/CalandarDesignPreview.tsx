@@ -3,14 +3,15 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid, IconButton } from '@chakra-ui/react';
-import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon } from 'lucide-react';
+import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon, Info as InfoIcon } from 'lucide-react';
 import { useMeasure } from "@uidotdev/usehooks";
 import CalendarPreview from '@/components/CalendarPreview';
 import PopupPrintPreview from '@/components/PopupPrintPreview';
 import PopupPrintOption from '@/components/PopupPrintOption';
+import MessageBox from '@/components/MessageBox';
 import { designNextSelector, designPrevSelector, useDesign } from '@/store/design';
 import { useShallow } from 'zustand/react/shallow';
-import { optionsSelector, useOptions } from '@/store/options';
+import { optionsSelector, useOptions, useVolatileOptions, volatileOptionsSelector } from '@/store/options';
 import { normalizeYearAndMonth } from '@/utils/calendar';
 
 type CalanderDesignPreviewProps = {
@@ -144,6 +145,10 @@ function CalanderDesignPreview({
   onChangeMonth,
   }: CalanderDesignPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
+  const confirmedNoInformationOfNextYearsHolidays = useVolatileOptions(useShallow(volatileOptionsSelector('confirmedNoInformationOfNextYearsHolidays')));
+  const setVolatileOption = useVolatileOptions(useShallow((state) => state.setOption));
+console.log({confirmedNoInformationOfNextYearsHolidays},!confirmedNoInformationOfNextYearsHolidays ||
+  confirmedNoInformationOfNextYearsHolidays < year)
   const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril'))) || false;
   const { year: yearR, month: monthR } = normalizeYearAndMonth(year, month, firstMonthIsApril);
 
@@ -285,6 +290,15 @@ function CalanderDesignPreview({
         open={openPrintOption}
         onOpenChange={(open) => setOpenPrintOption(open)}
       />
+
+      {(!confirmedNoInformationOfNextYearsHolidays ||
+       confirmedNoInformationOfNextYearsHolidays < year) &&
+      <MessageBox
+        icon={<InfoIcon size={72} />}
+        onClose={() => setVolatileOption('confirmedNoInformationOfNextYearsHolidays', year)}
+      >
+        翌年１月から３月分までの国民の祝日は２月に告示されるため日程が正確でない場合があります。
+      </MessageBox>}
 
       <div css={css`width: 0px; height: 0px;`}>
         {MonthList.reduce((r, month_) => { // カレンダーなどを生成するため非表示で残りの月も作る

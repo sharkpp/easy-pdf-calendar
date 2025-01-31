@@ -15,7 +15,7 @@ import { OpenChangeDetails } from '@zag-js/dialog';
 import { Button, Stack, Fieldset } from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
 import { Switch } from "@/components/ui/switch"
-import { optionsSelector, useOptions } from '@/store/options';
+import { optionsSelector, useOptions, useVolatileOptions } from '@/store/options';
 import { useShallow } from 'zustand/react/shallow';
 
 // 画像切り取りポップアップのプロパティの型
@@ -31,6 +31,7 @@ function PopupPrintPreview({
   const useYearlyCalendar = useOptions(useShallow(optionsSelector('useYearlyCalendar')));
   const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril')));
   const setOption = useOptions(useShallow((state) => state.setOption));
+  const setVolatileOption = useVolatileOptions(useShallow((state) => state.setOption));
 
   return (
     <Dialog 
@@ -94,7 +95,12 @@ function PopupPrintPreview({
                   >４月始まりとする<wbr />（１月〜３月は翌年の月となります）</span>}>
                   <Switch
                     checked={firstMonthIsApril || false}
-                    onCheckedChange={(e) => setOption('firstMonthIsApril', e.checked)}
+                    onCheckedChange={(e) => {
+                      setOption('firstMonthIsApril', e.checked);
+                      if (e.checked) {
+                        setVolatileOption("confirmedNoInformationOfNextYearsHolidays", 0);
+                      }
+                    }}
                   />
                 </Field>
               </Stack>
