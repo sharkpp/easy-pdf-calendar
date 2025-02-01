@@ -18,13 +18,13 @@ type HolidayStoreState = {
 };
 
 type HolidayStoreAction = {
-  getHolidays: (year: number, month: number) => HolidaysType;
+  getHolidays: (year: number, month: number, OnlyStatutoryHolidays: boolean) => HolidaysType;
 };
 
 export const useHoliday = create<HolidayStoreState & HolidayStoreAction>(
   (_set, get) => ({
     holidays: new Map<string, HolidayInfoType>(holidaysJSON as HolidaysJpFileType),
-    getHolidays: (year: number, month: number): HolidaysType => {
+    getHolidays: (year: number, month: number, OnlyStatutoryHolidays: boolean = false): HolidaysType => {
       const selector = `${("0000"+year).substr(-4)}/${("00"+month).substr(-2)}/`;
       return Array.from(
         (Map.groupBy(get().holidays, (holiday) =>

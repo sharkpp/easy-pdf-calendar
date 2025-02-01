@@ -13,6 +13,7 @@ import { designNextSelector, designPrevSelector, useDesign } from '@/store/desig
 import { useShallow } from 'zustand/react/shallow';
 import { optionsSelector, useOptions, useVolatileOptions, volatileOptionsSelector } from '@/store/options';
 import { normalizeYearAndMonth } from '@/utils/calendar';
+import { useHoliday } from '@/store/holiday';
 
 type CalanderDesignPreviewProps = {
   design: string;
@@ -147,8 +148,8 @@ function CalanderDesignPreview({
 {
   const confirmedNoInformationOfNextYearsHolidays = useVolatileOptions(useShallow(volatileOptionsSelector('confirmedNoInformationOfNextYearsHolidays')));
   const setVolatileOption = useVolatileOptions(useShallow((state) => state.setOption));
-console.log({confirmedNoInformationOfNextYearsHolidays},!confirmedNoInformationOfNextYearsHolidays ||
-  confirmedNoInformationOfNextYearsHolidays < year)
+  const hasNextYearHolidays = useHoliday(useShallow((state) => 0 < Object.keys(state.getHolidays(year + 1, 3, true)).length));
+
   const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril'))) || false;
   const { year: yearR, month: monthR } = normalizeYearAndMonth(year, month, firstMonthIsApril);
 
@@ -291,8 +292,9 @@ console.log({confirmedNoInformationOfNextYearsHolidays},!confirmedNoInformationO
         onOpenChange={(open) => setOpenPrintOption(open)}
       />
 
-      {(!confirmedNoInformationOfNextYearsHolidays ||
-       confirmedNoInformationOfNextYearsHolidays < year) &&
+      {(!hasNextYearHolidays &&
+        (!confirmedNoInformationOfNextYearsHolidays ||
+         confirmedNoInformationOfNextYearsHolidays < year)) && 
       <MessageBox
         icon={<InfoIcon size={72} />}
         onClose={() => setVolatileOption('confirmedNoInformationOfNextYearsHolidays', year)}
