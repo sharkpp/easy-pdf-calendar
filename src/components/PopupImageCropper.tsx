@@ -24,7 +24,7 @@ type PopupImageCropperProps = {
   cropState?: CropperState;
   aspectRatio: number;
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onClose: () => void;
   onCropApply: (croppedImage: Blob | undefined, cropState: CropperState | undefined) => void;
 }
 
@@ -44,7 +44,7 @@ const cssColorTheme = {
 function PopupImageCropper({
   image, cropState,
   aspectRatio,
-  open, onOpenChange,
+  open, onClose,
   onCropApply,
 }: PopupImageCropperProps) {
 
@@ -64,7 +64,7 @@ function PopupImageCropper({
     <Dialog 
       size="cover"
       open={open}
-      onOpenChange={(details: OpenChangeDetails) => onOpenChange(details.open)}
+      onOpenChange={(details: OpenChangeDetails) => !details.open && onClose()}
       placement="center"
       motionPreset="slide-in-bottom"
     >

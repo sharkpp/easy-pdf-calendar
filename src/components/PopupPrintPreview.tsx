@@ -11,7 +11,7 @@ import {
   DialogRoot as Dialog,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button, Stack, Fieldset } from "@chakra-ui/react"
+import { Button, Stack, Fieldset, DialogActionTrigger } from "@chakra-ui/react"
 import { createListCollection } from "@chakra-ui/react"
 import {
   SelectContent,
@@ -38,11 +38,11 @@ import { optionsSelector, useOptions } from '@/store/options';
 import { normalizeYearAndMonth } from '@/utils/calendar';
 
 // 画像切り取りポップアップのプロパティの型
-type PopupImageCropperProps = {
+type PopupPrintPreviewProps = {
   design: string;
   year: number;
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onClose: () => void;
 }
 
 const MONTH_LIST = new Array(12).fill(0).map((_, i: number) => i + 1);
@@ -203,8 +203,8 @@ async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: 
 
 function PopupPrintPreview({
   design, year,
-  open, onOpenChange,
-}: PopupImageCropperProps)
+  open, onClose,
+}: PopupPrintPreviewProps)
 {
   const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril'))) || false;
 
@@ -320,7 +320,7 @@ function PopupPrintPreview({
     <Dialog 
       size="full"
       open={open}
-      onOpenChange={(details: OpenChangeDetails) => onOpenChange(details.open)}
+      onOpenChange={(details: OpenChangeDetails) => !details.open && onClose()}
       placement="center"
       motionPreset="slide-in-bottom"
     >
@@ -392,12 +392,9 @@ function PopupPrintPreview({
 
           </div>
 
-          <Button
-            alignSelf="stretch"
-            onClick={() => onOpenChange(false)}
-          >
-            閉じる
-          </Button>
+          <DialogActionTrigger asChild>
+            <Button type="submit" alignSelf="stretch">閉じる</Button>
+          </DialogActionTrigger>
 
         </DialogBody>
       </DialogContent>

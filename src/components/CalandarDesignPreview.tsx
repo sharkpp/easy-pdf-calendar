@@ -284,12 +284,12 @@ function CalanderDesignPreview({
         design={design}
         year={year}
         open={openPrintPreview}
-        onOpenChange={(open) => setOpenPrintPreview(open)}
+        onClose={() => setOpenPrintPreview(false)}
       />
 
       <PopupPrintOption
         open={openPrintOption}
-        onOpenChange={(open) => setOpenPrintOption(open)}
+        onClose={() => setOpenPrintOption(false)}
       />
 
       {(!hasNextYearHolidays &&

@@ -21,11 +21,11 @@ import { useShallow } from 'zustand/react/shallow';
 // 画像切り取りポップアップのプロパティの型
 type PopupImageCropperProps = {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onClose: () => void;
 }
 
 function PopupPrintPreview({
-  open, onOpenChange,
+  open, onClose,
 }: PopupImageCropperProps) {
   
   const useYearlyCalendar = useOptions(useShallow(optionsSelector('useYearlyCalendar')));
@@ -37,7 +37,7 @@ function PopupPrintPreview({
     <Dialog 
       //size="cover"
       open={open}
-      onOpenChange={(details: OpenChangeDetails) => onOpenChange(details.open)}
+      onOpenChange={(details: OpenChangeDetails) => !details.open && onClose()}
       placement="center"
       motionPreset="slide-in-bottom"
     >

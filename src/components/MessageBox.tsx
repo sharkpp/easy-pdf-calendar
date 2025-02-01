@@ -34,7 +34,7 @@ function MessageBox({
   return (
     <DialogRoot
       open={true}
-      onOpenChange={onClose}
+      onOpenChange={(details) => !details.open && onClose()}
       size={size}
       placement="center"
       motionPreset="slide-in-bottom"

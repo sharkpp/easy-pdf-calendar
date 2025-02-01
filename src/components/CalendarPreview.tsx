@@ -602,10 +602,10 @@ function CalendarPreview({
             {!blankImage && !readonly && <PopupImageCropper
               key={`image-block-${imageBlock.name}-cropper-popup`}
               open={imageBlock.openCropper}
-              onOpenChange={(open) => {
+              onClose={() => {
                 //console.log({imageBlock,open});
                 setImageBlocks(updateImageBlock(imageBlock.name, {
-                  openCropper: open
+                  openCropper: false
                 }));
               }}
               image={imageBlock.state ? imageBlock.state.imageUrl || '' : ''}
