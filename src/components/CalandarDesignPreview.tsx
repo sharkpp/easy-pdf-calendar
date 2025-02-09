@@ -303,10 +303,11 @@ function CalanderDesignPreview({
       </MessageBox>}
 
       <div css={css`width: 0px; height: 0px;`}>
-        {MonthList.reduce((r, month_) => { // カレンダーなどを生成するため非表示で残りの月も作る
+        {MonthList.reduce((r, month_: number) => { // カレンダーなどを生成するため非表示で残りの月も作る
           if ([month-1, month, month+1].indexOf(month_) < 0) {
             r.push(
               <CalendarPreview
+                key={`calender-${design}-${year}-${month_}`}
                 design={design}
                 year={ normalizeYearAndMonth(year, month_, firstMonthIsApril).year}
                 month={normalizeYearAndMonth(year, month_, firstMonthIsApril).month}

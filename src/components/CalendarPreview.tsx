@@ -640,7 +640,7 @@ function CalendarPreview({
           </>);
         case 'dropzone':
           if (blankImage || readonly) {
-            return <div />;
+            return <div key={`image-block-${imageBlock.name}-blank`} />;
           }
           return (
             <DropZone
