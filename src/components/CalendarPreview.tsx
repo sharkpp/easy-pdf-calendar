@@ -86,15 +86,13 @@ const MonthShortEn = [
 // >> https://stackoverflow.com/questions/23034283/
 const makeSelector = (id: string) => `*[*|label^="${id}"]`;
 
-// テキストを追加
-function addSvgText(
+function addSvgTextCore(
   baseElm: SVGRectElement,
   text: string,
-  { textColor, align = 'center' }: {
-    textColor?: string,
-    align?: string
-  }
-): void {
+  textColor?: string,
+  align?: string,
+  stroke: boolean = false
+) {
   const fontSize = baseElm.height.baseVal.value;
   baseElm.ownerSVGElement?.insertAdjacentHTML("beforeend", `
     <text xml:space="preserve" 
@@ -110,8 +108,13 @@ white-space: pre;
 display: inline;
 fill: ${textColor};
 fill-opacity: 1;
-stroke: none;
 dominant-baseline: alphabetic;
+${!stroke ? `stroke: none;` : `
+stroke: ${textColor};
+stroke-width: max(1px, calc(${fontSize} * 0.2));
+stroke-linecap: round;
+stroke-linejoin: round;
+`}"
       x="0"
       y="0"
     >${text}</text>
@@ -132,6 +135,23 @@ dominant-baseline: alphabetic;
     }
     textElm.setAttribute("y", "" + (baseElm.y.baseVal.value + baseElm.height.baseVal.value));
   }
+}
+
+// テキストを追加
+function addSvgText(
+  baseElm: SVGRectElement,
+  text: string,
+  { textColor, align = 'center', strokeColor }: {
+    textColor?: string,
+    align?: string,
+    strokeColor?: string,
+  }
+): void {
+  if (strokeColor) { // ストロークの描画
+    // svg2pdf で paint-order: stroke; がサポートされてなさそうなので自力で実装
+    addSvgTextCore(baseElm, text, strokeColor, align, true);
+  }
+  addSvgTextCore(baseElm, text, textColor, align);
 }
 
 const updateImageBlock = (name: string, imageBlockPart: Partial<Record<keyof ImageBlockInfoType, any>>, updatedCallback : undefined | (() => void) = undefined) => {
@@ -307,7 +327,7 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         addSvgText(
           holiday2BaseElm,
           holidayText.anniversary || '',
-          { textColor: holidayColor, align }
+          { textColor: holidayColor, align, strokeColor: '#FFFFFF' }
         );
       }
 
@@ -326,7 +346,7 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         addSvgText(
           holidayBaseElm,
           holidayText.holiday || '',
-          { textColor: holidayColor, align }
+          { textColor: holidayColor, align, strokeColor: '#FFFFFF' }
         );
       }
 
@@ -334,7 +354,7 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
       addSvgText(
         dateBaseElm,
         ""+Math.abs(date),
-        { textColor: textColor }
+        { textColor: textColor, strokeColor: '#FFFFFF' }
       );
     });
 
