@@ -18,8 +18,8 @@ import { Switch } from "@/components/ui/switch"
 import { optionsSelector, useOptions, useVolatileOptions } from '@/store/options';
 import { useShallow } from 'zustand/react/shallow';
 import { useState } from 'react';
-import PopupMyHolidaysEditor from '@/components/PopupMyHolidaysEditor';
-import { myHolidaysSelector, setMyHolidaysSelector, useHoliday } from '@/store/holiday';
+import PopupAnniversarysEditor from '@/components/PopupAnniversarysEditor';
+import { anniversarysSelector, setAnniversarysSelector, useHoliday } from '@/store/holiday';
 
 // 印刷オプションのプロパティの型
 type PopupImageCropperProps = {
@@ -33,11 +33,11 @@ function PopupPrintPreview({
   
   const useYearlyCalendar = useOptions(useShallow(optionsSelector('useYearlyCalendar')));
   const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril')));
-  const myHolidays = useHoliday(useShallow(myHolidaysSelector()));
-  const setMyHolidays = useHoliday(useShallow(setMyHolidaysSelector()));
+  const anniversarys = useHoliday(useShallow(anniversarysSelector()));
+  const setAnniversarys = useHoliday(useShallow(setAnniversarysSelector()));
   const setOption = useOptions(useShallow((state) => state.setOption));
   const setVolatileOption = useVolatileOptions(useShallow((state) => state.setOption));
-  const [ openMyHolidaysEditor, setOpenMyHolidaysEditor ] = useState(false);
+  const [ openAnniversarysEditor, setOpenAnniversarysEditor ] = useState(false);
 
   return (
     <Dialog 
@@ -106,7 +106,7 @@ function PopupPrintPreview({
                 </Field>
 
                 <Field orientation="horizontal" label="独自の記念日を定義">
-                  <Button variant="outline" onClick={() => setOpenMyHolidaysEditor(true)}>編集...</Button>
+                  <Button variant="outline" onClick={() => setOpenAnniversarysEditor(true)}>編集...</Button>
                 </Field>
 
               </Stack>
@@ -118,11 +118,11 @@ function PopupPrintPreview({
             
           </Fieldset.Root>
 
-          <PopupMyHolidaysEditor
-            open={openMyHolidaysEditor}
-            value={myHolidays}
-            onClose={() => setOpenMyHolidaysEditor(false)}
-            onChange={(newItems) => setMyHolidays(newItems)}
+          <PopupAnniversarysEditor
+            open={openAnniversarysEditor}
+            value={anniversarys}
+            onClose={() => setOpenAnniversarysEditor(false)}
+            onChange={(newItems) => setAnniversarys(newItems)}
           />
 
         </DialogBody>

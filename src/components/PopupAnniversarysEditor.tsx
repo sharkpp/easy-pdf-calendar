@@ -31,7 +31,7 @@ import { useEffect, useRef, useState } from 'react';
 
 
 // 独自の記念日を定義のプロパティの型
-type PopupMyHolidaysEditorProps = {
+type PopupAnniversarysEditorProps = {
   open: boolean;
   onClose: () => void;
   value: HolidayInfoListType,
@@ -255,10 +255,10 @@ function HolidaysList({
   );
 }
 
-function PopupMyHolidaysEditor({
+function PopupAnniversarysEditor({
   open, onClose,
   value, onChange,
-}: PopupMyHolidaysEditorProps) {
+}: PopupAnniversarysEditorProps) {
   
   const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril')));
   const setOption = useOptions(useShallow((state) => state.setOption));
@@ -346,4 +346,4 @@ function PopupMyHolidaysEditor({
   )
 }
 
-export default PopupMyHolidaysEditor;
+export default PopupAnniversarysEditor;

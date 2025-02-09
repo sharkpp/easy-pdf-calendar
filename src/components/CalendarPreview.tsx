@@ -274,18 +274,49 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
             : dayOfWeekColors[dayOfWeek]
           ));
 
-      addSvgText(
-        dateBaseElm,
-        ""+Math.abs(date),
-        { textColor: textColor }
-      );
+      // 記念日枠を追加
+      const holidaymarkBaseElm = svgElm?.querySelector(makeSelector(`holidaymark-${dateIndex}`)) as SVGRectElement;
+      if (holidaymarkBaseElm && holidayText && holidayText?.mark) {
+        name = (holidaymarkBaseElm.getAttribute('inkscape:label') || '');
+        // format
+        const [ _, _kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', '', ''];
+        const formats = formats_.split(',');
+        const align = (
+          0<=formats.indexOf('left') ? 'left' :
+          0<=formats.indexOf('right')? 'right' :
+          'center'
+        );
+        addSvgText(
+          holidaymarkBaseElm,
+          holidayText.mark || '',
+          { textColor: holidayColor, align }
+        );
+      }
+      // 記念日を追加
+      const holiday2BaseElm = svgElm?.querySelector(makeSelector(`holiday2-${dateIndex}`)) as SVGRectElement;
+      if (holiday2BaseElm && holidayText && holidayText?.anniversary) {
+        name = (holiday2BaseElm.getAttribute('inkscape:label') || '');
+        // format
+        const [ _, _kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', '', ''];
+        const formats = formats_.split(',');
+        const align = (
+          0<=formats.indexOf('left') ? 'left' :
+          0<=formats.indexOf('right')? 'right' :
+          'center'
+        );
+        addSvgText(
+          holiday2BaseElm,
+          holidayText.anniversary || '',
+          { textColor: holidayColor, align }
+        );
+      }
 
       // 祝日名を追加
       const holidayBaseElm = svgElm?.querySelector(makeSelector(`holiday-${dateIndex}`)) as SVGRectElement;
       if (holidayBaseElm && holidayText && holidayText.holiday) {
         name = (holidayBaseElm.getAttribute('inkscape:label') || '');
         // format
-        const [ _, _kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', ''];
+        const [ _, _kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', '', ''];
         const formats = formats_.split(',');
         const align = (
           0<=formats.indexOf('left') ? 'left' :
@@ -299,24 +330,12 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         );
       }
 
-      // 記念日を追加
-      const holiday2BaseElm = svgElm?.querySelector(makeSelector(`holiday2-${dateIndex}`)) as SVGRectElement;
-      if (holiday2BaseElm && holidayText && holidayText?.myHoliday) {
-        name = (holidayBaseElm.getAttribute('inkscape:label') || '');
-        // format
-        const [ _, _kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', ''];
-        const formats = formats_.split(',');
-        const align = (
-          0<=formats.indexOf('left') ? 'left' :
-          0<=formats.indexOf('right')? 'right' :
-          'center'
-        );
-        addSvgText(
-          holidayBaseElm,
-          holidayText.myHoliday || '',
-          { textColor: holidayColor, align }
-        );
-      }
+      // 日付を追加
+      addSvgText(
+        dateBaseElm,
+        ""+Math.abs(date),
+        { textColor: textColor }
+      );
     });
 
   return svgElm;

@@ -15,7 +15,8 @@ export type HolidayInfoListType = Map<string, HolidayInfoType>;
 
 export type HolidaysItemType = {
   holiday?: string;
-  myHoliday?: string;
+  anniversary?: string;
+  mark?: string;
 };
 export type HolidaysItemType_ = string;
 export type HolidaysType = [undefined, ...HolidaysItemType[]] & { length: 32 };
@@ -24,13 +25,13 @@ type HolidaysJpFileType = [ string, HolidayInfoType ][];
 
 type HolidayStoreState = {
   holidays: HolidayInfoListType;
-  myHolidays: HolidayInfoListType;
+  anniversarys: HolidayInfoListType;
 };
 
 type HolidayStoreAction = {
   getHolidays: (year: number, month: number, OnlyStatutoryHolidays?: boolean) => HolidaysType;
-  getMyHolidays: () => HolidayInfoListType;
-  setMyHolidays: (holidays: HolidayInfoListType) => void;
+  getAnniversarys: () => HolidayInfoListType;
+  setAnniversarys: (holidays: HolidayInfoListType) => void;
 };
 
 const cache = new Map();
@@ -52,8 +53,8 @@ export const useHoliday = create(
   persist(
     (set, get: () => HolidayStoreState & HolidayStoreAction) => ({
       holidays: new Map<string, HolidayInfoType>(holidaysJSON as HolidaysJpFileType),
-      myHolidays: new Map<string, HolidayInfoType>(),
-      getHolidays: (year: number, month: number, OnlyStatutoryHolidays?: boolean): HolidaysType => {
+      anniversarys: new Map<string, HolidayInfoType>(),
+      getHolidays: (year: number, month: number, holidaysOnly?: boolean): HolidaysType => {
         const selector = `${("0000"+year).substr(-4)}/${("00"+month).substr(-2)}/`;
         return memo(
           ([] as [string, HolidayInfoType][]).concat(
@@ -62,7 +63,7 @@ export const useHoliday = create(
               0 == holiday[0].indexOf(selector) ? true : false,
             ).get(true) || []) as [string, HolidayInfoType][]),
             // ユーザーの記念日
-            Array.from((Map.groupBy(get().myHolidays, (holiday) =>
+            holidaysOnly ? [] : Array.from((Map.groupBy(get().anniversarys, (holiday) =>
               0 == holiday[0].indexOf(selector) ? true : false,
             ).get(true) || []) as [string, HolidayInfoType][])
           )
@@ -71,19 +72,25 @@ export const useHoliday = create(
             if (!r[key]) {
               r[key] = {};
             }
-            r[key].holiday = item[1].name;
+            if (item[1].mark) {
+              r[key].anniversary = item[1].name;
+              r[key].mark = item[1].mark;
+            }
+            else {
+              r[key].holiday = item[1].name;
+            }
             return r;
           }, [] as unknown as HolidaysType)
         );
       },
-      getMyHolidays: (): HolidayInfoListType => {
-        return get().myHolidays;
+      getAnniversarys: (): HolidayInfoListType => {
+        return get().anniversarys;
       },
-      setMyHolidays: (holidays: HolidayInfoListType): void => {
+      setAnniversarys: (holidays: HolidayInfoListType): void => {
         const state = get();
         set({
           ...state,
-          myHolidays: holidays
+          anniversarys: holidays
         });
       }
     }),
@@ -95,16 +102,16 @@ export const useHoliday = create(
 );
 
 export const holidaysSelector =
-  (year: number, month: number, OnlyStatutoryHolidays: boolean = false) => 
-    (state: HolidayStoreAction) => state.getHolidays(year, month, OnlyStatutoryHolidays)
+  (year: number, month: number, holidaysOnly: boolean = false) => 
+    (state: HolidayStoreAction) => state.getHolidays(year, month, holidaysOnly)
   ;
 
-export const myHolidaysSelector =
+export const anniversarysSelector =
   () => 
-    (state: HolidayStoreAction) => state.getMyHolidays()
+    (state: HolidayStoreAction) => state.getAnniversarys()
   ;
 
-export const setMyHolidaysSelector =
+export const setAnniversarysSelector =
   () => 
-    (state: HolidayStoreAction) => state.setMyHolidays
+    (state: HolidayStoreAction) => state.setAnniversarys
   ;
