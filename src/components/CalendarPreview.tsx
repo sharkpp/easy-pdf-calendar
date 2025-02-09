@@ -282,7 +282,7 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
 
       // 祝日名を追加
       const holidayBaseElm = svgElm?.querySelector(makeSelector(`holiday-${dateIndex}`)) as SVGRectElement;
-      if (holidayBaseElm && holidayText) {
+      if (holidayBaseElm && holidayText && holidayText.holiday) {
         name = (holidayBaseElm.getAttribute('inkscape:label') || '');
         // format
         const [ _, _kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', ''];
@@ -294,7 +294,26 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         );
         addSvgText(
           holidayBaseElm,
-          holidayText,
+          holidayText.holiday || '',
+          { textColor: holidayColor, align }
+        );
+      }
+
+      // 記念日を追加
+      const holiday2BaseElm = svgElm?.querySelector(makeSelector(`holiday2-${dateIndex}`)) as SVGRectElement;
+      if (holiday2BaseElm && holidayText && holidayText?.myHoliday) {
+        name = (holidayBaseElm.getAttribute('inkscape:label') || '');
+        // format
+        const [ _, _kind, formats_ ] = /^(.*)\[(.*)\]$/.exec(name) || ['', ''];
+        const formats = formats_.split(',');
+        const align = (
+          0<=formats.indexOf('left') ? 'left' :
+          0<=formats.indexOf('right')? 'right' :
+          'center'
+        );
+        addSvgText(
+          holidayBaseElm,
+          holidayText.myHoliday || '',
           { textColor: holidayColor, align }
         );
       }
@@ -398,7 +417,7 @@ function CalendarPreview({
     // 更新
     setCachedCalendarElm(design, year, month, calendarElm_);
 //console.warn(`${calendarKey} Reflecting the month's content from the template`);
-  }, [cachedCalendarTemplateElm, svgContainerElm, designInfo]);
+  }, [cachedCalendarTemplateElm, svgContainerElm, designInfo, holidays]);
 
   // 画像埋め込み枠を列挙
   useEffect(() => {

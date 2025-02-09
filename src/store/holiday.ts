@@ -1,8 +1,9 @@
 // 祝日・休日を保持する
 
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { persist } from 'zustand/middleware'
 import holidaysJSON from '../../holidays.json'
+import { createSuperJSONStorage } from '@/utils/zustand-middleware-superjson-storage';
 
 export type HolidayInfoType = {
   date: number;
@@ -34,8 +35,8 @@ type HolidayStoreAction = {
 
 const cache = new Map();
 function memo(value: any) {
-  const cacheKey = JSON.stringify(new Map().set(10,"abc"),(_key, value) => {
-    if (value.constructor.name === "Map") {
+  const cacheKey = JSON.stringify(value,(_key, value) => {
+    if (value && value.constructor && value.constructor.name === "Map") {
       return Array.from(value);
     }
     return value;
@@ -88,7 +89,7 @@ export const useHoliday = create(
     }),
     {
       name: 'ocm-calendar-holidays',
-      storage: createJSONStorage(() => localStorage), 
+      storage: createSuperJSONStorage(() => localStorage), 
     }
   ),
 );

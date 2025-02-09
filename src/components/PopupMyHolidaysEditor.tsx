@@ -1,7 +1,7 @@
 // 独自の記念日を定義
 
 import { css, FunctionInterpolation, Theme } from '@emotion/react';
-import { CalendarDays as CalendarDaysIcon } from 'lucide-react';
+import { CalendarDays as CalendarDaysIcon, Trash2 as Trash2Icon } from 'lucide-react';
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -11,11 +11,9 @@ import {
   DialogTitle,
   DialogActionTrigger,
 } from "@/components/ui/dialog";
-import { createListCollection, Editable } from "@chakra-ui/react"
+import { createListCollection, Editable, IconButton } from "@chakra-ui/react"
 import { OpenChangeDetails } from '@zag-js/dialog';
-import { Button, Stack, Fieldset } from "@chakra-ui/react"
-import { Field } from "@/components/ui/field"
-import { Switch } from "@/components/ui/switch"
+import { Button, Stack, Fieldset } from "@chakra-ui/react";
 import {
   SelectContent,
   SelectItem,
@@ -51,11 +49,8 @@ function DatePicker() {
   
 }
 
-const defaultItems = new Map();
-defaultItems.set('2025/4/30',{date:30,name:"テスト"});
-defaultItems.set('2025/4/31',{date:31,name:"テスト"});
-
-function splitDate(date: string): number[] {
+// 年月日を分解
+function parseDate(date: string): number[] {
   const date_ = date.split('/');
   if (3 !== date_.length) {
     return [];
@@ -70,13 +65,17 @@ function splitDate(date: string): number[] {
   return date__;
 }
 
+function joinDate(date: number[]) {
+  return `${("0000"+date[0]).substr(-4)}/${("00"+date[1]).substr(-2)}/${("00"+date[2]).substr(-2)}`;
+}
+
+// 年月日文字列を比較
 function compByDate(a: [string, HolidayInfoType], b: [string, HolidayInfoType]): number {
   const ak = a[0];
   const bk = b[0];
   if (a !== b) {
-    const a = splitDate(ak);
-    const b = splitDate(bk);
-    console.log({ak,bk,a,b})
+    const a = parseDate(ak);
+    const b = parseDate(bk);
     if (a.length !== b.length) {
       return a.length < b.length ? -1 : 1;
     }
@@ -93,6 +92,7 @@ function compByDate(a: [string, HolidayInfoType], b: [string, HolidayInfoType]):
   return 0;
 }
 
+// 編集用フィールド
 function EditableField(props: {
   value: string, onChangeValue: (value: string) => void,
   clearWhenCommit?: boolean,
@@ -127,10 +127,12 @@ function EditableField(props: {
   );
 }
 
+// 記念日のマークの一覧
 const HolidayMarkList = createListCollection({
   items: ["〇","♡","☆"],
 });
-console.log({HolidayMarkList})
+
+// 記念日の一覧
 function HolidaysList({
   dialogContentRef,
   holidays,
@@ -146,6 +148,7 @@ function HolidaysList({
             <Table.ColumnHeader width="8rem">年月日</Table.ColumnHeader>
             <Table.ColumnHeader>名称</Table.ColumnHeader>
             <Table.ColumnHeader width="5rem">マーク</Table.ColumnHeader>
+            <Table.ColumnHeader width="5rem">削除</Table.ColumnHeader>
             </Table.Row>
         </Table.Header>
 
@@ -156,14 +159,14 @@ function HolidaysList({
                 <EditableField
                   placeholder="YYYY/MM/DD"
                   value={key}
-                  onChangeValue={(value) => {console.log(value)
-                    const date_ = splitDate(value);
+                  onChangeValue={(value) => {
+                    const date_ = parseDate(value);
                     if (date_.length < 1) {
                       onHolidaysChange(new Map(holidays));
                     } else {
                       const newHolidays = new Map(holidays);
                       newHolidays.delete(key);
-                      newHolidays.set(value, { date, name, mark });
+                      newHolidays.set(joinDate(date_), { date, name, mark });
                       onHolidaysChange(new Map([...newHolidays].sort(compByDate)));
                     }
                   }}
@@ -207,6 +210,20 @@ function HolidaysList({
                   </SelectContent>
                 </SelectRoot>
               </Table.Cell>
+              <Table.Cell>
+                <IconButton
+                  size="md"
+                  variant="outline"
+                  colorPalette="red"
+                  onClick={() => {
+                      const newHolidays = new Map(holidays);
+                      newHolidays.delete(key);
+                      onHolidaysChange(new Map([...newHolidays].sort(compByDate)));
+                    }}
+                >
+                  <Trash2Icon />
+                </IconButton>
+              </Table.Cell>
             </Table.Row>
           ))}
             <Table.Row key="new">
@@ -215,15 +232,17 @@ function HolidaysList({
                   placeholder="YYYY/MM/DD"
                   value={newDateField}
                   onChangeValue={(value) => {
-                    const date_ = splitDate(value);
+                    const date_ = parseDate(value);
                     if (0 < date_.length) {
                       const newHolidays = new Map(holidays);
-                      newHolidays.set(value, { date: date_[2], name: "" });
+                      newHolidays.set(joinDate(date_), { date: date_[2], name: "" });
                       onHolidaysChange(new Map([...newHolidays].sort(compByDate)));
                       setNewDateField("");
                     }
                   }}
                 />
+              </Table.Cell>
+              <Table.Cell>
               </Table.Cell>
               <Table.Cell>
               </Table.Cell>
@@ -243,10 +262,14 @@ function PopupMyHolidaysEditor({
   
   const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril')));
   const setOption = useOptions(useShallow((state) => state.setOption));
-  const [ holidaysItems, setHolidaysItems ] = useState<HolidayInfoListType>(defaultItems);
+  const [ holidaysItems, setHolidaysItems ] = useState<HolidayInfoListType>(new Map());
   //const dialogContentRef = useRef<HTMLDivElement>(null);
   const [ dialogContentRef, setDialogContentRef ] = useState<HTMLDivElement | null>(null);
-  console.log({holidaysItems,dialogContentRef:!!dialogContentRef})
+
+  useEffect(() => {
+    setHolidaysItems(new Map([...value].sort(compByDate)));
+  }, [value]);
+
   return (
     <Dialog 
       open={open}
