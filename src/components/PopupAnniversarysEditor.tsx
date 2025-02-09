@@ -22,12 +22,10 @@ import {
   SelectTrigger,
   SelectValueText,
 } from "@/components/ui/select";
-import { optionsSelector, useOptions, useVolatileOptions } from '@/store/options';
-import { useShallow } from 'zustand/react/shallow';
 
 import { Table } from "@chakra-ui/react"
 import { HolidayInfoListType, HolidayInfoType } from '@/store/holiday';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 // 独自の記念日を定義のプロパティの型
@@ -45,9 +43,8 @@ type HolidaysListProps = {
 }
 
 
-function DatePicker() {
-  
-}
+// function DatePicker() {
+// }
 
 // 年月日を分解
 function parseDate(date: string): number[] {
@@ -65,6 +62,7 @@ function parseDate(date: string): number[] {
   return date__;
 }
 
+// 年月日を結合
 function joinDate(date: number[]) {
   return `${("0000"+date[0]).substr(-4)}/${("00"+date[1]).substr(-2)}/${("00"+date[2]).substr(-2)}`;
 }
@@ -128,8 +126,8 @@ function EditableField(props: {
 }
 
 // 記念日のマークの一覧
-const HolidayMarkList = createListCollection({
-  items: ["〇","♡","☆"],
+const AnniversaryMarkList = createListCollection({
+  items: ["〇","♡","☆","🎂"],
 });
 
 // 記念日の一覧
@@ -138,7 +136,6 @@ function HolidaysList({
   holidays,
   onHolidaysChange,
 }: HolidaysListProps) {
-  console.log("HolidaysList",dialogContentRef)
   const [ newDateField, setNewDateField ] = useState("");
   return (
     <Table.ScrollArea borderWidth="1px" rounded="md" height="160px">
@@ -185,7 +182,7 @@ function HolidaysList({
               </Table.Cell>
               <Table.Cell>
                 <SelectRoot
-                  collection={HolidayMarkList}
+                  collection={AnniversaryMarkList}
                   size="xs"
                   // @ts-ignore なんか定義がおかしい？
                   value={[mark]}
@@ -202,7 +199,7 @@ function HolidaysList({
                   <SelectContent
                     portalRef={dialogContentRef.current ? dialogContentRef as React.RefObject<HTMLElement> : undefined}
                   >
-                    {HolidayMarkList.items.map(item => 
+                    {AnniversaryMarkList.items.map(item => 
                       <SelectItem item={item} key={item}>
                         {item}
                       </SelectItem>
@@ -235,7 +232,11 @@ function HolidaysList({
                     const date_ = parseDate(value);
                     if (0 < date_.length) {
                       const newHolidays = new Map(holidays);
-                      newHolidays.set(joinDate(date_), { date: date_[2], name: "" });
+                      newHolidays.set(joinDate(date_), {
+                        date: date_[2],
+                        name: "",
+                        mark: AnniversaryMarkList.items[0]
+                      });
                       onHolidaysChange(new Map([...newHolidays].sort(compByDate)));
                       setNewDateField("");
                     }
@@ -260,10 +261,7 @@ function PopupAnniversarysEditor({
   value, onChange,
 }: PopupAnniversarysEditorProps) {
   
-  const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril')));
-  const setOption = useOptions(useShallow((state) => state.setOption));
   const [ holidaysItems, setHolidaysItems ] = useState<HolidayInfoListType>(new Map());
-  //const dialogContentRef = useRef<HTMLDivElement>(null);
   const [ dialogContentRef, setDialogContentRef ] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
