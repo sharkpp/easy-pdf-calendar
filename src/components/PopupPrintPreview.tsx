@@ -10,8 +10,9 @@ import {
   DialogHeader,
   DialogRoot as Dialog,
   DialogTitle,
+  DialogActionTrigger,
 } from "@/components/ui/dialog";
-import { Button, Stack, Fieldset, DialogActionTrigger } from "@chakra-ui/react"
+import { Button, Stack, Fieldset } from "@chakra-ui/react"
 import { createListCollection } from "@chakra-ui/react"
 import {
   SelectContent,
@@ -37,7 +38,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { optionsSelector, useOptions } from '@/store/options';
 import { normalizeYearAndMonth } from '@/utils/calendar';
 
-// 画像切り取りポップアップのプロパティの型
+// 印刷プレビュー画面のプロパティの型
 type PopupPrintPreviewProps = {
   design: string;
   year: number;

@@ -17,8 +17,11 @@ import { Field } from "@/components/ui/field"
 import { Switch } from "@/components/ui/switch"
 import { optionsSelector, useOptions, useVolatileOptions } from '@/store/options';
 import { useShallow } from 'zustand/react/shallow';
+import { useState } from 'react';
+import PopupMyHolidaysEditor from '@/components/PopupMyHolidaysEditor';
+import { myHolidaysSelector, setMyHolidaysSelector, useHoliday } from '@/store/holiday';
 
-// 画像切り取りポップアップのプロパティの型
+// 印刷オプションのプロパティの型
 type PopupImageCropperProps = {
   open: boolean;
   onClose: () => void;
@@ -30,8 +33,11 @@ function PopupPrintPreview({
   
   const useYearlyCalendar = useOptions(useShallow(optionsSelector('useYearlyCalendar')));
   const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril')));
+  const myHolidays = useHoliday(useShallow(myHolidaysSelector()));
+  const setMyHolidays = useHoliday(useShallow(setMyHolidaysSelector()));
   const setOption = useOptions(useShallow((state) => state.setOption));
   const setVolatileOption = useVolatileOptions(useShallow((state) => state.setOption));
+  const [ openMyHolidaysEditor, setOpenMyHolidaysEditor ] = useState(false);
 
   return (
     <Dialog 
@@ -67,25 +73,20 @@ function PopupPrintPreview({
         <DialogBody>
 
           <Fieldset.Root size="lg" maxW="md">
-            {/* <Stack>
-              <Fieldset.Legend>カレンダー生成時のオプション</Fieldset.Legend>
-              <Fieldset.HelperText>
-                カレンダーを生成する際のオプションを設定します。
-              </Fieldset.HelperText>
-            </Stack> */}
-
             <Fieldset.Content>
               <Stack gap="4" maxW="sm" css={css`
                   width: 100%;
                   max-width: 100%;
                   --field-label-width: auto;
                 `}>
+
                 <Field orientation="horizontal" label="年間カレンダーを追加する">
                   <Switch
                     checked={useYearlyCalendar || false}
                     onCheckedChange={(e) => setOption('useYearlyCalendar', e.checked)}
                   />
                 </Field>
+
                 <Field orientation="horizontal" label={<span
                     css={css`
                       word-break: keep-all;
@@ -97,12 +98,17 @@ function PopupPrintPreview({
                     checked={firstMonthIsApril || false}
                     onCheckedChange={(e) => {
                       setOption('firstMonthIsApril', e.checked);
-                      if (e.checked) {
+                      if (e.checked) { // 警告を表示
                         setVolatileOption("confirmedNoInformationOfNextYearsHolidays", 0);
                       }
                     }}
                   />
                 </Field>
+
+                <Field orientation="horizontal" label="独自の記念日を定義">
+                  <Button variant="outline" onClick={() => setOpenMyHolidaysEditor(true)}>編集...</Button>
+                </Field>
+
               </Stack>
             </Fieldset.Content>
 
@@ -111,6 +117,13 @@ function PopupPrintPreview({
             </DialogActionTrigger>
             
           </Fieldset.Root>
+
+          <PopupMyHolidaysEditor
+            open={openMyHolidaysEditor}
+            value={myHolidays}
+            onClose={() => setOpenMyHolidaysEditor(false)}
+            onChange={(newItems) => setMyHolidays(newItems)}
+          />
 
         </DialogBody>
       </DialogContent>
