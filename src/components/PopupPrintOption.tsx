@@ -11,8 +11,16 @@ import {
   DialogTitle,
   DialogActionTrigger,
 } from "@/components/ui/dialog";
+import {
+  SelectContent,
+  SelectItem,
+  //SelectLabel,
+  SelectRoot,
+  SelectTrigger,
+  SelectValueText,
+} from "@/components/ui/select"
 import { OpenChangeDetails } from '@zag-js/dialog';
-import { Button, Stack, Fieldset } from "@chakra-ui/react"
+import { Button, Stack, Fieldset, createListCollection } from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
 import { Switch } from "@/components/ui/switch"
 import { optionsSelector, useOptions, useVolatileOptions } from '@/store/options';
@@ -20,6 +28,37 @@ import { useShallow } from 'zustand/react/shallow';
 import { useState } from 'react';
 import PopupAnniversarysEditor from '@/components/PopupAnniversarysEditor';
 import { anniversarysSelector, setAnniversarysSelector, useHoliday } from '@/store/holiday';
+import { useYearSelect } from '@/store/date-select';
+
+const nowJST = Date.now() + 9 * 60 * 60 * 1000;
+const dateJST = new Date(nowJST);
+
+type YearInfo = {
+  value: number;
+  label: string;
+};
+
+function year2YearInfo(year: number, type_: number): YearInfo {
+  return {
+    label: [
+      `去年(${year}年)`,
+      `今年(${year}年)`,
+      `来年(${year}年)`,
+    ][type_],
+    value: year
+  };
+}
+
+const YearsList = createListCollection({
+  // 去年
+  // 今年
+  // 来年
+  items: ([] as YearInfo[]).concat(
+    dateJST.getUTCMonth() + 1 < 4 ? [ year2YearInfo(dateJST.getUTCFullYear() - 1, 0) ] : [],
+    [ year2YearInfo(dateJST.getUTCFullYear(), 1)  ],
+    [ year2YearInfo(dateJST.getUTCFullYear() + 1, 2) ],
+  ),
+});
 
 // 印刷オプションのプロパティの型
 type PopupImageCropperProps = {
@@ -31,6 +70,9 @@ function PopupPrintPreview({
   open, onClose,
 }: PopupImageCropperProps) {
   
+  const yearSelect = useYearSelect.use.year();
+  const setYearSelect = useYearSelect.use.setYearSelect();
+  const [ dialogContentRef, setDialogContentRef ] = useState<HTMLDivElement | null>(null);
   const useYearlyCalendar = useOptions(useShallow(optionsSelector('useYearlyCalendar')));
   const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril')));
   const anniversarys = useHoliday(useShallow(anniversarysSelector()));
@@ -55,6 +97,7 @@ function PopupPrintPreview({
             max-height: calc(100% - 1.75rem - var(--chakra-spacing-6) - var(--chakra-spacing-4));
           }
         `}
+        ref={elm => setDialogContentRef(elm)}
       >
         <DialogHeader>
           <DialogTitle
@@ -79,6 +122,32 @@ function PopupPrintPreview({
                   max-width: 100%;
                   --field-label-width: auto;
                 `}>
+
+                <Field orientation="horizontal" label="カレンダーを作成する年の指定">
+                  <SelectRoot
+                      collection={YearsList}
+                      size="sm"
+                      width="320px"
+                      // @ts-ignore なんか定義がおかしい？ string[] を要求しているが実際には number[] が返ってくる...
+                      value={[yearSelect]}
+                      // @ts-ignore なんか定義がおかしい？サンプル通りにやっても数値の配列で返ってくる...
+                      onValueChange={(e) => setYearSelect(e.value[0])}
+                      css={css`width: 9rem;`}
+                    >
+                    <SelectTrigger>
+                      <SelectValueText placeholder="作成する年の指定" />
+                    </SelectTrigger>
+                    <SelectContent
+                      portalRef={{current:dialogContentRef} as React.RefObject<HTMLDivElement>}
+                    >
+                      {YearsList.items.map((year) => (
+                        <SelectItem item={year} key={year.value}>
+                          {year.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </SelectRoot>
+                </Field>
 
                 <Field orientation="horizontal" label="年間カレンダーを追加する">
                   <Switch

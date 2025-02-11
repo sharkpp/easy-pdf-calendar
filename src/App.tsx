@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { css } from '@emotion/react';
 import DesignList from './components/DesignList';
 import CalanderDesignPreview from './components/CalandarDesignPreview';
+import { useYearSelect } from '@/store/date-select';
 
 // 表示するUIの種類
 const UI = {
@@ -12,7 +13,7 @@ const UI = {
 function App()
 {
   const [ design, setDesign ] = useState("");
-  const [ year, _setYear ] = useState(2025);
+  const year = useYearSelect.use.year();
   const [ month, setMonth ] = useState(1);
   const [ ui, setUi ] = useState(UI.SelectDesign);
 
