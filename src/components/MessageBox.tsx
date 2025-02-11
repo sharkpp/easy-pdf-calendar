@@ -1,6 +1,6 @@
 // メッセージ表示用コンポーネント
 
-import { Button, For, HStack } from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react"
 import {
   DialogActionTrigger,
   DialogBody,

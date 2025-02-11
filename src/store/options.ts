@@ -11,7 +11,7 @@ type OptionsStoreStateKey = keyof OptionsStoreState;
 
 type OptionsStoreAction = {
   getOption: <K extends keyof OptionsStoreState>(name: OptionsStoreStateKey) => OptionsStoreState[K] | null;
-  setOption: <K extends keyof OptionsStoreState>(name: OptionsStoreStateKey, value: OptionsStoreState[K]) => OptionsStoreState[K] | null;
+  setOption: <K extends keyof OptionsStoreState>(name: OptionsStoreStateKey, value: OptionsStoreState[K]) => void;
 }
 
 export const useOptions = create(
@@ -22,7 +22,7 @@ export const useOptions = create(
       getOption: <K extends keyof OptionsStoreState>(name: OptionsStoreStateKey): OptionsStoreState[K] | null => {
         return get()[name];
       },
-      setOption: <K extends keyof OptionsStoreState>(name: OptionsStoreStateKey, value: OptionsStoreState[K]): OptionsStoreState[K] | null => {
+      setOption: <K extends keyof OptionsStoreState>(name: OptionsStoreStateKey, value: OptionsStoreState[K]): void => {
         set({ [name]: value });
       },
     }),
@@ -48,7 +48,7 @@ export const optionsSelector =
   
   type VolatileOptionsStoreAction = {
     getOption: <K extends keyof VolatileOptionsStoreState>(name: VolatileOptionsStoreStateKey) => VolatileOptionsStoreState[K] | null;
-    setOption: <K extends keyof VolatileOptionsStoreState>(name: VolatileOptionsStoreStateKey, value: VolatileOptionsStoreState[K]) => VolatileOptionsStoreState[K] | null;
+    setOption: <K extends keyof VolatileOptionsStoreState>(name: VolatileOptionsStoreStateKey, value: VolatileOptionsStoreState[K]) => void;
   }
   
   export const useVolatileOptions = create(
@@ -58,7 +58,7 @@ export const optionsSelector =
         getOption: <K extends keyof VolatileOptionsStoreState>(name: VolatileOptionsStoreStateKey): VolatileOptionsStoreState[K] | null => {
           return get()[name];
         },
-        setOption: <K extends keyof VolatileOptionsStoreState>(name: VolatileOptionsStoreStateKey, value: VolatileOptionsStoreState[K]): VolatileOptionsStoreState[K] | null => {
+        setOption: <K extends keyof VolatileOptionsStoreState>(name: VolatileOptionsStoreStateKey, value: VolatileOptionsStoreState[K]): void => {
           set({ [name]: value });
         },
       }),
