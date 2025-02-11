@@ -105,7 +105,7 @@ function PopupPrintPreview({
                   />
                 </Field>
 
-                <Field orientation="horizontal" label="独自の記念日を定義">
+                <Field orientation="horizontal" label="記念日を定義">
                   <Button variant="outline" onClick={() => setOpenAnniversarysEditor(true)}>編集...</Button>
                 </Field>
 

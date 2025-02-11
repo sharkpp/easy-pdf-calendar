@@ -1,4 +1,4 @@
-// 独自の記念日を定義
+// 記念日を定義
 
 import { css, FunctionInterpolation, Theme } from '@emotion/react';
 import { CalendarDays as CalendarDaysIcon, Trash2 as Trash2Icon } from 'lucide-react';
@@ -28,7 +28,7 @@ import { HolidayInfoListType, HolidayInfoType } from '@/store/holiday';
 import { useEffect, useState } from 'react';
 
 
-// 独自の記念日を定義のプロパティの型
+// 記念日を定義のプロパティの型
 type PopupAnniversarysEditorProps = {
   open: boolean;
   onClose: () => void;
@@ -295,7 +295,7 @@ function PopupAnniversarysEditor({
                 gap: 0.5rem;
             `}>
             <CalendarDaysIcon />
-              独自の記念日を定義
+              記念日を定義
             </DialogTitle>
           <DialogCloseTrigger />
         </DialogHeader>
