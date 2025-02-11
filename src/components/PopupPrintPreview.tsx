@@ -37,6 +37,7 @@ import { DesignInfoType, designSelector, useDesign } from '@/store/design';
 import { useShallow } from 'zustand/react/shallow';
 import { optionsSelector, useOptions } from '@/store/options';
 import { normalizeYearAndMonth } from '@/utils/calendar';
+import { FONT_BASE_PATH } from '@/common';
 
 // 印刷プレビュー画面のプロパティの型
 type PopupPrintPreviewProps = {
@@ -214,7 +215,7 @@ function PopupPrintPreview({
   const { getCalendar } = useCalendar();
   const [ pdfVisible, setPdfVisible ] = useState(false);
 
-  const notosans = useFont("Noto Sans Gothic", "/assets/fonts/NotoSansJP-Medium.ttf")
+  const notosans = useFont("Noto Sans Gothic", FONT_BASE_PATH + "/NotoSansJP-Medium.ttf")
   
   //const colorMode = useColorMode().colorMode as 'dark' | 'light' | undefined;
   //console.log(colorMode)
