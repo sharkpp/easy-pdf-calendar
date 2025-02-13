@@ -163,7 +163,7 @@ function HolidaysList({
                     } else {
                       const newHolidays = new Map(holidays);
                       newHolidays.delete(key);
-                      newHolidays.set(joinDate(date_), { date, name, mark });
+                      newHolidays.set(joinDate(date_), { date: +date_[2], name, mark });
                       onHolidaysChange(new Map([...newHolidays].sort(compByDate)));
                     }
                   }}
