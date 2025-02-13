@@ -91,6 +91,7 @@ function addSvgTextCore(
   text: string,
   textColor?: string,
   align?: string,
+  bold: string = '',
   stroke: boolean = false
 ) {
   const fontSize = baseElm.height.baseVal.value;
@@ -99,7 +100,7 @@ function addSvgTextCore(
       style="
 font-style: normal;
 font-variant: normal;
-font-weight: normal;
+font-weight: ${bold || 'normal'};
 font-stretch: normal;
 font-size: ${fontSize};
 line-height: 1.25;
@@ -109,15 +110,16 @@ display: inline;
 fill: ${textColor};
 fill-opacity: 1;
 dominant-baseline: alphabetic;
+alignment-baseline: baseline;
 ${!stroke ? `stroke: none;` : `
 stroke: ${textColor};
-stroke-width: max(1px, calc(${fontSize} * 0.2));
+stroke-width: max(2px, calc(${fontSize} * 0.3));
 stroke-linecap: round;
 stroke-linejoin: round;
 `}"
       x="0"
       y="0"
-    >${text}</text>
+    ><tspan>${text}</tspan></text>
   `);
   const textElm: SVGTextElement | null = baseElm.ownerSVGElement?.lastElementChild as SVGTextElement;
   if (textElm) {
@@ -141,17 +143,18 @@ stroke-linejoin: round;
 function addSvgText(
   baseElm: SVGRectElement,
   text: string,
-  { textColor, align = 'center', strokeColor }: {
+  { textColor, align = 'center', bold, strokeColor }: {
     textColor?: string,
     align?: string,
+    bold?: string,
     strokeColor?: string,
   }
 ): void {
   if (strokeColor) { // ストロークの描画
     // svg2pdf で paint-order: stroke; がサポートされてなさそうなので自力で実装
-    addSvgTextCore(baseElm, text, strokeColor, align, true);
+    addSvgTextCore(baseElm, text, strokeColor, align, bold, true);
   }
-  addSvgTextCore(baseElm, text, textColor, align);
+  addSvgTextCore(baseElm, text, textColor, align, bold);
 }
 
 const updateImageBlock = (name: string, imageBlockPart: Partial<Record<keyof ImageBlockInfoType, any>>, updatedCallback : undefined | (() => void) = undefined) => {
@@ -309,7 +312,7 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         addSvgText(
           holidaymarkBaseElm,
           holidayText.mark || '',
-          { textColor: holidayColor, align }
+          { textColor: holidayColor, align, bold: '950' }
         );
       }
       // 記念日を追加
