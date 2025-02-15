@@ -24,7 +24,7 @@ async function loadFont(path: string): Promise<ArrayBuffer | undefined> {
   }
 }
 
-export function useFont(name: string, path: string, style?: string): Font {
+export function useFont(name: string, path: string, style?: string, weight?: number | string): Font {
 
   const promise = useMemo(() => loadFont(path), [ path ])
   const install = useCallback(async (pdf: jsPDF) => {
@@ -33,8 +33,9 @@ export function useFont(name: string, path: string, style?: string): Font {
     
     const fileName = name + ".ttf"
     pdf.addFileToVFS(fileName, Buffer.from(data).toString("base64"))
-    pdf.addFont(fileName, name, style ?? "normal")
-  }, [ name, promise, style ])
+    pdf.addFont(fileName, name, "normal")
+    pdf.addFont(fileName, name, "normal", 950)
+  }, [ name, promise, style, weight ])
 
   return useMemo(() => ({
     name,
