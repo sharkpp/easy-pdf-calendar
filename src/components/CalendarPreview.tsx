@@ -1,6 +1,6 @@
 // カレンダーの一月分をデザインと月を指定し描画する
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
 import {
   Skeleton,
@@ -415,15 +415,13 @@ function CalendarPreview({
 //console.log(calendarKey,Date.now(),{cachedCalendarTemplateElm,cachedCalendarElm,calendarElm,svgContainerElm,[`imageBlocks[data-${month}]`]:imageBlocks[`data-${month}`]});
 
   // コンテナ要素を取得
-  const refSvgContainer = useMemo(() => {
-    return (svgContainer: HTMLDivElement | null) => {
+  const refSvgContainer = useCallback((svgContainer: HTMLDivElement | null) => {
       if (!svgContainer) {
         return;
       }
       setSvgContainerElm(svgContainer);
-//console.warn(`${calendarKey} Obtaining container element`)
-    };
-  }, []);
+console.log(`${calendarKey}${readonly?1:0} Obtaining container element`)
+    }, []);
 
   // カレンダーのテンプレートのsvgを読み込む
   useEffect(() => {
@@ -442,7 +440,7 @@ function CalendarPreview({
         calendarElm_.removeAttribute('height');
         // 更新
         setCachedCalendarElm(design, calendarElm_);
-//console.warn(`${calendarKey} Loading the calendar template SVG`);
+console.log(`${calendarKey}${readonly?1:0} Loading the calendar template SVG`);
       });
   }, [cachedCalendarTemplateElm]);
 
@@ -453,12 +451,15 @@ function CalendarPreview({
     }
     // テンプレートから月の内容を反映
     let calendarElm_ = cachedCalendarTemplateElm.cloneNode(true) as SVGElement;
+console.log(`${calendarKey}${readonly?1:0} #1`,{svgContainerElm:svgContainerElm?.firstElementChild,calendarElm_});
     // カレンダーを構築
-    svgContainerElm.firstElementChild?.replaceWith(calendarElm_);
+    svgContainerElm?.firstElementChild
+      ? svgContainerElm?.firstElementChild?.replaceWith(calendarElm_)
+      : svgContainerElm?.appendChild(calendarElm_);
     calendarElm_ = buildCalendar(calendarElm_, year, month, designInfo, holidays);
     // 更新
     setCachedCalendarElm(design, year, month, calendarElm_);
-//console.warn(`${calendarKey} Reflecting the month's content from the template`);
+console.log(`${calendarKey}${readonly?1:0} Reflecting the month's content from the template`);
   }, [cachedCalendarTemplateElm, svgContainerElm, designInfo, holidays]);
 
   // 画像埋め込み枠を列挙
@@ -467,7 +468,10 @@ function CalendarPreview({
       return;
     }
     // カレンダーを更新
-    svgContainerElm.firstElementChild?.replaceWith(cachedCalendarElm);
+console.log(`${calendarKey}${readonly?1:0} #2`,{svgContainerElm:svgContainerElm?.firstElementChild,cachedCalendarElm});
+    svgContainerElm?.firstElementChild
+      ? svgContainerElm?.firstElementChild?.replaceWith(cachedCalendarElm)
+      : svgContainerElm?.appendChild(cachedCalendarElm);
 
     let newImageBlocks = {} as {[key: string]: ImageBlockInfoType};
     
@@ -514,7 +518,7 @@ function CalendarPreview({
       }));
     }
 
-//console.warn(`${calendarKey} Enumerating image embedding frames`);
+console.log(`${calendarKey}${readonly?1:0} Enumerating image embedding frames`);
   }, [cachedCalendarElm, svgContainerElm]);
 
   // 画像データの読み込み
@@ -524,10 +528,10 @@ function CalendarPreview({
       if (false !== imageBlock.state) {
         return;
       }
-//console.warn(`${calendarKey} Loading image data`);
+console.log(`${calendarKey}${readonly?1:0} Loading image data`);
       getImageData(imageBlock.name)
       .then((imageBlockData) => {
-//console.warn(`${calendarKey} Loaded image data`,{imageBlocks,imageBlockData});
+console.log(`${calendarKey}${readonly?1:0} Loaded image data`,{imageBlocks,imageBlockData});
         setImageBlocks(updateImageBlock(imageBlock.name, {
           state: imageBlockData
         }));
@@ -595,7 +599,7 @@ function CalendarPreview({
     // カレンダーを更新
     setCalendarElm(calendarElm_ as SVGElement);
     setCachedCalendarElm(design, year, month, calendarElm_);
-    //console.warn(`${calendarKey} Combining calendar SVG with images`, {imageBlocks});
+    console.log(`${calendarKey}${readonly?1:0} Combining calendar SVG with images`, {imageBlocks});
   }, [cachedCalendarElm, imageBlocks, blankImage]);
 
   // カレンダーをコンテナに追加し表示を更新
@@ -603,13 +607,32 @@ function CalendarPreview({
     if (!calendarElm || !svgContainerElm) {
       return;
     }
-    svgContainerElm.firstElementChild?.replaceWith(calendarElm);
-    //console.warn(`${calendarKey} Updating and displaying the calendar in the container`);
+
+console.log(`${calendarKey}${readonly?1:0} #3`,{svgContainerElm:svgContainerElm?.firstElementChild,calendarElm});
+    svgContainerElm?.firstElementChild
+      ? svgContainerElm?.firstElementChild?.replaceWith(calendarElm)
+      : svgContainerElm?.appendChild(calendarElm);
+    console.log(`${calendarKey}${readonly?1:0} Updating and displaying the calendar in the container`);
   }, [calendarElm, svgContainerElm]);
+
+console.log(`${calendarKey}${readonly?1:0} CalendarPreview #1`,{svgContainerElm,cachedCalendarTemplateElm,cachedCalendarElm,calendarElm})
+
+
+//     if (svgContainerElm &&
+//         calendarElm) {
+// console.log(`${calendarKey}${readonly?1:0} -------- `,{svgContainerElm,cachedCalendarTemplateElm,cachedCalendarElm,calendarElm})
+//     //svgContainerElm?.firstElementChild
+//     //  ? svgContainerElm?.firstElementChild?.replaceWith(calendarElm)
+//     //  : svgContainerElm?.appendChild(calendarElm);
+//       if (!svgContainerElm?.firstElementChild) {
+//         svgContainerElm?.appendChild(calendarElm);
+//       }
+//     }
+
+console.log(`${calendarKey}${readonly?1:0} CalendarPreview #2`,{svgContainerElm,cachedCalendarTemplateElm,cachedCalendarElm,calendarElm})
 
   return (
     <div
-      ref={refSvgContainer}
       css={css`${cssProp||""}
         background: white;
         border: 1px solid rgb(240,240,240);
@@ -624,7 +647,7 @@ function CalendarPreview({
         }
       `}
     >
-      <svg/>
+      <div ref={refSvgContainer} />
       {Object.values(imageBlocks)
       .map(((imageBlock) => {
         let imageBlockType: 'blank' | 'image' | 'dropzone' = 'blank';

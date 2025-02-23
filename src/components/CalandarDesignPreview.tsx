@@ -2,8 +2,11 @@
 
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import { Box, SimpleGrid, IconButton } from '@chakra-ui/react';
-import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon, Info as InfoIcon } from 'lucide-react';
+import { Box, SimpleGrid, IconButton, Tabs, Button } from '@chakra-ui/react';
+import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon, ArrowBigRight as ArrowBigRightIcon,
+          Info as InfoIcon, CalendarDays as CalendarDaysIcon, Image as ImageIcon,
+          ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon,
+          PanelLeftClose as PanelLeftCloseIcon, PanelLeftOpen as PanelLeftOpenIcon } from 'lucide-react';
 import { useMeasure } from "@uidotdev/usehooks";
 import CalendarPreview from '@/components/CalendarPreview';
 import PopupPrintPreview from '@/components/PopupPrintPreview';
@@ -26,117 +29,150 @@ type CalanderDesignPreviewProps = {
 const MonthList = [ 1,2,3,4,5,6,7,8,9,10,11,12 ];
 
 const cssStyles = css`
-width: 250vw;
-height: 250vh;
-margin-left: calc(-75vw - 1rem);
-margin-top:  calc(-75vh - 1rem);
-grid-template-columns: 1fr 1fr min(60vw, 100vh) 1fr 1fr;
-grid-template-rows:    1fr 1fr max-content      1fr 1fr;
-grid-template-areas: 
-  ".        .        design-p2 .        .      "
-  ".        .        design-p1 .        .      "
-  "month-p2 month-p1 calendar  month-n1 month-n2"
-  ".        .        design-n1 .        .      "
-  ".        .        design-n2 .        .      "; 
-.calendar { grid-area: calendar; }
-.design-p1 {
-  display: flex;
-  justify-content: center;
-  align-content: flex-end;
-  flex-wrap: wrap;
-  grid-area: design-p1; 
-}
-.design-p2 {
-  display: flex;
-  justify-content: center;
-  align-content: flex-end;
-  flex-wrap: wrap;
-  grid-area: design-p2; 
-}
-.design-n1 {
-  display: flex;
-  justify-content: center;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  grid-area: design-n1; 
-}
-.design-n2 {
-  display: flex;
-  justify-content: center;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  grid-area: design-n2; 
-}
-.month-p1 {
-  align-self: center; 
-  grid-area: month-p1; 
-}
-.month-p2 {
-  align-self: center; 
-  grid-area: month-p2; 
-}
-.month-n1 {
-  align-self: center; 
-  grid-area: month-n1; 
-}
-.month-n2 {
-  align-self: center; 
-  grid-area: month-n2; 
-}
-`;
+  --line-thickness: 1px;
+  --shadow-color: var(--chakra-colors-color-palette-solid);
+  --action-acion-size: 64px;
 
-const cssStyles2 = css`
-position: absolute;
-width: 100vw;
-height: 100vh;
-left: 0px;
-top: 0px;
-display: grid;
-/*grid-template-columns: 1fr 0px  1fr;
-grid-template-rows:    1fr 0px 1fr;*/
-gap: 0px 0px;
-grid-auto-flow: row;
-grid-template-areas:
-  "area-tl .        print-action"
-  ".       calendar ."
-  "area-bl .        config-action";
-pointer-events: none;
-user-select: none;
+  width: 100cqw;
+  height: 100cqw;
 
-.calendar {
-  grid-area: calendar;
-}
-.area-tl {
-  grid-area: area-tl;
-  pointer-events: auto;
-  user-select: auto;
-}
-.print-action {
-  grid-area: print-action;
-  pointer-events: auto;
-  user-select: auto;
-}
-.area-bl {
-  grid-area: area-bl;
-  pointer-events: auto;
-  user-select: auto;
-}
-.config-action {
-  grid-area: config-action;
-  pointer-events: auto;
-  user-select: auto;
-}
+  display: grid;
+  grid-template-columns: minmax(100px, 20%) var(--action-acion-size) 1fr var(--action-acion-size) var(--action-acion-size); 
+  grid-template-rows: var(--action-acion-size) calc(100cqh - var(--action-acion-size) * 2 - 0.5em * 2) var(--action-acion-size); 
+  gap: 0.5em 0.5em; 
+  grid-template-areas: 
+    "sidemenu to-design-action . config-action print-action"
+    "sidemenu previous-month calendar calendar next-month"
+    "sidemenu ad ad ad ad"; 
 
-button {
-  width: 100%;
-  height: 100%;
-  padding: 0.5rem;
-  svg {
-    width: auto;
-    height: 100%;
+  .sidemenu {
+    grid-area: sidemenu;
+
+    border-right-width: var(--line-thickness);
+    border-right-style: solid;
+    border-right-color: var(--global-color-border, currentColor);
+
+    height: 100cqh;
+
+    > * {
+      height: 100cqh;
+    }
+
+    .chakra-tabs__list > button {
+      padding: var(--chakra-spacing-1);
+      flex-grow: 1;
+      justify-content: center;
+    }
+    
+    .chakra-tabs__content {
+      padding: 0.5rem;
+      height: calc(100% - var(--tabs-height));
+      overflow: hidden scroll;
+    }
+
+    .chakra-tabs__content > div {
+      display: grid;
+      grid-template-rows: repeat(12, 1fr);
+      gap: var(--chakra-spacing-1);
+    }
+
+    .chakra-tabs__content > div > div {
+      grid-row: span 1;
+      display: grid;
+      grid-template-rows: subgrid;
+    }
+
+    .chakra-tabs__content > div > div[data-selected] {
+      border-radius: var(--chakra-radii-l2);
+      padding: var(--chakra-spacing-2);
+      border-width: var(--line-thickness);
+      border-style: solid;
+      box-shadow: 0 0 0 1px var(--shadow-color);
+      border-color: var(--chakra-colors-color-palette-solid);
+    }
+    .chakra-tabs__content > div > div[data-selected] svg {
+      width: 64px;
+      height: 64px;
+      align-self: center;
+      justify-self: center;
+    }
   }
-}
+
+  .to-design-action, .config-action, .print-action {
+    width: 100%;
+    height: 100%;
+    justify-self: center; 
+    align-self: center; 
+
+    > button {
+      width: 100%;
+      height: 100%;
+    }
+    > button > svg {
+      width: 75%;
+      height: 75%;
+    }
+  }
+
+  .to-design-action {
+    grid-area: to-design-action; 
+  }
+
+  .config-action {
+    grid-area: config-action; 
+  }
+
+  .print-action {
+    grid-area: print-action; 
+  }
+
+  .calendar {
+    grid-area: calendar; 
+
+    overflow: hidden;
+    justify-self: center; 
+    align-self: center; 
+  }
+  
+  .calendar > div > div:first-child > svg {
+    width: 100%;
+    height: calc(100cqh - var(--action-acion-size) * 2 - 0.5em * 2);
+  }
+
+  .previous-month {
+    grid-area: previous-month; 
+
+    justify-self: center; 
+    align-self: center; 
+  }
+
+  .next-month {
+    grid-area: next-month; 
+
+    justify-self: center; 
+    align-self: center; 
+  }
+
+  .previous-month,
+  .next-month {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      height: 100%;
+    }
+  }
+  
+  .ad {
+    grid-area: ad;
+    background: rgba(0,0,0,0.1);
+  }
+
 `;
+
+type SidemenuTabPage = "calendars" | "designs";
 
 function CalanderDesignPreview({
   design,
@@ -153,121 +189,83 @@ function CalanderDesignPreview({
   const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril'))) || false;
   const { year: yearR, month: monthR } = normalizeYearAndMonth(year, month, firstMonthIsApril);
 
-  const prevDesignName = useDesign(useShallow(designPrevSelector(design)));
-  const nextDesignName = useDesign(useShallow(designNextSelector(design)));
+  //const prevDesignName = useDesign(useShallow(designPrevSelector(design)));
+  //const nextDesignName = useDesign(useShallow(designNextSelector(design)));
 
-  const [ ref, { width, height } ] = useMeasure();
   const [ openPrintPreview, setOpenPrintPreview ] = useState(false);
   const [ openPrintOption, setOpenPrintOption ] = useState(false);
+
+  const [ submenuTab, setSubmenuTab ] = useState<SidemenuTabPage>("calendars");
 
   return (
     <>
       <SimpleGrid
-        columns={5}
-        //gap="1rem"
         css={cssStyles}
       >
-        <Box ref={ref} className="calendar" width="100%" padding="4" color="white">
-          <CalendarPreview
-            key={`${design}-${yearR}-${monthR}-preview`}
-            //cssStyle={css`width: 80%;`}
-            design={design}
-            year={yearR}
-            month={monthR}
-          />
-        </Box>
-
-        <Box className="design-p2" width="100%" padding="4" color="white">
-        </Box>
-        <Box
-          className="design-p1" width="100%" padding="4" color="white"
-          onClick={() => (prevDesignName&&onChangeDesign&&onChangeDesign(prevDesignName))}
+        <SimpleGrid
+          className="sidemenu"
         >
-          {prevDesignName && <CalendarPreview
-              key={`${prevDesignName}-${yearR}-${monthR}-preview`}
-              cssStyle={css`width: 80%;`}
-              design={prevDesignName}
-              year={yearR}
-              month={monthR}
-              readonly={true}
-            />}
-        </Box>
-        <Box
-          className="design-n1" width="100%" padding="4" color="white"
-          onClick={() => (nextDesignName&&onChangeDesign&&onChangeDesign(nextDesignName))}
-        >
-          {nextDesignName && <CalendarPreview
-              key={`${nextDesignName}-${yearR}-${monthR}-preview`}
-              cssStyle={css`width: 80%;`}
-              design={nextDesignName}
-              year={yearR}
-              month={monthR}
-              readonly={true}
-            />}
-        </Box>
-        <Box className="design-n2" width="100%" padding="4" color="white">
-        </Box>
-
-        <Box className="month-p2" width="100%" padding="4" color="white">
-        </Box>
-        <Box
-          className="month-p1" width="100%" padding="4" color="white"
-          onClick={() => (1<=month-1&&onChangeMonth&&onChangeMonth(month-1))}
-        >
-          {1<=month-1&&<CalendarPreview
-            key={`${design}-${year}-${month-1}-preview`}
-            //cssStyle={css`width: 80%;`}
-            design={design}
-            year={ normalizeYearAndMonth(year, month-1, firstMonthIsApril).year}
-            month={normalizeYearAndMonth(year, month-1, firstMonthIsApril).month}
-            readonly={true}
-          />}
-        </Box>
-        <Box
-          className="month-n1" width="100%" padding="4" color="white"
-          onClick={() => (month+1<=12&&onChangeMonth&&onChangeMonth(month+1))}
-        >
-          {month+1<=12&&<CalendarPreview
-            key={`${design}-${year}-${month+1}-preview`}
-            //cssStyle={css`width: 80%;`}
-            design={design}
-            year={ normalizeYearAndMonth(year, month-1, firstMonthIsApril).year}
-            month={normalizeYearAndMonth(year, month+1, firstMonthIsApril).month}
-            readonly={true}
-          />}
-        </Box>
-        <Box className="month-n2" width="100%" padding="4" color="white">
-        </Box>
-
-      </SimpleGrid>
-
-      <SimpleGrid
-        columns={5}
-        //gap="1rem"
-        css={css`
-          ${cssStyles2}
-          grid-template-columns: 1fr ${width}px  1fr;
-          grid-template-rows:    1fr ${height}px 1fr;
-        `}
-      >
-        <Box className="calendar" width="100%" padding="4" color="white">
-        </Box>
-
-        <Box className="area-tl" width="100%" padding="4" color="white">
-        </Box>
-        <Box className="print-action" width="100%" padding="4" color="white">
-          <IconButton
-            aria-label="print-calendar"
-            onClick={() => setOpenPrintPreview(true)}
-            variant="ghost"
-            size="lg"
+          <Tabs.Root
+            variant="outline"
+            value={submenuTab}
+            onValueChange={(e) => setSubmenuTab(e.value as SidemenuTabPage)}
           >
-            <PrinterIcon />
-          </IconButton>
-        </Box>
-        <Box className="area-bl" width="100%" padding="4" color="white">
-        </Box>
-        <Box className="config-action" width="100%" padding="4" color="white">
+            <Tabs.List>
+              <Tabs.Trigger value="designs">
+                {/*<CalendarDaysIcon />*/}
+                デザイン
+              </Tabs.Trigger>
+              <Tabs.Trigger value="calendars">
+                {/*<ImageIcon />*/}
+                カレンダー
+              </Tabs.Trigger>
+              <Button variant="ghost">
+                <PanelLeftCloseIcon />
+              </Button>
+            </Tabs.List>
+
+            <Tabs.Content value="designs" className="designs-list">
+              Manage your team members {submenuTab}
+            </Tabs.Content>
+
+            <Tabs.Content value="calendars" className="calendars-list">
+              <div>
+                {MonthList.map((month_: number) => { // カレンダーなどを生成するため非表示で残りの月も作る
+                  const { year: year__, month: month__ } = normalizeYearAndMonth(year, month_, firstMonthIsApril);
+                  if (month === month_) { // 選択している月
+                    return (
+                      <div
+                        data-selected={month === month_ ? "yes" : undefined}
+                      >
+                        <ArrowBigRightIcon />
+                      </div>
+                    );
+                  }
+                  return (
+                    <div
+                      data-selected={month === month_ ? "yes" : undefined}
+                      onClick={() => onChangeMonth&&onChangeMonth(month_)}
+                    >
+                      <CalendarPreview
+                        key={`calendar-${design}-${year}-${month_}`}
+                        design={design}
+                        year={ year__}
+                        month={month__}
+                        readonly
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </Tabs.Content>
+
+          </Tabs.Root>
+        </SimpleGrid>
+
+        <SimpleGrid className="to-design-action">
+        </SimpleGrid>
+
+        <SimpleGrid className="config-action">
           <IconButton
             aria-label="print-calendar"
             onClick={() => setOpenPrintOption(true)}
@@ -276,7 +274,50 @@ function CalanderDesignPreview({
           >
             <CalendarCogIcon />
           </IconButton>
-        </Box>
+        </SimpleGrid>
+
+        <SimpleGrid className="print-action">
+          <IconButton
+            aria-label="print-calendar"
+            onClick={() => setOpenPrintPreview(true)}
+            variant="ghost"
+            size="lg"
+          >
+            <PrinterIcon />
+          </IconButton>
+        </SimpleGrid>
+
+        <SimpleGrid className="previous-month">
+          <Button
+            variant="ghost"
+            disabled={!(1<=month-1)}
+            onClick={() => 1<=month-1&&onChangeMonth&&onChangeMonth(month-1)}
+          >
+            <ChevronLeftIcon />
+          </Button>
+        </SimpleGrid>
+
+        <SimpleGrid className="next-month">
+          <Button
+            variant="ghost"
+            disabled={!(month+1<12)}
+            onClick={() => month+1<12&&onChangeMonth&&onChangeMonth(month+1)}
+          >
+            <ChevronRightIcon />
+          </Button>
+        </SimpleGrid>
+
+        <SimpleGrid className="calendar">
+          <CalendarPreview
+            key={`${design}-${yearR}-${monthR}-preview`}
+            design={design}
+            year={yearR}
+            month={monthR}
+          />
+        </SimpleGrid>
+
+        <SimpleGrid className="ad">
+        </SimpleGrid>
 
       </SimpleGrid>
 
@@ -302,21 +343,6 @@ function CalanderDesignPreview({
         翌年１月から３月分までの国民の祝日は２月に告示されるため日程が正確でない場合があります。
       </MessageBox>}
 
-      <div css={css`width: 0px; height: 0px;`}>
-        {MonthList.reduce((r, month_: number) => { // カレンダーなどを生成するため非表示で残りの月も作る
-          if ([month-1, month, month+1].indexOf(month_) < 0) {
-            r.push(
-              <CalendarPreview
-                key={`calender-${design}-${year}-${month_}`}
-                design={design}
-                year={ normalizeYearAndMonth(year, month_, firstMonthIsApril).year}
-                month={normalizeYearAndMonth(year, month_, firstMonthIsApril).month}
-              />
-            );
-          }
-          return r;
-        }, [] as any)}
-      </div>
     </>
   );
 }
