@@ -2,8 +2,9 @@
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import holidaysJSON from '../../holidays.json'
+import { createSelectors } from '@/utils/zustand';
 import { createSuperJSONStorage } from '@/utils/zustand-middleware-superjson-storage';
+import holidaysJSON from '../../holidays.json'
 
 export type HolidayInfoType = {
   date: number;
@@ -49,7 +50,7 @@ function memo(value: any) {
   return value;
 }
 
-export const useHoliday = create(
+const useHolidayBase = create(
   persist(
     (set, get: () => HolidayStoreState & HolidayStoreAction) => ({
       holidays: new Map<string, HolidayInfoType>(holidaysJSON as HolidaysJpFileType),
@@ -101,17 +102,4 @@ export const useHoliday = create(
   ),
 );
 
-export const holidaysSelector =
-  (year: number, month: number, holidaysOnly: boolean = false) => 
-    (state: HolidayStoreAction) => state.getHolidays(year, month, holidaysOnly)
-  ;
-
-export const anniversarysSelector =
-  () => 
-    (state: HolidayStoreAction) => state.getAnniversarys()
-  ;
-
-export const setAnniversarysSelector =
-  () => 
-    (state: HolidayStoreAction) => state.setAnniversarys
-  ;
+export const useHoliday = createSelectors(useHolidayBase);

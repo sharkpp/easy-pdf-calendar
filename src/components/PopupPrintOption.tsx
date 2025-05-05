@@ -23,11 +23,11 @@ import { OpenChangeDetails } from '@zag-js/dialog';
 import { Button, Stack, Fieldset, createListCollection } from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
 import { Switch } from "@/components/ui/switch"
-import { optionsSelector, useOptions, useVolatileOptions } from '@/store/options';
+import { useOptions, useVolatileOptions } from '@/store/options';
 import { useShallow } from 'zustand/react/shallow';
 import { useState } from 'react';
 import PopupAnniversarysEditor from '@/components/PopupAnniversarysEditor';
-import { anniversarysSelector, setAnniversarysSelector, useHoliday } from '@/store/holiday';
+import { useHoliday } from '@/store/holiday';
 import { useYearSelect } from '@/store/date-select';
 
 const nowJST = Date.now() + 9 * 60 * 60 * 1000;
@@ -73,12 +73,12 @@ function PopupPrintPreview({
   const yearSelect = useYearSelect.use.year();
   const setYearSelect = useYearSelect.use.setYearSelect();
   const [ dialogContentRef, setDialogContentRef ] = useState<HTMLDivElement | null>(null);
-  const useYearlyCalendar = useOptions(useShallow(optionsSelector('useYearlyCalendar')));
-  const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril')));
-  const anniversarys = useHoliday(useShallow(anniversarysSelector()));
-  const setAnniversarys = useHoliday(useShallow(setAnniversarysSelector()));
-  const setOption = useOptions(useShallow((state) => state.setOption));
-  const setVolatileOption = useVolatileOptions(useShallow((state) => state.setOption));
+  const useYearlyCalendar = useOptions.use.useYearlyCalendar();
+  const firstMonthIsApril = useOptions.use.firstMonthIsApril();
+  const anniversarys = useHoliday.use.anniversarys();
+  const setAnniversarys = useHoliday.use.setAnniversarys();
+  const setOption = useOptions.use.setOption();
+  const setVolatileOption = useVolatileOptions.use.setOption();
   const [ openAnniversarysEditor, setOpenAnniversarysEditor ] = useState(false);
 
   return (

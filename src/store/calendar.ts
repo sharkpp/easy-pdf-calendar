@@ -1,6 +1,7 @@
 // 構築されたカレンダーの情報を保持する
 
 import { create } from 'zustand'
+import { createSelectors } from '@/utils/zustand';
 
 // type CalendarState = {
 //   elm: SVGElement;
@@ -11,18 +12,19 @@ type CalendarStoreState = {
 }
 
 type CalendarStoreAction = {
-  getCalendar: ((design: string, year: number, month: number) => SVGElement | null) |
+  getCalendar: ((design: string, year?: number, month?: number) => SVGElement | null) |
                ((design: string) => SVGElement | null);
   setCalendar:  (design: string, yearOrElm: number | SVGElement, month?: number, elm?: SVGElement) => SVGElement | null;
 }
 
-export const useCalendar = create<CalendarStoreState & CalendarStoreAction>(
+const useCalendarBase = create<CalendarStoreState & CalendarStoreAction>(
   (set, get) => ({
     cache: new Map<string, SVGElement>(),
     getCalendar: (design: string, year?: number, month?: number): SVGElement | null => {
       const elm = get().cache.get(`${design}:${year||-1}:${month||-1}:`);
       if (elm) {
-        return elm.cloneNode(true) as SVGElement;
+        //return elm.cloneNode(true) as SVGElement;
+        return elm as SVGElement;
       }
       return null;
     },
@@ -39,11 +41,4 @@ export const useCalendar = create<CalendarStoreState & CalendarStoreAction>(
   })
 );
 
-export const calendarSelector =
-  (design: string, year?: number, month?: number) => 
-    (state: CalendarStoreState) => state.cache.get(`${design}:${year||-1}:${month||-1}:`)
-  ;
-
-export const setCalendarSelector =
-  (state: CalendarStoreAction) => state.setCalendar
-  ;
+export const useCalendar = createSelectors(useCalendarBase);

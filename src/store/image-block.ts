@@ -1,6 +1,7 @@
 // イメージブロックの収納
 
 import { create } from 'zustand'
+import { createSelectors } from '@/utils/zustand';
 import { CropperState } from 'react-advanced-cropper';
 import { get as getIdb, set as setIdb, del as delIdb } from 'idb-keyval';
 
@@ -23,7 +24,7 @@ type ImageBlockStoreAction = {
 
 const IDB_PREFIX = 'image-block-';
 
-export const useImageBlock = create<ImageBlockStoreState & ImageBlockStoreAction>((_set, get) => ({
+const useImageBlockBase = create<ImageBlockStoreState & ImageBlockStoreAction>((_set, get) => ({
 
   cache: new Map<string, ImageBlockState>(),
 
@@ -60,3 +61,5 @@ export const useImageBlock = create<ImageBlockStoreState & ImageBlockStoreAction
   },
 
 }));
+
+export const useImageBlock = createSelectors(useImageBlockBase);

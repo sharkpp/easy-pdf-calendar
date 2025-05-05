@@ -12,9 +12,9 @@ import CalendarPreview from '@/components/CalendarPreview';
 import PopupPrintPreview from '@/components/PopupPrintPreview';
 import PopupPrintOption from '@/components/PopupPrintOption';
 import MessageBox from '@/components/MessageBox';
-import { designNextSelector, designPrevSelector, useDesign } from '@/store/design';
+//import { useDesign } from '@/store/design';
 import { useShallow } from 'zustand/react/shallow';
-import { optionsSelector, useOptions, useVolatileOptions, volatileOptionsSelector } from '@/store/options';
+import { useOptions, useVolatileOptions } from '@/store/options';
 import { normalizeYearAndMonth } from '@/utils/calendar';
 import { useHoliday } from '@/store/holiday';
 
@@ -182,11 +182,11 @@ function CalanderDesignPreview({
   onChangeMonth,
   }: CalanderDesignPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
-  const confirmedNoInformationOfNextYearsHolidays = useVolatileOptions(useShallow(volatileOptionsSelector('confirmedNoInformationOfNextYearsHolidays')));
-  const setVolatileOption = useVolatileOptions(useShallow((state) => state.setOption));
+  const confirmedNoInformationOfNextYearsHolidays = useVolatileOptions.use.confirmedNoInformationOfNextYearsHolidays();
+  const setVolatileOption = useVolatileOptions.use.setOption();
   const hasNextYearHolidays = useHoliday(useShallow((state) => 0 < Object.keys(state.getHolidays(year + 1, 3, true)).length));
 
-  const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril'))) || false;
+  const firstMonthIsApril = useOptions.use.firstMonthIsApril() || false;
   const { year: yearR, month: monthR } = normalizeYearAndMonth(year, month, firstMonthIsApril);
 
   //const prevDesignName = useDesign(useShallow(designPrevSelector(design)));

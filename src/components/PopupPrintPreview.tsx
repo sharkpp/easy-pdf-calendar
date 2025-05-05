@@ -33,9 +33,9 @@ import { useCalendar } from '@/store/calendar';
 import Spinner from '@/components/Spinner';
 import PrintSizeList from '@/../layouts/info.json';
 //import type { LayoutsInfoItem } from '@/../layouts/info.json';
-import { DesignInfoType, designSelector, useDesign } from '@/store/design';
+import { DesignInfoType, useDesign } from '@/store/design';
 import { useShallow } from 'zustand/react/shallow';
-import { optionsSelector, useOptions } from '@/store/options';
+import { useOptions } from '@/store/options';
 import { normalizeYearAndMonth } from '@/utils/calendar';
 import { FONT_BASE_PATH } from '@/common';
 
@@ -208,11 +208,11 @@ function PopupPrintPreview({
   open, onClose,
 }: PopupPrintPreviewProps)
 {
-  const firstMonthIsApril = useOptions(useShallow(optionsSelector('firstMonthIsApril'))) || false;
+  const firstMonthIsApril = useOptions.use.firstMonthIsApril() || false;
 
   const dialogContentRef = useRef<HTMLDivElement>(null);
 
-  const { getCalendar } = useCalendar();
+  const getCalendar = useCalendar.use.getCalendar();
   const [ pdfVisible, setPdfVisible ] = useState(false);
 
   const notosans = useFont("Noto Sans Gothic", FONT_BASE_PATH + "/NotoSansJP-Medium.ttf")
@@ -220,7 +220,7 @@ function PopupPrintPreview({
   //const colorMode = useColorMode().colorMode as 'dark' | 'light' | undefined;
   //console.log(colorMode)
 
-  const designInfo = useDesign(useShallow(designSelector(design)));
+  const designInfo = useDesign.use.getDesign()(design);
 
   const [pageLayoutIndex, setPageLayoutIndex] = useState<number[]>([0]);
 

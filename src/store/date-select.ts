@@ -1,7 +1,7 @@
 // 年の選択情報を保持する
 
-import { createSelectors } from '@/utils/zustand';
 import { create } from 'zustand'
+import { createSelectors } from '@/utils/zustand';
 
 const nowJST = Date.now() + 9 * 60 * 60 * 1000;
 const dateJST = new Date(nowJST);
@@ -14,7 +14,7 @@ type YearSelectStoreAction = {
   setYearSelect: (year: number) => void;
 }
 
-export const useYearSelectBase = create<YearSelectStoreState & YearSelectStoreAction>(
+const useYearSelectBase = create<YearSelectStoreState & YearSelectStoreAction>(
   (set, _get) => ({
     year: dateJST.getUTCFullYear(),
     setYearSelect: (year: number): void => {
@@ -26,4 +26,4 @@ export const useYearSelectBase = create<YearSelectStoreState & YearSelectStoreAc
   })
 );
 
-export const useYearSelect = createSelectors(useYearSelectBase)
+export const useYearSelect = createSelectors(useYearSelectBase);

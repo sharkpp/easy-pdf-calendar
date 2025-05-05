@@ -1,6 +1,7 @@
 // デザインの情報を保持する
 
 import { create } from 'zustand'
+import { createSelectors } from '@/utils/zustand';
 
 type RGB = `rgb(${number}, ${number}, ${number})`;
 type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
@@ -54,7 +55,7 @@ type DesignStoreAction = {
   getNextDesignName: (name: string) => string | null;
 }
 
-export const useDesign = create<DesignStoreState & DesignStoreAction>(
+const useDesignBase = create<DesignStoreState & DesignStoreAction>(
   (set, get) => ({
     cache: new Map<string, DesignInfoType>(),
     getDesign: (name: string): DesignInfoType | null => {
@@ -100,29 +101,4 @@ export const useDesign = create<DesignStoreState & DesignStoreAction>(
   })
 );
 
-export const designSelector =
-  (name: string) => 
-    (state: DesignStoreAction) => state.getDesign(name)
-  ;
-
-export const designPrevSelector =
-  (name: string) => 
-    (state: DesignStoreAction) => state.getPrevDesignName(name)
-;
-export const designNextSelector =
-  (name: string) => 
-    (state: DesignStoreAction) => state.getNextDesignName(name)
-;
-
-export const setDesignSelector =
-  (state: DesignStoreAction) => state.setDesign
-  ;
-
-export const designsSelector =
-  () => 
-    (state: DesignStoreAction) => state.getDesigns()
-  ;
-
-export const setDesignsSelector =
-    (state: DesignStoreAction) => state.setDesign
-  ;
+export const useDesign = createSelectors(useDesignBase);

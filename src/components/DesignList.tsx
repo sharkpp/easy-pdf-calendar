@@ -8,7 +8,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { CALENDAR_DESIGNS_BASE_PATH } from '@/common';
 import { fetchData } from '@/fetch';
 import CalendarPreview from '@/components/CalendarPreview';
-import { designsSelector, useDesign, DesignInfoType } from '@/store/design';
+import { useDesign, DesignInfoType } from '@/store/design';
 
 type DesignsIndexList = {
   index: DesignInfoType[];
@@ -22,7 +22,7 @@ type DesignListProps = {
 
 function DesignListCore({ design, year, onSelect }: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
 {
-  const designs = useDesign(useShallow(designsSelector()));
+  const designs = useDesign.use.getDesigns()();
   const { setDesigns } = useDesign();
 
   const indexJson: DesignsIndexList = use(
