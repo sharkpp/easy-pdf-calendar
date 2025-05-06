@@ -22,7 +22,7 @@ type DesignListProps = {
 
 function DesignListCore({ design, year, onSelect }: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
 {
-  const designs = useDesign.use.getDesigns()();
+  const designs = useDesign(useShallow((state) => state.getDesigns()));
   const { setDesigns } = useDesign();
 
   const indexJson: DesignsIndexList = use(

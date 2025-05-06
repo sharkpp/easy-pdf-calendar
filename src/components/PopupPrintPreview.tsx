@@ -220,7 +220,7 @@ function PopupPrintPreview({
   //const colorMode = useColorMode().colorMode as 'dark' | 'light' | undefined;
   //console.log(colorMode)
 
-  const designInfo = useDesign.use.getDesign()(design);
+  const designInfo = useDesign(useShallow((state) => state.getDesign(design)));
 
   const [pageLayoutIndex, setPageLayoutIndex] = useState<number[]>([0]);
 
