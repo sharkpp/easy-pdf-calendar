@@ -11,6 +11,7 @@ type Color = RGB | RGBA | HEX;
 export type DesignInfoType = {
   id: string;
   name: string;
+  disabled?: boolean;
   layout: {
     orientation: "landscape" | "portrait";
     size: "A4" | "A5" | "A6" | "B6JIS" | "PostCard" | "L" | "2L";

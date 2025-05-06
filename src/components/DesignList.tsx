@@ -30,7 +30,7 @@ function DesignListCore({ design, year, onSelect }: DesignListProps & import("re
   );
 
   useEffect(() => {
-    setDesigns(indexJson.index);
+    setDesigns(indexJson.index.filter(designInfo => designInfo.disabled !== true));
   }, [indexJson])
 
   return (
