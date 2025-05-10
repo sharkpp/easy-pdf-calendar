@@ -134,7 +134,7 @@ const cssStyles = css`
     align-self: center; 
   }
   
-  .calendar > div > div:first-child > svg {
+  .calendar > div > div:first-of-type > svg {
     width: 100%;
     height: calc(100cqh - var(--action-acion-size) * 2 - 0.5em * 2);
   }
@@ -235,6 +235,7 @@ function CalanderDesignPreview({
                   if (month === month_) { // 選択している月
                     return (
                       <div
+                        key={`calendar-${design}-${year}-${month_}`}
                         data-selected={month === month_ ? "yes" : undefined}
                       >
                         <ArrowBigRightIcon />
@@ -243,6 +244,7 @@ function CalanderDesignPreview({
                   }
                   return (
                     <div
+                      key={`calendar-${design}-${year}-${month_}`}
                       data-selected={month === month_ ? "yes" : undefined}
                       onClick={() => onChangeMonth&&onChangeMonth(month_)}
                     >

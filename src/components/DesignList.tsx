@@ -20,6 +20,24 @@ type DesignListProps = {
   onSelect?: (name: string) => void;
 }
 
+const cssStyles = css`
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  padding: 1rem;
+  & > h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  & .design-list-item {
+    max-width: calc(((100vw - 1rem * 2) - 1rem) / 2);
+  }
+  & .design-list-item:hover .chakra-card__root {
+    border-width: 5px;
+    margin: -4px;
+  }
+`;
+
 function DesignListCore({ design, year, onSelect }: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
 {
   const designs = useDesign(useShallow((state) => state.getDesigns()));
@@ -36,7 +54,7 @@ function DesignListCore({ design, year, onSelect }: DesignListProps & import("re
   return (
     <SimpleGrid minChildWidth="sm" gap={"1rem"}>
       {designs.map((designInfo: DesignInfoType) => (
-        <Box key={designInfo.id}>
+        <Box key={designInfo.id} className="design-list-item">
           <Card
             size="sm"
             onClick={() => (onSelect && onSelect(designInfo.id))}
@@ -64,13 +82,8 @@ function DesignList(props: DesignListProps & import("react").RefAttributes<HTMLD
 {
   return (
     <>
-      <div
-        css={css`
-          height: 100%;
-          width: 100%;
-          overflow-y: auto;
-        `}
-      >
+      <div css={cssStyles}>
+        <Heading size="6xl">簡単PDFカレンダー</Heading>
         <Suspense fallback={<p>Loading...</p>}>
           <DesignListCore {...props} />
         </Suspense>
