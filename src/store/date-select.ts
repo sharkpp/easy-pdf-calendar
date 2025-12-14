@@ -16,7 +16,7 @@ type YearSelectStoreAction = {
 
 const useYearSelectBase = create<YearSelectStoreState & YearSelectStoreAction>(
   (set, _get) => ({
-    year: dateJST.getUTCFullYear(),
+    year: dateJST.getUTCFullYear() + (10 <= dateJST.getUTCMonth() ? 1 : 0), // 11月/12月の場合は翌年をデフォルトにする
     setYearSelect: (year: number): void => {
       set((prev) => ({
         ...prev,
