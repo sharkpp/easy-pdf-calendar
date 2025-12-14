@@ -1,9 +1,10 @@
 // カレンダーのデザインの一覧
 
-import { Suspense, use, useEffect } from 'react';
+import { JSX, Suspense, use, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import { CardRoot as Card, CardHeader, CardBody, Heading } from '@chakra-ui/react'
+import { Button, ButtonGroup, Stack, Text } from "@chakra-ui/react";
 import { useShallow } from 'zustand/react/shallow';
 import { CALENDAR_DESIGNS_BASE_PATH } from '@/common';
 import { fetchData } from '@/fetch';
@@ -20,6 +21,11 @@ type DesignListProps = {
   onSelect?: (name: string) => void;
 }
 
+type DesignTagsProps = {
+  selectTags: string[];
+  setSelectTags?: (tag: string[]) => void;
+}
+
 const cssStyles = css`
   --epc-title-font-size: min(calc((100vw - 1rem * 2) / 8.5), calc(100vh / 20)); /* len(簡単PDFカレンダー) = 8.5 */
 
@@ -30,8 +36,8 @@ const cssStyles = css`
 
   display: grid; 
   grid-template-columns: 1fr; 
-  grid-template-rows: calc(var(--epc-title-font-size) + 1rem) 0 1fr; 
-  gap: 0px 0px; 
+  grid-template-rows: calc(var(--epc-title-font-size) + 1rem) max-content 1fr; 
+  gap: 0.5em 0px; 
   grid-template-areas: 
     "title"
     "tags"
@@ -53,24 +59,13 @@ const cssStyles = css`
   & .design-list .design-list-item {
     max-width: calc(((100vw - 1rem * 2) - 1rem) / 2);
   }
-
-/*  & > h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  & .design-list-item {
-    max-width: calc(((100vw - 1rem * 2) - 1rem) / 2);
-  }
-  & .design-list-item:hover .chakra-card__root {
-    border-width: 5px;
-    margin: -4px;
-  }*/
 `;
 
-function DesignListCore({ design, year, onSelect }: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
+function DesignListCore({ selectTags, design, year, onSelect }: DesignTagsProps & DesignListProps & import("react").RefAttributes<HTMLDivElement>): JSX.Element
 {
   const designs = useDesign(useShallow((state) => state.getDesigns()));
-  const { setDesigns } = useDesign();
+  const { setDesigns, getDesginNamesByTags } = useDesign();
+  const [ filterdDesigns, setFilterdDesigns ] = useState<DesignInfoType[]>(designs);
 
   const indexJson: DesignsIndexList = use(
     fetchData(`${CALENDAR_DESIGNS_BASE_PATH}/index.json`, async (res) => res.json())
@@ -78,11 +73,21 @@ function DesignListCore({ design, year, onSelect }: DesignListProps & import("re
 
   useEffect(() => {
     setDesigns(indexJson.index.filter(designInfo => designInfo.disabled !== true));
-  }, [indexJson])
+  }, [indexJson]);
+
+  useEffect(() => {
+    if (0 < selectTags.length) {
+      const designNames = getDesginNamesByTags(selectTags);
+      setFilterdDesigns(designs.filter(designInfo => designNames.includes(designInfo.id)));
+    }
+    else {
+      setFilterdDesigns(designs);
+    }
+  }, [selectTags, designs]);
 
   return (
     <SimpleGrid minChildWidth="sm" gap={"1rem"} className="design-list">
-      {designs.map((designInfo: DesignInfoType) => (
+      {filterdDesigns.map((designInfo: DesignInfoType) => (
         <Box key={designInfo.id} className="design-list-item">
           <Card
             size="sm"
@@ -107,14 +112,58 @@ function DesignListCore({ design, year, onSelect }: DesignListProps & import("re
     </SimpleGrid>
   );
 }
-function DesignList(props: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
+
+function DesignTags({ selectTags, setSelectTags }: DesignTagsProps): JSX.Element
 {
+  const { getTags } = useDesign();
+
+  return (
+    <ButtonGroup variant="subtle">
+      {getTags().map(tag => (
+        <Button
+          key={tag}
+          size="xs"
+          rounded="2xl"
+          variant={selectTags.includes(tag) ? "solid" : "outline"}
+          onClick={(event) => {
+            if (event.shiftKey) {
+              if (selectTags.includes(tag)) {
+                setSelectTags(selectTags.filter(t => t !== tag));
+              } else {
+                setSelectTags([...selectTags, tag]);
+              }
+            }
+            else {
+              if (!selectTags.includes(tag)) {
+                setSelectTags([tag]);
+              }
+              else if (1 < selectTags.length) {
+                setSelectTags([tag]);
+              }
+              else {
+                setSelectTags(selectTags.filter(t => t !== tag));
+              }
+            }
+          }}
+        >
+          {tag}
+        </Button>
+      ))}
+    </ButtonGroup>
+  );
+}
+
+function DesignList(props: DesignListProps & import("react").RefAttributes<HTMLDivElement>): JSX.Element
+{
+  const [ selectTags, setSelectTags ] = useState<string[]>([]);
+
   return (
     <>
       <div css={cssStyles}>
         <Heading className="title" size="6xl">簡単PDFカレンダー</Heading>
+        <DesignTags selectTags={selectTags} setSelectTags={setSelectTags} />
         <Suspense fallback={<p>Loading...</p>}>
-          <DesignListCore {...props} />
+          <DesignListCore selectTags={selectTags} {...props} />
         </Suspense>
       </div>
     </>

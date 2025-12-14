@@ -16,6 +16,7 @@ export type DesignInfoType = {
     orientation: "landscape" | "portrait";
     size: "A4" | "A5" | "A6" | "B6JIS" | "PostCard" | "L" | "2L";
   };
+  tags: string[]; // デザインのタグ
   templates: {
     month: string; // 月のテンプレートのSVGのパス
     year?: string; // 年間のテンプレートのSVGのパス
@@ -45,6 +46,7 @@ export type DesignInfoType = {
 
 type DesignStoreState = {
   cache: Map<string, DesignInfoType>;
+  tags: Map<string, Set<string>>; // tag -> Set<design id>
 }
 
 type DesignStoreAction = {
@@ -54,11 +56,14 @@ type DesignStoreAction = {
   setDesigns: (designsInfo: DesignInfoType[]) => DesignInfoType[] | [];
   getPrevDesignName: (name: string) => string | null;
   getNextDesignName: (name: string) => string | null;
+  getTags: () => string[];
+  getDesginNamesByTags: (tags: string[]) => string[];
 }
 
 const useDesignBase = create<DesignStoreState & DesignStoreAction>(
   (set, get) => ({
     cache: new Map<string, DesignInfoType>(),
+    tags: new Map<string, Set<string>>(),
     getDesign: (name: string): DesignInfoType | null => {
       return get().cache.get(name) || null;
     },
@@ -90,14 +95,36 @@ const useDesignBase = create<DesignStoreState & DesignStoreAction>(
     setDesigns: (designsInfo: DesignInfoType[]): DesignInfoType[] | [] => {
       set((prev) => {
         const newCache = new Map(prev.cache);
+        const newTags = new Map(prev.tags);
         designsInfo.forEach(designInfo => {
-          newCache.set(designInfo.id, designInfo)
+          newCache.set(designInfo.id, designInfo);
+          designInfo.tags.forEach(tag => {
+            if (!newTags.has(tag)) {
+              newTags.set(tag, new Set<string>());
+            }
+            newTags.get(tag)?.add(designInfo.id);
+          });
         });
         return {
           cache: newCache,
+          tags: newTags,
         };
       })
       return designsInfo;
+    },
+    getTags: (): string[] => {
+      return Array.from(get().tags.keys());
+    },
+    getDesginNamesByTags: (tags: string[]): string[] => {
+      // 全てのタグを含むデザインIDを取得
+      const designIdSets = tags.map(tag => get().tags.get(tag) || new Set<string>());
+      if (designIdSets.length === 0) {
+        return [];
+      }
+      const intersection = designIdSets.reduce((acc, set) => {
+        return new Set([...acc].filter(x => set.has(x)));
+      });
+      return Array.from(intersection);
     },
   })
 );

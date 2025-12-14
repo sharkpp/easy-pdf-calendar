@@ -4,6 +4,9 @@
     "orientation": "landscape",
     "size": "B6JIS"
   },
+  "tags": [
+    "シンプル", "画像付き"
+  ],
   "templates": {
     "month": "main.svg"
   },
