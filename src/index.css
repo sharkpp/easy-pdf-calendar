@@ -71,6 +71,6 @@ button:focus-visible {
 
 html, body, #root, .chakra-theme {
   width: 100cqw;
-  height: 100cqw;
+  height: 100cqh;
   overflow: hidden;
 }

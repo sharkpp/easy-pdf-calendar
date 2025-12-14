@@ -21,11 +21,40 @@ type DesignListProps = {
 }
 
 const cssStyles = css`
+  --epc-title-font-size: min(calc((100vw - 1rem * 2) / 8.5), calc(100vh / 20)); /* len(簡単PDFカレンダー) = 8.5 */
+
   height: 100%;
   width: 100%;
-  overflow-y: auto;
-  padding: 1rem;
-  & > h2 {
+  overflow: hidden;
+  padding: 0.5em;
+
+  display: grid; 
+  grid-template-columns: 1fr; 
+  grid-template-rows: calc(var(--epc-title-font-size) + 1rem) 0 1fr; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    "title"
+    "tags"
+    "design-list"; 
+
+  & .title {
+    grid-area: title;
+    text-align: center;
+    font-size: var(--epc-title-font-size);
+    line-height: calc(var(--epc-title-font-size) + 1rem);
+  }
+  & .tags {
+    grid-area: tags;
+  }
+  & .design-list {
+    grid-area: design-list;
+    overflow: hidden auto;
+  }
+  & .design-list .design-list-item {
+    max-width: calc(((100vw - 1rem * 2) - 1rem) / 2);
+  }
+
+/*  & > h2 {
     text-align: center;
     margin-bottom: 1rem;
   }
@@ -35,7 +64,7 @@ const cssStyles = css`
   & .design-list-item:hover .chakra-card__root {
     border-width: 5px;
     margin: -4px;
-  }
+  }*/
 `;
 
 function DesignListCore({ design, year, onSelect }: DesignListProps & import("react").RefAttributes<HTMLDivElement>)
@@ -52,7 +81,7 @@ function DesignListCore({ design, year, onSelect }: DesignListProps & import("re
   }, [indexJson])
 
   return (
-    <SimpleGrid minChildWidth="sm" gap={"1rem"}>
+    <SimpleGrid minChildWidth="sm" gap={"1rem"} className="design-list">
       {designs.map((designInfo: DesignInfoType) => (
         <Box key={designInfo.id} className="design-list-item">
           <Card
@@ -83,7 +112,7 @@ function DesignList(props: DesignListProps & import("react").RefAttributes<HTMLD
   return (
     <>
       <div css={cssStyles}>
-        <Heading size="6xl">簡単PDFカレンダー</Heading>
+        <Heading className="title" size="6xl">簡単PDFカレンダー</Heading>
         <Suspense fallback={<p>Loading...</p>}>
           <DesignListCore {...props} />
         </Suspense>
