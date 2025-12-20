@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import { Box, SimpleGrid, IconButton, Tabs, Button } from '@chakra-ui/react';
+import { SimpleGrid, IconButton, Tabs, Button, Heading } from '@chakra-ui/react';
 import { Tooltip } from "@/components/ui/tooltip";
 import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon, ArrowBigRight as ArrowBigRightIcon,
           Info as InfoIcon, CalendarDays as CalendarDaysIcon, Image as ImageIcon,
           ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon,
           PanelLeftClose as PanelLeftCloseIcon, PanelLeftOpen as PanelLeftOpenIcon,
           Calendars as CalendarsIcon } from 'lucide-react';
-import { useMeasure } from "@uidotdev/usehooks";
+//import { useMeasure } from "@uidotdev/usehooks";
 import CalendarPreview from '@/components/CalendarPreview';
 import PopupPrintPreview from '@/components/PopupPrintPreview';
 import PopupPrintOption from '@/components/PopupPrintOption';
@@ -19,6 +19,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useOptions, useVolatileOptions } from '@/store/options';
 import { normalizeYearAndMonth } from '@/utils/calendar';
 import { useHoliday } from '@/store/holiday';
+import { useDesign } from '@/store/design';
 
 type CalanderDesignPreviewProps = {
   design: string;
@@ -56,8 +57,12 @@ const cssStyles = css`
 
     height: 100cqh;
 
-    > * {
-      height: 100cqh;
+    .design-title {
+      height: fit-content;
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      padding: var(--chakra-spacing-2) var(--chakra-spacing-1);
     }
 
     .chakra-tabs__list > button {
@@ -66,35 +71,50 @@ const cssStyles = css`
       justify-content: center;
     }
     
-    .chakra-tabs__content {
+    .design-months-list {
       padding: 0.5rem;
-      height: calc(100% - var(--tabs-height));
       overflow: hidden scroll;
     }
 
-    .chakra-tabs__content > div {
+    .design-months-list > div {
       display: grid;
       grid-template-rows: repeat(12, 1fr);
       gap: var(--chakra-spacing-1);
     }
 
-    .chakra-tabs__content > div > div {
+    .design-months-list > div > div {
       grid-row: span 1;
       display: grid;
       grid-template-rows: subgrid;
+      cursor: pointer;
+      position: relative;
     }
 
-    .chakra-tabs__content > div > div[data-selected] {
+    .design-months-list > div > div:hover::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: var(--chakra-colors-color-palette-subtle);
+      background_: red;
+      mix-blend-mode: multiply;
+    }
+
+    .design-months-list > div > div[data-selected] {
       border-radius: var(--chakra-radii-l2);
       padding: var(--chakra-spacing-2);
       border-width: var(--line-thickness);
       border-style: solid;
       box-shadow: 0 0 0 1px var(--shadow-color);
       border-color: var(--chakra-colors-color-palette-solid);
+      container-type: size;
     }
-    .chakra-tabs__content > div > div[data-selected] svg {
-      width: 64px;
-      height: 64px;
+    .design-months-list > div > div[data-selected] svg {
+      width: min(64px, 100cqw, 100cqh);
+      height: min(64px, 100cqw, 100cqh);
       align-self: center;
       justify-self: center;
     }
@@ -193,6 +213,8 @@ function CalanderDesignPreview({
 
   //const prevDesignName = useDesign(useShallow(designPrevSelector(design)));
   //const nextDesignName = useDesign(useShallow(designNextSelector(design)));
+  const { getDesign } = useDesign();
+  const designName = getDesign(design)?.name || design;
 
   const [ openPrintPreview, setOpenPrintPreview ] = useState(false);
   const [ openPrintOption, setOpenPrintOption ] = useState(false);
@@ -204,7 +226,7 @@ function CalanderDesignPreview({
       <SimpleGrid
         css={cssStyles}
       >
-        <SimpleGrid
+        {false&&<SimpleGrid
           className="sidemenu"
         >
           <Tabs.Root
@@ -264,6 +286,46 @@ function CalanderDesignPreview({
             </Tabs.Content>
 
           </Tabs.Root>
+        </SimpleGrid>}
+
+        <SimpleGrid className="sidemenu">
+          <Tooltip showArrow content={designName}>
+            <Heading className="design-title">
+              {designName}
+            </Heading>
+          </Tooltip>
+          <div className="design-months-list">
+            <div>
+              {MonthList.map((month_: number) => { // カレンダーなどを生成するため非表示で残りの月も作る
+                const { year: year__, month: month__ } = normalizeYearAndMonth(year, month_, firstMonthIsApril);
+                if (month === month_) { // 選択している月
+                  return (
+                    <div
+                      key={`calendar-${design}-${year}-${month_}`}
+                      data-selected={month === month_ ? "yes" : undefined}
+                    >
+                      <ArrowBigRightIcon />
+                    </div>
+                  );
+                }
+                return (
+                  <div
+                    key={`calendar-${design}-${year}-${month_}`}
+                    data-selected={month === month_ ? "yes" : undefined}
+                    onClick={() => onChangeMonth&&onChangeMonth(month_)}
+                  >
+                    <CalendarPreview
+                      key={`calendar-${design}-${year}-${month_}`}
+                      design={design}
+                      year={ year__}
+                      month={month__}
+                      readonly
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </SimpleGrid>
 
         <SimpleGrid className="to-design-action">
