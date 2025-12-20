@@ -11,6 +11,8 @@ type DropZoneProps = {
 
 // ドロップ領域のデザイン
 const cssDropZone = css`
+  --epc-drop-zone-font-size: min(calc((100cqi - 0.25rem * 2) / 8), var(--chakra-font-sizes-md)); /* len(選択してください) = 8 */
+  container-type: size;
   border: 1px solid rgb(240,240,240);
   border-radius: 4px;
   label {
@@ -41,6 +43,7 @@ const cssDropZone = css`
       width: min-content;
       text-align: center;
       color: #999;
+      font-size: var(--epc-drop-zone-font-size);
     }
   }
 `;
