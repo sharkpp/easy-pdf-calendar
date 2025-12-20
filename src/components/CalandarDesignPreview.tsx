@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import { SimpleGrid, IconButton, Tabs, Button, Heading } from '@chakra-ui/react';
+import { SimpleGrid, IconButton, Button, Heading } from '@chakra-ui/react';
 import { Tooltip } from "@/components/ui/tooltip";
 import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon, ArrowBigRight as ArrowBigRightIcon,
           Info as InfoIcon, CalendarDays as CalendarDaysIcon, Image as ImageIcon,
@@ -226,68 +226,6 @@ function CalanderDesignPreview({
       <SimpleGrid
         css={cssStyles}
       >
-        {false&&<SimpleGrid
-          className="sidemenu"
-        >
-          <Tabs.Root
-            variant="outline"
-            value={submenuTab}
-            onValueChange={(e) => setSubmenuTab(e.value as SidemenuTabPage)}
-          >
-            <Tabs.List>
-              <Tabs.Trigger value="designs">
-                {/*<CalendarDaysIcon />*/}
-                デザイン
-              </Tabs.Trigger>
-              <Tabs.Trigger value="calendars">
-                {/*<ImageIcon />*/}
-                カレンダー
-              </Tabs.Trigger>
-              <Button variant="ghost">
-                <PanelLeftCloseIcon />
-              </Button>
-            </Tabs.List>
-
-            <Tabs.Content value="designs" className="designs-list">
-              Manage your team members {submenuTab}
-            </Tabs.Content>
-
-            <Tabs.Content value="calendars" className="calendars-list">
-              <div>
-                {MonthList.map((month_: number) => { // カレンダーなどを生成するため非表示で残りの月も作る
-                  const { year: year__, month: month__ } = normalizeYearAndMonth(year, month_, firstMonthIsApril);
-                  if (month === month_) { // 選択している月
-                    return (
-                      <div
-                        key={`calendar-${design}-${year}-${month_}`}
-                        data-selected={month === month_ ? "yes" : undefined}
-                      >
-                        <ArrowBigRightIcon />
-                      </div>
-                    );
-                  }
-                  return (
-                    <div
-                      key={`calendar-${design}-${year}-${month_}`}
-                      data-selected={month === month_ ? "yes" : undefined}
-                      onClick={() => onChangeMonth&&onChangeMonth(month_)}
-                    >
-                      <CalendarPreview
-                        key={`calendar-${design}-${year}-${month_}`}
-                        design={design}
-                        year={ year__}
-                        month={month__}
-                        readonly
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </Tabs.Content>
-
-          </Tabs.Root>
-        </SimpleGrid>}
-
         <SimpleGrid className="sidemenu">
           <Tooltip showArrow content={designName}>
             <Heading className="design-title">
@@ -380,8 +318,8 @@ function CalanderDesignPreview({
         <SimpleGrid className="next-month">
           <Button
             variant="ghost"
-            disabled={!(month+1<12)}
-            onClick={() => month+1<12&&onChangeMonth&&onChangeMonth(month+1)}
+            disabled={!(month+1<=12)}
+            onClick={() => month+1<=12&&onChangeMonth&&onChangeMonth(month+1)}
           >
             <ChevronRightIcon />
           </Button>
