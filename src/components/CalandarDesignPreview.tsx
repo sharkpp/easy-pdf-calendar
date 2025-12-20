@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid, IconButton, Tabs, Button } from '@chakra-ui/react';
+import { Tooltip } from "@/components/ui/tooltip";
 import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon, ArrowBigRight as ArrowBigRightIcon,
           Info as InfoIcon, CalendarDays as CalendarDaysIcon, Image as ImageIcon,
           ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon,
-          PanelLeftClose as PanelLeftCloseIcon, PanelLeftOpen as PanelLeftOpenIcon } from 'lucide-react';
+          PanelLeftClose as PanelLeftCloseIcon, PanelLeftOpen as PanelLeftOpenIcon,
+          Calendars as CalendarsIcon } from 'lucide-react';
 import { useMeasure } from "@uidotdev/usehooks";
 import CalendarPreview from '@/components/CalendarPreview';
 import PopupPrintPreview from '@/components/PopupPrintPreview';
@@ -265,28 +267,42 @@ function CalanderDesignPreview({
         </SimpleGrid>
 
         <SimpleGrid className="to-design-action">
+          <Tooltip showArrow content="トップに戻ってデザインを変更">
+            <IconButton
+              aria-label="print-calendar"
+              onClick={() => onChangeDesign && onChangeDesign("")}
+              variant="ghost"
+              size="lg"
+            >
+              <CalendarsIcon />
+            </IconButton>
+          </Tooltip>
         </SimpleGrid>
 
         <SimpleGrid className="config-action">
-          <IconButton
-            aria-label="print-calendar"
-            onClick={() => setOpenPrintOption(true)}
-            variant="ghost"
-            size="lg"
-          >
-            <CalendarCogIcon />
-          </IconButton>
+          <Tooltip showArrow content="設定を変更">
+            <IconButton
+              aria-label="print-calendar"
+              onClick={() => setOpenPrintOption(true)}
+              variant="ghost"
+              size="lg"
+            >
+              <CalendarCogIcon />
+            </IconButton>
+          </Tooltip>
         </SimpleGrid>
 
         <SimpleGrid className="print-action">
-          <IconButton
-            aria-label="print-calendar"
-            onClick={() => setOpenPrintPreview(true)}
-            variant="ghost"
-            size="lg"
-          >
-            <PrinterIcon />
-          </IconButton>
+          <Tooltip showArrow content="印刷プレビューを表示">
+            <IconButton
+              aria-label="print-calendar"
+              onClick={() => setOpenPrintPreview(true)}
+              variant="ghost"
+              size="lg"
+            >
+              <PrinterIcon />
+            </IconButton>
+          </Tooltip>
         </SimpleGrid>
 
         <SimpleGrid className="previous-month">

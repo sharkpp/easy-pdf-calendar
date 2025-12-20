@@ -34,7 +34,12 @@ function App()
           design={design}
           year={year}
           month={month}
-          onChangeDesign={(designName) => setDesign(designName)}
+          onChangeDesign={(designName) => {
+            setDesign(designName);
+            if ("" === designName) {
+              setUi(UI.SelectDesign);
+            }
+          }}
           onChangeMonth={(month) => setMonth(month)}
         />}
       </div>

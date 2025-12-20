@@ -57,6 +57,7 @@ const cssStyles = css`
     overflow: hidden auto;
   }
   & .design-list .design-list-item {
+    cursor: pointer;
     max-width: calc(((100vw - 1rem * 2) - 1rem) / 2);
   }
 `;
