@@ -24,7 +24,6 @@ import { Button, Stack, Fieldset, createListCollection } from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
 import { Switch } from "@/components/ui/switch"
 import { useOptions, useVolatileOptions } from '@/store/options';
-import { useShallow } from 'zustand/react/shallow';
 import { useState } from 'react';
 import PopupAnniversarysEditor from '@/components/PopupAnniversarysEditor';
 import { useHoliday } from '@/store/holiday';

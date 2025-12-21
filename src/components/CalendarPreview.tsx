@@ -1,7 +1,6 @@
 // カレンダーの一月分をデザインと月を指定し描画する
 
 import { useEffect, useCallback, useState } from 'react';
-import { useId } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
 import {
   Skeleton,
@@ -374,7 +373,7 @@ function CalendarPreview({
   blankImage = false,
 }: CalendarPreviewProps & import("react").RefAttributes<HTMLDivElement>)
 {
-  const calendarKey = `${design}:${year}:${month}:`;
+  //const calendarKey = `${design}:${year}:${month}:`;
 
   // # https://dot-to-ascii.ggerganov.com/
   // digraph {
@@ -742,7 +741,7 @@ function CalendarPreview({
             <DropZone
               key={`image-block-${imageBlock.name}-dropzone`}
               cssStyle={imageBlock.cssStyle}
-              onSelectFile={(file, isDrop) => {
+              onSelectFile={(file, _isDrop) => {
                 //console.log({file,isDrop});
                 const reader = new FileReader(); // ファイル読み取り用オブジェクト作成
                 reader.onload = (event: ProgressEvent<FileReader>) => {

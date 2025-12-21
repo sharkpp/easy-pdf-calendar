@@ -5,9 +5,8 @@ import { css } from '@emotion/react';
 import { SimpleGrid, IconButton, Button, Heading } from '@chakra-ui/react';
 import { Tooltip } from "@/components/ui/tooltip";
 import { Printer as PrinterIcon, CalendarCog as CalendarCogIcon, ArrowBigRight as ArrowBigRightIcon,
-          Info as InfoIcon, CalendarDays as CalendarDaysIcon, Image as ImageIcon,
+          Info as InfoIcon, 
           ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon,
-          PanelLeftClose as PanelLeftCloseIcon, PanelLeftOpen as PanelLeftOpenIcon,
           Calendars as CalendarsIcon } from 'lucide-react';
 //import { useMeasure } from "@uidotdev/usehooks";
 import CalendarPreview from '@/components/CalendarPreview';
@@ -194,8 +193,6 @@ const cssStyles = css`
 
 `;
 
-type SidemenuTabPage = "calendars" | "designs";
-
 function CalanderDesignPreview({
   design,
   year,
@@ -218,8 +215,6 @@ function CalanderDesignPreview({
 
   const [ openPrintPreview, setOpenPrintPreview ] = useState(false);
   const [ openPrintOption, setOpenPrintOption ] = useState(false);
-
-  const [ submenuTab, setSubmenuTab ] = useState<SidemenuTabPage>("calendars");
 
   return (
     <>

@@ -4,7 +4,7 @@ import { JSX, Suspense, use, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import { CardRoot as Card, CardHeader, CardBody, Heading } from '@chakra-ui/react'
-import { Button, ButtonGroup, Stack, Text } from "@chakra-ui/react";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 import { useShallow } from 'zustand/react/shallow';
 import { CALENDAR_DESIGNS_BASE_PATH } from '@/common';
 import { fetchData } from '@/fetch';
@@ -129,20 +129,20 @@ function DesignTags({ selectTags, setSelectTags }: DesignTagsProps): JSX.Element
           onClick={(event) => {
             if (event.shiftKey) {
               if (selectTags.includes(tag)) {
-                setSelectTags(selectTags.filter(t => t !== tag));
+                setSelectTags?.(selectTags.filter(t => t !== tag));
               } else {
-                setSelectTags([...selectTags, tag]);
+                setSelectTags?.([...selectTags, tag]);
               }
             }
             else {
               if (!selectTags.includes(tag)) {
-                setSelectTags([tag]);
+                setSelectTags?.([tag]);
               }
               else if (1 < selectTags.length) {
-                setSelectTags([tag]);
+                setSelectTags?.([tag]);
               }
               else {
-                setSelectTags(selectTags.filter(t => t !== tag));
+                setSelectTags?.(selectTags.filter(t => t !== tag));
               }
             }
           }}
