@@ -160,7 +160,7 @@ function addSvgText(
 const updateImageBlock = (name: string, imageBlockPart: Partial<Record<keyof ImageBlockInfoType, any>>, updatedCallback : undefined | (() => void) = undefined) => {
   return (
     (curImageBlocks: { [key: string]: ImageBlockInfoType }) => {
-      updatedCallback && updatedCallback();
+      updatedCallback?.();
       return {
         ...curImageBlocks,
         [name]: {

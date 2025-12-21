@@ -92,7 +92,7 @@ function DesignListCore({ selectTags, design, year, onSelect }: DesignTagsProps 
         <Box key={designInfo.id} className="design-list-item">
           <Card
             size="sm"
-            onClick={() => (onSelect && onSelect(designInfo.id))}
+            onClick={() => onSelect?.(designInfo.id)}
             {...(design !== designInfo.id ? {} : { bg: "orange", variant: "subtle" })}
           >
             <CardHeader>

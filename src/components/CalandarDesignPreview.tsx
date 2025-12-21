@@ -265,7 +265,7 @@ function CalanderDesignPreview({
           <Tooltip showArrow content="トップに戻ってデザインを変更">
             <IconButton
               aria-label="print-calendar"
-              onClick={() => onChangeDesign && onChangeDesign("")}
+              onClick={() => onChangeDesign?.("")}
               variant="ghost"
               size="lg"
             >
