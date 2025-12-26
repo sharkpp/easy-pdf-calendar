@@ -24,7 +24,7 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="1"
-     inkscape:cx="344"
+     inkscape:cx="344.5"
      inkscape:cy="241.5"
      inkscape:window-width="1440"
      inkscape:window-height="872"
@@ -472,7 +472,7 @@
      inkscape:label="base"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:none"><rect
+     style="display:inline"><rect
        style="fill:#ececec;fill-opacity:1;stroke:none;stroke-width:0.184444;stroke-linecap:round;stroke-linejoin:round"
        id="rect1"
        width="176"

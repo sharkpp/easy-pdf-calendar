@@ -155,6 +155,8 @@ function addSvgText(
     addSvgTextCore(baseElm, text, strokeColor, align, bold, true);
   }
   addSvgTextCore(baseElm, text, textColor, align, bold);
+
+  baseElm.style.opacity = '0';
 }
 
 const updateImageBlock = (name: string, imageBlockPart: Partial<Record<keyof ImageBlockInfoType, any>>, updatedCallback : undefined | (() => void) = undefined) => {
@@ -267,6 +269,17 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
     });
 
   // 日付を追加
+  svgElm // 項目を表示
+    .querySelectorAll([
+      makeSelector(`day-`),
+      makeSelector(`holidaymark-`),
+      makeSelector(`holiday-`),
+      makeSelector(`holiday2-`),
+    ].join(","))
+    .forEach((baseElm: Element) => {
+      (baseElm as SVGElement).style.opacity = '1';
+    });
+
   dateItems
     .forEach((date, dateIndex) => {
       if (date < -15) { // 前月
@@ -359,6 +372,17 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         ""+Math.abs(date),
         { textColor: textColor, strokeColor: '#FFFFFF' }
       );
+    });
+
+  svgElm // 項目を非表示
+    .querySelectorAll([
+      makeSelector(`day-`),
+      makeSelector(`holidaymark-`),
+      makeSelector(`holiday-`),
+      makeSelector(`holiday2-`),
+    ].join(","))
+    .forEach((baseElm: Element) => {
+      (baseElm as SVGElement).style.opacity = '0';
     });
 
   return svgElm;
@@ -485,13 +509,67 @@ function CalendarPreview({
     cachedCalendarElm
       .querySelectorAll(makeSelector(`image`))
       .forEach((baseElm: Element) => {
+        (baseElm as SVGElement).style.opacity = '1';
+
         const blockName = (baseElm.getAttribute('inkscape:label') || '');
         const name = `${(/^(.*)\[(.*)\]$/.exec(blockName) || ['', '', ''])[2] || ''}-${month}`; // {ブロック名}:{月}
         const svgBBox = (baseElm as SVGGraphicsElement).ownerSVGElement?.getBoundingClientRect() ||
                         { x: 0, y: 0, width: 0, height: 0 };
         const baseBBox = baseElm.getBoundingClientRect();
         const baseSvgBBox = (baseElm as SVGGraphicsElement).getBBox();
-  
+/*
+        //baseElm.height.baseVal.value
+        const svgElm = (baseElm as SVGGraphicsElement).ownerSVGElement;
+        const svgElmViewBox = (n => ({ x: n[0], y: n[1], width: n[2], height: n[3], }))(svgElm?.getAttribute('viewBox')?.split(/\s+/).map(v=>parseFloat(v))||[]);
+
+        const baseElmVisivled = !!((baseElm as HTMLElement).offsetWidth || (baseElm as HTMLElement).offsetHeight || baseElm.getClientRects().length);
+
+        const baseBBox_ = JSON.parse(JSON.stringify(baseBBox)) as DOMRect;
+        if (true || svgElm && !baseElmVisivled ) {
+          baseBBox.x = svgElm.width.baseVal.value / svgElmViewBox.width * (baseElm as SVGRectElement).x.baseVal.value;
+          baseBBox.y = svgElm.height.baseVal.value / svgElmViewBox.height * (baseElm as SVGRectElement).y.baseVal.value;
+          baseBBox.width = svgElm.width.baseVal.value / svgElmViewBox.width * (baseElm as SVGRectElement).width.baseVal.value;
+          baseBBox.height = svgElm.height.baseVal.value / svgElmViewBox.height * (baseElm as SVGRectElement).height.baseVal.value;
+        } else {
+          baseBBox_.x = svgElm.width.baseVal.value / svgElmViewBox.width * (baseElm as SVGRectElement).x.baseVal.value;
+          baseBBox_.y = svgElm.height.baseVal.value / svgElmViewBox.height * (baseElm as SVGRectElement).y.baseVal.value;
+          baseBBox_.width = svgElm.width.baseVal.value / svgElmViewBox.width * (baseElm as SVGRectElement).width.baseVal.value;
+          baseBBox_.height = svgElm.height.baseVal.value / svgElmViewBox.height * (baseElm as SVGRectElement).height.baseVal.value;
+        }
+      console.log(`${design} Image Block: ${name}`);
+
+        console.log(`${design} Image Block: ${name}`, {
+          baseBBox,baseBBox_,baseElmVisivled,
+          "svgElm.*.baseVal.value": {
+            width: svgElm.width.baseVal.value,
+            height: svgElm.height.baseVal.value,
+          },
+          "baseElm.*.baseVal.value": {
+            x: baseElm.x.baseVal.value,
+            y: baseElm.y.baseVal.value,
+            width: baseElm.width.baseVal.value,
+            height: baseElm.height.baseVal.value,
+          },
+          svgElmViewBox,
+        });
+        0&&console.log(`${design} Image Block: ${name}`, {
+          baseElmVisivled,
+          baseElm,
+          "baseElm.*.baseVal.value": {
+            x: undefined!==baseElm.x&&baseElm.x.baseVal.value,
+            y: undefined!==baseElm.y&&baseElm.y.baseVal.value,
+            width: undefined!==baseElm.width&&baseElm.width.baseVal.value,
+            height: undefined!==baseElm.height&&baseElm.height.baseVal.value,
+          },
+          svgElm: svgElm,
+          "svgElm.*.baseVal.value": {
+            x: undefined!==svgElm.x&&svgElm.x.baseVal.value,
+            y: undefined!==svgElm.y&&svgElm.y.baseVal.value,
+            width: undefined!==svgElm.width&&svgElm.width.baseVal.value,
+            height: undefined!==svgElm.height&&svgElm.height.baseVal.value,
+          },
+          svgBBox, svgElmViewBox,baseBBox_,baseBBox, baseSvgBBox});
+*/
         const cssImageArea = css`
             position: absolute;
             left:   ${baseBBox.x - svgBBox.x}px;
@@ -515,6 +593,8 @@ function CalendarPreview({
           openCropper: false,
           state: false,
         };
+
+        (baseElm as SVGElement).style.opacity = '0';
       });
     if (0 < Object.keys(newImageBlocks).length) {
       // 画像埋め込み枠の情報を更新
@@ -648,10 +728,6 @@ function CalendarPreview({
         background: white;
         border: 1px solid rgb(240,240,240);
         position: relative;
-        svg {
-          user-select: none;
-          pointer-events: none;
-        }
         svg {
           user-select: none;
           pointer-events: none;
