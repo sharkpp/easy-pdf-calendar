@@ -5,7 +5,7 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import legacy from '@vitejs/plugin-legacy';
 import { resolve } from 'path';
-import { type Dirent, readdirSync, readFileSync, write, writeFileSync } from 'fs';
+import { type Dirent, readdirSync, readFileSync, writeFileSync } from 'fs';
 import YAML from 'yamljs';
 
 import getHolidaysJson from './tools/update-holiday-jp';
