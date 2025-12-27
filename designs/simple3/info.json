@@ -16,6 +16,9 @@
     "saturdayDate":       "#0066ff",
     "holidayDate":        "#FF0000"
   },
+  "fonts": {
+    "date": "Noto Sans Gothic"
+  },
   "options": {
     "disablePreviousMonthDate": true,
     "disableNextMonthDate": true

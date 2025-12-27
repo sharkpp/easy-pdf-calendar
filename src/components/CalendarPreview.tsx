@@ -13,6 +13,7 @@ import { ImageBlockState, useImageBlock } from '@/store/image-block';
 import { useCalendar } from '@/store/calendar';
 import { DesignInfoType, useDesign } from '@/store/design';
 import { useHoliday, HolidaysType } from '@/store/holiday';
+import { fonts as FontInfoItems } from '@/../fonts/index.json';
 
 // カレンダープレビューのプロパティの型
 type CalendarPreviewProps = {
@@ -91,6 +92,7 @@ function addSvgTextCore(
   text: string,
   textColor?: string,
   align?: string,
+  fontName: string = '',
   bold: string = '',
   stroke: boolean = false
 ) {
@@ -104,7 +106,7 @@ font-weight: ${bold || 'normal'};
 font-stretch: normal;
 font-size: ${fontSize};
 line-height: 1.25;
-font-family: &quot;Noto Sans Gothic&quot;;
+font-family: &quot;${fontName || "Noto Sans Gothic"}&quot;;
 white-space: pre;
 display: inline;
 fill: ${textColor};
@@ -143,18 +145,19 @@ stroke-linejoin: round;
 function addSvgText(
   baseElm: SVGRectElement,
   text: string,
-  { textColor, align = 'center', bold, strokeColor }: {
+  { textColor, align = 'center', fontName, bold, strokeColor }: {
     textColor?: string,
     align?: string,
+    fontName?: string,
     bold?: string,
     strokeColor?: string,
   }
-): void {
+): void {console.log({text,fontName})
   if (strokeColor) { // ストロークの描画
     // svg2pdf で paint-order: stroke; がサポートされてなさそうなので自力で実装
-    addSvgTextCore(baseElm, text, strokeColor, align, bold, true);
+    addSvgTextCore(baseElm, text, strokeColor, align, fontName, bold, true);
   }
-  addSvgTextCore(baseElm, text, textColor, align, bold);
+  addSvgTextCore(baseElm, text, textColor, align, fontName, bold);
 
   baseElm.style.opacity = '0';
 }
@@ -178,6 +181,12 @@ const updateImageBlock = (name: string, imageBlockPart: Partial<Record<keyof Ima
 function buildCalendar(svgElm: SVGElement, year: number, month: number, designInfo: DesignInfoType, holidays: HolidaysType )
 {
   // SVGテンプレート読み込み完了後の書き換え処理
+
+  const dateFontName    = designInfo.fonts?.date || 'Noto Sans Gothic';
+  const yearFontName    = designInfo.fonts?.year || dateFontName;
+  const monthFontName   = designInfo.fonts?.month || dateFontName;
+  const holidayFontName = designInfo.fonts?.holiday || dateFontName;
+console.log(designInfo,{dateFontName,yearFontName,monthFontName,holidayFontName});
 
   const dateColor               = designInfo.colors.date; // その他の日付の色
   const previousMonthDateColor  = designInfo.colors.previousMonthDate || dateColor; // 先月の日付の色
@@ -263,7 +272,8 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         baseElm as SVGRectElement,
         text,
         {
-          textColor: "rgb(0, 0, 0)"
+          textColor: "rgb(0, 0, 0)",
+          fontName: 'year' === kind ? yearFontName : monthFontName,
         }
       );
     });
@@ -325,7 +335,12 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         addSvgText(
           holidaymarkBaseElm,
           holidayText.mark || '',
-          { textColor: holidayColor, align, bold: '950' }
+          {
+            textColor: holidayColor,
+            align,
+            fontName: dateFontName,
+            bold: '950'
+          }
         );
       }
       // 記念日を追加
@@ -343,7 +358,12 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         addSvgText(
           holiday2BaseElm,
           holidayText.anniversary || '',
-          { textColor: holidayColor, align, strokeColor: '#FFFFFF' }
+          {
+            textColor: holidayColor,
+            align,
+            strokeColor: '#FFFFFF',
+            fontName: holidayFontName,
+          }
         );
       }
 
@@ -362,7 +382,12 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         addSvgText(
           holidayBaseElm,
           holidayText.holiday || '',
-          { textColor: holidayColor, align, strokeColor: '#FFFFFF' }
+          {
+            textColor: holidayColor,
+            align,
+            strokeColor: '#FFFFFF',
+            fontName: holidayFontName,
+          }
         );
       }
 
@@ -370,7 +395,11 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
       addSvgText(
         dateBaseElm,
         ""+Math.abs(date),
-        { textColor: textColor, strokeColor: '#FFFFFF' }
+        {
+          textColor: textColor,
+          strokeColor: '#FFFFFF',
+          fontName: dateFontName,
+        }
       );
     });
 
@@ -517,59 +546,7 @@ function CalendarPreview({
                         { x: 0, y: 0, width: 0, height: 0 };
         const baseBBox = baseElm.getBoundingClientRect();
         const baseSvgBBox = (baseElm as SVGGraphicsElement).getBBox();
-/*
-        //baseElm.height.baseVal.value
-        const svgElm = (baseElm as SVGGraphicsElement).ownerSVGElement;
-        const svgElmViewBox = (n => ({ x: n[0], y: n[1], width: n[2], height: n[3], }))(svgElm?.getAttribute('viewBox')?.split(/\s+/).map(v=>parseFloat(v))||[]);
 
-        const baseElmVisivled = !!((baseElm as HTMLElement).offsetWidth || (baseElm as HTMLElement).offsetHeight || baseElm.getClientRects().length);
-
-        const baseBBox_ = JSON.parse(JSON.stringify(baseBBox)) as DOMRect;
-        if (true || svgElm && !baseElmVisivled ) {
-          baseBBox.x = svgElm.width.baseVal.value / svgElmViewBox.width * (baseElm as SVGRectElement).x.baseVal.value;
-          baseBBox.y = svgElm.height.baseVal.value / svgElmViewBox.height * (baseElm as SVGRectElement).y.baseVal.value;
-          baseBBox.width = svgElm.width.baseVal.value / svgElmViewBox.width * (baseElm as SVGRectElement).width.baseVal.value;
-          baseBBox.height = svgElm.height.baseVal.value / svgElmViewBox.height * (baseElm as SVGRectElement).height.baseVal.value;
-        } else {
-          baseBBox_.x = svgElm.width.baseVal.value / svgElmViewBox.width * (baseElm as SVGRectElement).x.baseVal.value;
-          baseBBox_.y = svgElm.height.baseVal.value / svgElmViewBox.height * (baseElm as SVGRectElement).y.baseVal.value;
-          baseBBox_.width = svgElm.width.baseVal.value / svgElmViewBox.width * (baseElm as SVGRectElement).width.baseVal.value;
-          baseBBox_.height = svgElm.height.baseVal.value / svgElmViewBox.height * (baseElm as SVGRectElement).height.baseVal.value;
-        }
-      console.log(`${design} Image Block: ${name}`);
-
-        console.log(`${design} Image Block: ${name}`, {
-          baseBBox,baseBBox_,baseElmVisivled,
-          "svgElm.*.baseVal.value": {
-            width: svgElm.width.baseVal.value,
-            height: svgElm.height.baseVal.value,
-          },
-          "baseElm.*.baseVal.value": {
-            x: baseElm.x.baseVal.value,
-            y: baseElm.y.baseVal.value,
-            width: baseElm.width.baseVal.value,
-            height: baseElm.height.baseVal.value,
-          },
-          svgElmViewBox,
-        });
-        0&&console.log(`${design} Image Block: ${name}`, {
-          baseElmVisivled,
-          baseElm,
-          "baseElm.*.baseVal.value": {
-            x: undefined!==baseElm.x&&baseElm.x.baseVal.value,
-            y: undefined!==baseElm.y&&baseElm.y.baseVal.value,
-            width: undefined!==baseElm.width&&baseElm.width.baseVal.value,
-            height: undefined!==baseElm.height&&baseElm.height.baseVal.value,
-          },
-          svgElm: svgElm,
-          "svgElm.*.baseVal.value": {
-            x: undefined!==svgElm.x&&svgElm.x.baseVal.value,
-            y: undefined!==svgElm.y&&svgElm.y.baseVal.value,
-            width: undefined!==svgElm.width&&svgElm.width.baseVal.value,
-            height: undefined!==svgElm.height&&svgElm.height.baseVal.value,
-          },
-          svgBBox, svgElmViewBox,baseBBox_,baseBBox, baseSvgBBox});
-*/
         const cssImageArea = css`
             position: absolute;
             left:   ${baseBBox.x - svgBBox.x}px;
@@ -721,7 +698,7 @@ function CalendarPreview({
   }, [holidays])
 
 //console.log(`${calendarKey}${readonly?1:0} CalendarPreview #2`,{svgContainerElm,cachedCalendarTemplateElm,cachedCalendarElm,calendarElm,holidays})
-
+console.log({designInfo,FontInfoItems})
   return (
     <div
       css={css`${cssProp||""}
@@ -734,6 +711,12 @@ function CalendarPreview({
         }
       `}
     >
+      <style>
+        {designInfo?.fonts?.date    && (FontInfoItems as Record<string, any>)[designInfo?.fonts?.date]?.web}
+        {designInfo?.fonts?.holiday && (FontInfoItems as Record<string, any>)[designInfo?.fonts?.holiday]?.web}
+        {designInfo?.fonts?.month   && (FontInfoItems as Record<string, any>)[designInfo?.fonts?.month]?.web}
+        {designInfo?.fonts?.year    && (FontInfoItems as Record<string, any>)[designInfo?.fonts?.year]?.web}
+      </style>
       <div ref={refSvgContainer} />
       {Object.values(imageBlocks)
       .map(((imageBlock) => {

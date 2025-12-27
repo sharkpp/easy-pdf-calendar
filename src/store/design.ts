@@ -38,10 +38,16 @@ export type DesignInfoType = {
     previousMonthDate?:   Color; // 先月の日付の色
     nextMonthDate?:       Color; // 来月の日付の色
   };
+  fonts: {
+    date: string; // 日付のフォントファミリー
+    month?: string; // 月のフォントファミリー
+    year?: string; // 年のフォントファミリー
+    holiday?: string; // 祝日のフォントファミリー
+  };
   options?: {
     disablePreviousMonthDate?: boolean; // 前月の日付を無効にする
     disableNextMonthDate?: boolean; // 次月の日付を無効にする
-  }
+  };
 }
 
 type DesignStoreState = {

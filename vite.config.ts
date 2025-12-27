@@ -5,7 +5,8 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import legacy from '@vitejs/plugin-legacy';
 import { resolve } from 'path';
-import { Dirent, readdirSync, readFileSync, writeFileSync } from 'fs';
+import { type Dirent, readdirSync, readFileSync, write, writeFileSync } from 'fs';
+import YAML from 'yamljs';
 
 import getHolidaysJson from './tools/update-holiday-jp';
 
@@ -55,6 +56,9 @@ const {
     } as designsResultType)
 
 writeFileSync(DESIGNS_INDEX_JSON_PATH, JSON.stringify(designsIndexContent));
+
+// フォント一覧を更新
+writeFileSync('./fonts/index.json', JSON.stringify(YAML.load('./fonts/index.yaml')))
 
 // https://vite.dev/config/
 export default defineConfig({

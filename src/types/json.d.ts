@@ -19,3 +19,20 @@ declare module '*/layouts/info.json' {
   const value: LayoutsInfoType;
   export = value;
 }
+
+declare module '*/fonts/index.json' {
+  export interface FontInfoItemType {
+    name: string;
+    pdf: Array<string>;
+    web: string;
+  }
+
+  interface FontsIndexType {
+    "fonts": {
+      [fontName: string | undefiend]: FontInfoItemType
+    }
+  }
+
+  const value: FontsIndexType;
+  export = value;
+}
