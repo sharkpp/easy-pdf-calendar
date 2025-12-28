@@ -27,17 +27,18 @@ import { OpenChangeDetails } from '@zag-js/dialog';
 import { jsPDF } from 'jspdf';
 import 'svg2pdf.js';
 import { PageSize } from '@/utils/jspdf-pagesize';
-import { useFont, Font } from '@/hooks/jspdf-usefont';
+import { useFonts, type FontList } from '@/hooks/jspdf-usefont';
 import { PRINT_LAYOUT_BASE_PATH } from '@/common';
 import { useCalendar } from '@/store/calendar';
 import Spinner from '@/components/Spinner';
 import PrintSizeList from '@/../layouts/info.json';
-//import type { LayoutsInfoItem } from '@/../layouts/info.json';
+import type { LayoutsInfoType } from '@/../layouts/info.json';
 import { DesignInfoType, useDesign } from '@/store/design';
 import { useShallow } from 'zustand/react/shallow';
 import { useOptions } from '@/store/options';
 import { normalizeYearAndMonth } from '@/utils/calendar';
 import { FONT_BASE_PATH } from '@/common';
+import { fonts as FontInfoItems, type FontInfoItemType } from '@/../fonts/index.json';
 
 // 印刷プレビュー画面のプロパティの型
 type PopupPrintPreviewProps = {
@@ -109,7 +110,7 @@ overflow: hidden;
 const makeSelector = (id: string) => `*[*|label^="${id}"]`;
 
 // PDF構築
-async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: Font[], _designInfo: DesignInfoType, pageLayout: any, layoutSvgElm: SVGElement | null): Promise<{ workId: string, pdfContent: string }> {
+async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: FontList, _designInfo: DesignInfoType, pageLayout: any, layoutSvgElm: SVGElement | null): Promise<{ workId: string, pdfContent: string }> {
   //console.log({calendars,fonts,designInfo,pageLayout,layoutSvgElm});
   const pageSizeMM = pageLayout && PageSize[pageLayout.size];
   if (!pageSizeMM) {
@@ -126,9 +127,9 @@ async function makePdf(workId: string, calendars: (SVGElement | null)[], fonts: 
   });
 
   // フォントをインストール
-  for await (const font of fonts) {
-    await font.install(doc);
-    doc.setFont(font.name);
+  await fonts.install(doc);
+  for await (const fontName of fonts.names) {
+    doc.setFont(fontName);
   }
 
   const pageRect = layoutSvgElm?.getBoundingClientRect();
@@ -215,12 +216,32 @@ function PopupPrintPreview({
   const getCalendar = useCalendar.use.getCalendar();
   const [ pdfVisible, setPdfVisible ] = useState(false);
 
-  const notosans = useFont("Noto Sans Gothic", FONT_BASE_PATH + "/NotoSansJP-Medium.ttf")
-  
+  const designInfo = useDesign(useShallow((state) => state.getDesign(design)));
+
+  const useFontsList = [
+    designInfo?.fonts.date,
+    designInfo?.fonts.month,
+    designInfo?.fonts.year,
+    designInfo?.fonts.holiday,
+  ].reduce((acc: Map<string, FontInfoItemType>, fontName: string | undefined) => {
+    if (fontName && !acc.has(fontName)) {
+      acc.set(fontName, (FontInfoItems as Record<string, FontInfoItemType>)[fontName]);
+    }
+    return acc;
+  }, new Map<string, FontInfoItemType>()).values();
+
+  //console.log('>>',design,useFontsList)
+  //const notosans = useFont("Noto Sans Gothic", FONT_BASE_PATH + "/NotoSansJP-Medium.ttf")
+  const fonts = useFonts(
+    Array.from(useFontsList)
+    .map((fontInfo) => ({
+      name: fontInfo.name,
+      path: FONT_BASE_PATH + "/" + fontInfo.pdf,
+    }))
+  );
+
   //const colorMode = useColorMode().colorMode as 'dark' | 'light' | undefined;
   //console.log(colorMode)
-
-  const designInfo = useDesign(useShallow((state) => state.getDesign(design)));
 
   const [pageLayoutIndex, setPageLayoutIndex] = useState<number[]>([0]);
 
@@ -228,7 +249,8 @@ function PopupPrintPreview({
     if (!designInfo) {
       return [];
     }
-    return PrintSizeList[designInfo.layout.size][designInfo.layout.orientation];
+    // PrintSizeList is loaded from JSON and has dynamic keys; cast to an indexable type to satisfy TypeScript
+    return (PrintSizeList as LayoutsInfoType)[designInfo.layout.size][designInfo.layout.orientation];
   }, [designInfo]);
 
   const pageLayoutIndexList = useMemo(() => {
@@ -282,7 +304,7 @@ function PopupPrintPreview({
             const { year: yearR, month: monthR } = normalizeYearAndMonth(year, month, firstMonthIsApril);
             return getCalendar(design, yearR, monthR)
           }),
-          [notosans],
+          fonts,
           designInfo,
           pageLayout, layoutSvgElm
         ).then(({ workId, pdfContent }) => {

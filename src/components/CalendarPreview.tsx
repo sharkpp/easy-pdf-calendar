@@ -152,7 +152,7 @@ function addSvgText(
     bold?: string,
     strokeColor?: string,
   }
-): void {console.log({text,fontName})
+): void {
   if (strokeColor) { // ストロークの描画
     // svg2pdf で paint-order: stroke; がサポートされてなさそうなので自力で実装
     addSvgTextCore(baseElm, text, strokeColor, align, fontName, bold, true);
@@ -186,7 +186,6 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
   const yearFontName    = designInfo.fonts?.year || dateFontName;
   const monthFontName   = designInfo.fonts?.month || dateFontName;
   const holidayFontName = designInfo.fonts?.holiday || dateFontName;
-console.log(designInfo,{dateFontName,yearFontName,monthFontName,holidayFontName});
 
   const dateColor               = designInfo.colors.date; // その他の日付の色
   const previousMonthDateColor  = designInfo.colors.previousMonthDate || dateColor; // 先月の日付の色
@@ -698,7 +697,7 @@ function CalendarPreview({
   }, [holidays])
 
 //console.log(`${calendarKey}${readonly?1:0} CalendarPreview #2`,{svgContainerElm,cachedCalendarTemplateElm,cachedCalendarElm,calendarElm,holidays})
-console.log({designInfo,FontInfoItems})
+//console.log({designInfo,FontInfoItems})
   return (
     <div
       css={css`${cssProp||""}

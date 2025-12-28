@@ -2,6 +2,7 @@
 
 import { create } from 'zustand'
 import { createSelectors } from '@/utils/zustand';
+import type { LayoutOrientationType, LayoutSizeType } from '@/../layouts/info.json';
 
 type RGB = `rgb(${number}, ${number}, ${number})`;
 type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
@@ -13,8 +14,8 @@ export type DesignInfoType = {
   name: string;
   disabled?: boolean;
   layout: {
-    orientation: "landscape" | "portrait";
-    size: "A4" | "A5" | "A6" | "B6JIS" | "PostCard" | "L" | "2L";
+    orientation: LayoutOrientationType;
+    size: LayoutSizeType;
   };
   tags: string[]; // デザインのタグ
   templates: {

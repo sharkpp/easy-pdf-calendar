@@ -1,45 +1,48 @@
-// https://qiita.com/Toshimichi/items/1e23523bb270d149d00f
+// jspdf 用のフォント読み込みフック
 
 import jsPDF from "jspdf"
 import { useCallback, useMemo } from "react"
 
-export interface Font {
-  name: string,
-
+export interface FontList {
+  names: Array<string>,
   install(pdf: jsPDF): Promise<void>
 }
 
-async function loadFont(path: string): Promise<ArrayBuffer | undefined> {
+async function loadFonts(pathList: Array<string>): Promise<Array<ArrayBuffer | undefined>> {
   try {
-    if (typeof window === "undefined") return undefined
-    const response = await fetch(path)
-    if (!response.ok) {
-      console.error(`Failed to fetch font: ${response.statusText}`)
-      return undefined
-    }
-    return await response.arrayBuffer()
-  } catch (e) {
-    console.error(e)
-    return undefined
+    if (typeof window === "undefined") return [];
+    const fetchPromises = pathList.map(async (url) => {
+      const response = await fetch(url);
+      if (!response.ok) {
+        console.error(`Failed to fetch font: ${response.statusText}`)
+        return undefined
+      }
+      return await response.arrayBuffer();
+    });
+    const buffers = await Promise.all(fetchPromises);
+    return buffers;
+  } catch (error) {
+    console.error(error);
+    return [];
   }
 }
 
-export function useFont(name: string, path: string, style?: string, weight?: number | string): Font {
-
-  const promise = useMemo(() => loadFont(path), [ path ])
+export function useFonts(fontsList: Array<{ name: string, path: string, style?: string, weight?: number | string }>): FontList {
+  const promise = useMemo(() => loadFonts(fontsList.map(font => font.path)), [ fontsList ])
   const install = useCallback(async (pdf: jsPDF) => {
-    const data = await promise
-    if (!data) return
-    
-    const fileName = name + ".ttf"
-    pdf.addFileToVFS(fileName, Buffer.from(data).toString("base64"))
-    pdf.addFont(fileName, name, "normal")
-    pdf.addFont(fileName, name, "normal", 950)
-  }, [ name, promise, style, weight ])
-
+    const dataList = await promise
+    fontsList.forEach((font, index) => {
+      const data = dataList[index];
+      if (!data) return;
+      const fileName = font.name + ".ttf"
+      pdf.addFileToVFS(fileName, Buffer.from(data).toString("base64"))
+      pdf.addFont(fileName, font.name, "normal")
+      pdf.addFont(fileName, font.name, "normal", 950)
+    });
+  }, [ promise ]);
   return useMemo(() => ({
-    name,
+    names: fontsList.map(font => font.name),
     install,
-  }), [ name, install ])
+  }), [ fontsList, install ]);
 }
 

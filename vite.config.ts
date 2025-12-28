@@ -58,7 +58,8 @@ const {
 writeFileSync(DESIGNS_INDEX_JSON_PATH, JSON.stringify(designsIndexContent));
 
 // フォント一覧を更新
-writeFileSync('./fonts/index.json', JSON.stringify(YAML.load('./fonts/index.yaml')))
+const fontsInfo = YAML.load('./fonts/index.yaml') as any;
+writeFileSync('./fonts/index.json', JSON.stringify(fontsInfo));
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -70,10 +71,25 @@ export default defineConfig({
     tsconfigPaths(),
     viteStaticCopy({
       targets: [
-        {
-          src: normalizePath(resolve(__dirname, './fonts') + "/*.ttf"),
-          dest: 'assets/fonts'
-        },
+        ...(
+          Object.values(fontsInfo.fonts).reduce((r: viteStaticCopyTargetType[], fontInfo: any ) => {
+            // .ttf
+            r.push({
+              src: normalizePath(resolve(__dirname, `./fonts/**/${fontInfo.pdf.split('/').pop()}`)),
+              dest: 'assets/fonts/'
+            });
+            // .woff, .woff2
+            Array.from((fontInfo.web as string).matchAll(/".*?assets\/fonts.*?"/g))
+              .forEach((m: RegExpMatchArray) => {
+                const fontPath = m[0].replace(/"/g, '');
+                r.push({
+                  src: normalizePath(resolve(__dirname, `./fonts/**/${fontPath.split('/').pop()}`)),
+                  dest: 'assets/fonts/'
+                });
+              });
+            return r;
+          }, [] as viteStaticCopyTargetType[])
+        ),
         {
           src: normalizePath(resolve(__dirname, './layouts') + "/*.svg"),
           dest: 'assets/layouts'
