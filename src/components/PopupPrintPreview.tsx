@@ -38,7 +38,8 @@ import { useShallow } from 'zustand/react/shallow';
 import { useOptions } from '@/store/options';
 import { normalizeYearAndMonth } from '@/utils/calendar';
 import { FONT_BASE_PATH } from '@/common';
-import { fonts as FontInfoItems, type FontInfoItemType } from '@/../fonts/index.json';
+//import { fonts as FontInfoItems, type FontInfoItemType } from '@/../fonts/index.json';
+import { FontInfoItemsMap, type FontInfoItemType } from '@/utils/fonts-list.ts';
 
 // 印刷プレビュー画面のプロパティの型
 type PopupPrintPreviewProps = {
@@ -225,15 +226,12 @@ function PopupPrintPreview({
     designInfo?.fonts.holiday,
   ].reduce((acc: Map<string, FontInfoItemType>, fontName: string | undefined) => {
     if (fontName && !acc.has(fontName)) {
-      const fontInfoIndex = (FontInfoItems as Array<FontInfoItemType>).findIndex((fontInfo) => fontInfo.name === fontName);
-      if (0 <= fontInfoIndex) {
-        acc.set(fontName, FontInfoItems[fontInfoIndex]);
-      }
+      acc.set(fontName, FontInfoItemsMap[fontName]);
     }
     return acc;
   }, new Map<string, FontInfoItemType>()).values());
 
-  console.log('>>',design,useFontsList)
+  //console.log('>>',design,useFontsList)
   //const notosans = useFont("Noto Sans Gothic", FONT_BASE_PATH + "/NotoSansJP-Medium.ttf")
   const fonts = useFonts(
     Array.from(useFontsList)

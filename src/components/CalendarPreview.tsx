@@ -13,7 +13,7 @@ import { ImageBlockState, useImageBlock } from '@/store/image-block';
 import { useCalendar } from '@/store/calendar';
 import { DesignInfoType, useDesign } from '@/store/design';
 import { useHoliday, HolidaysType } from '@/store/holiday';
-import { fonts as FontInfoItems } from '@/../fonts/index.json';
+import { FontInfoItemsMap, type FontInfoItemType } from '@/utils/fonts-list.ts';
 
 // カレンダープレビューのプロパティの型
 type CalendarPreviewProps = {
@@ -697,7 +697,7 @@ function CalendarPreview({
   }, [holidays])
 
 //console.log(`${calendarKey}${readonly?1:0} CalendarPreview #2`,{svgContainerElm,cachedCalendarTemplateElm,cachedCalendarElm,calendarElm,holidays})
-//console.log({designInfo,FontInfoItems})
+console.log(design, year, month,{designInfo,FontInfoItemsMap})
   return (
     <div
       css={css`${cssProp||""}
@@ -711,10 +711,10 @@ function CalendarPreview({
       `}
     >
       <style>
-        {designInfo?.fonts?.date    && (FontInfoItems as Record<string, any>)[designInfo?.fonts?.date]?.web}
-        {designInfo?.fonts?.holiday && (FontInfoItems as Record<string, any>)[designInfo?.fonts?.holiday]?.web}
-        {designInfo?.fonts?.month   && (FontInfoItems as Record<string, any>)[designInfo?.fonts?.month]?.web}
-        {designInfo?.fonts?.year    && (FontInfoItems as Record<string, any>)[designInfo?.fonts?.year]?.web}
+        {designInfo?.fonts?.date    && (FontInfoItemsMap as Record<string, FontInfoItemType>)[designInfo?.fonts?.date]?.web}
+        {designInfo?.fonts?.holiday && (FontInfoItemsMap as Record<string, FontInfoItemType>)[designInfo?.fonts?.holiday]?.web}
+        {designInfo?.fonts?.month   && (FontInfoItemsMap as Record<string, FontInfoItemType>)[designInfo?.fonts?.month]?.web}
+        {designInfo?.fonts?.year    && (FontInfoItemsMap as Record<string, FontInfoItemType>)[designInfo?.fonts?.year]?.web}
       </style>
       <div ref={refSvgContainer} />
       {Object.values(imageBlocks)
