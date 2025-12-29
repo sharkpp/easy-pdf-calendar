@@ -218,19 +218,22 @@ function PopupPrintPreview({
 
   const designInfo = useDesign(useShallow((state) => state.getDesign(design)));
 
-  const useFontsList = [
+  const useFontsList = Array.from([
     designInfo?.fonts.date,
     designInfo?.fonts.month,
     designInfo?.fonts.year,
     designInfo?.fonts.holiday,
   ].reduce((acc: Map<string, FontInfoItemType>, fontName: string | undefined) => {
     if (fontName && !acc.has(fontName)) {
-      acc.set(fontName, (FontInfoItems as Record<string, FontInfoItemType>)[fontName]);
+      const fontInfoIndex = (FontInfoItems as Array<FontInfoItemType>).findIndex((fontInfo) => fontInfo.name === fontName);
+      if (0 <= fontInfoIndex) {
+        acc.set(fontName, FontInfoItems[fontInfoIndex]);
+      }
     }
     return acc;
-  }, new Map<string, FontInfoItemType>()).values();
+  }, new Map<string, FontInfoItemType>()).values());
 
-  //console.log('>>',design,useFontsList)
+  console.log('>>',design,useFontsList)
   //const notosans = useFont("Noto Sans Gothic", FONT_BASE_PATH + "/NotoSansJP-Medium.ttf")
   const fonts = useFonts(
     Array.from(useFontsList)

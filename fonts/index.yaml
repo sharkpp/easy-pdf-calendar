@@ -1,11 +1,9 @@
 ---
 fonts:
-  Noto Sans Gothic:
-    name: Noto Sans JP
+  - name: Noto Sans Gothic
     pdf: NotoSansJP-Regular.ttf
     web: "@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');"
-  Sono:
-    name: Sono
+  - name: Sono
     pdf: Sono-Regular.ttf
     web: |-
       @font-face {

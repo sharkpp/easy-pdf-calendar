@@ -26,9 +26,7 @@ declare module '@/../fonts/index.json' {
   }
 
   export interface FontsIndexType {
-    "fonts": {
-      [fontName: string]: FontInfoItemType
-    }
+    "fonts": Array<FontInfoItemType>;
   }
 
   const value: FontsIndexType;
