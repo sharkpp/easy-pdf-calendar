@@ -15,6 +15,12 @@ import { DesignInfoType, useDesign } from '@/store/design';
 import { useHoliday, HolidaysType } from '@/store/holiday';
 import { FontInfoItemsMap, type FontInfoItemType } from '@/utils/fonts-list.ts';
 
+import {
+  MonthLongEn, MonthLongEnUpperCase, MonthLongEnLowerCase,
+  MonthShortEn, MonthShortEnUpperCase, MonthShortEnLowerCase,
+  MonthLongJp
+} from '@/strings.ts';
+
 // カレンダープレビューのプロパティの型
 type CalendarPreviewProps = {
   cssStyle?: SerializedStyles;
@@ -38,50 +44,6 @@ type ImageBlockInfoType = {
 }
 
 const MS24H = 24 * 60 * 60 * 1000;
-
-const MonthLongJp = [
-  '睦月',
-  '如月',
-  '弥生',
-  '卯月',
-  '皐月',
-  '水無月',
-  '文月',
-  '葉月',
-  '長月',
-  '神無月',
-  '霜月',
-  '師走',
-];
-
-const MonthLongEn = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-const MonthShortEn = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
 
 // Is it possible to use HTML's .querySelector() to select by xlink attribute in an SVG?
 // >> https://stackoverflow.com/questions/23034283/
@@ -242,6 +204,8 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
       const isShort = 0<=formats.indexOf('short');
       const isJaJP = 0<=formats.indexOf('jaJP');
       const isEnUS = 0<=formats.indexOf('enUS');
+      const isEnUSUp = isEnUS && 0<=formats.indexOf('upper');
+      const isEnUSLo = isEnUS && 0<=formats.indexOf('lower');
       const align = (
         0<=formats.indexOf('left') ? 'left' :
         0<=formats.indexOf('right')? 'right' :
@@ -266,11 +230,15 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
           else                        { text = ""+year; }
           break;
         case 'month':
-          if      (isShort && isJaJP) { text = `${month}月`; }
-          else if (isLong  && isJaJP) { text = MonthLongJp[month-1]; }
-          else if (isShort && isEnUS) { text = MonthShortEn[month-1]; }
-          else if (isLong  && isEnUS) { text = MonthLongEn[month-1]; }
-          else                        { text = ""+month;}
+          if      (isShort && isJaJP)   { text = `${month}月`; }
+          else if (isLong  && isJaJP)   { text = MonthLongJp[month-1]; }
+          else if (isShort && isEnUSUp) { text = MonthShortEnUpperCase[month-1]; }
+          else if (isShort && isEnUSLo) { text = MonthShortEnLowerCase[month-1]; }
+          else if (isShort && isEnUS)   { text = MonthShortEn[month-1]; }
+          else if (isLong  && isEnUSUp) { text = MonthLongEnUpperCase[month-1]; }
+          else if (isLong  && isEnUSLo) { text = MonthLongEnLowerCase[month-1]; }
+          else if (isLong  && isEnUS)   { text = MonthLongEn[month-1]; }
+          else                          { text = ""+month;}
           break;
       }
 
