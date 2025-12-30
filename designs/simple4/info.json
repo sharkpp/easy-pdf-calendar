@@ -19,7 +19,8 @@
     "nextMonthDate":      "#A0A0A0"
   },
   "fonts": {
-    "date": "Noto Sans Gothic"
+    "date": "Sono",
+    "holiday": "Noto Sans Gothic"
   },
   "options": {
     "disablePreviousMonthDate": false,

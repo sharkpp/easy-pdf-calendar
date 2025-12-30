@@ -242,9 +242,16 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
       const isShort = 0<=formats.indexOf('short');
       const isJaJP = 0<=formats.indexOf('jaJP');
       const isEnUS = 0<=formats.indexOf('enUS');
+      const align = (
+        0<=formats.indexOf('left') ? 'left' :
+        0<=formats.indexOf('right')? 'right' :
+        'center'
+      );
       //const isNumber = 0<=formats.indexOf('number') || '' === formats_;
       // kind  | formats    | sample
       // ------+------------+--------
+      //       | left       | 
+      //       | right      | 
       // year  | number     | 2025
       //       | long,jaJP  | 2025年
       // month | number     | 1
@@ -273,6 +280,7 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
         {
           textColor: "rgb(0, 0, 0)",
           fontName: 'year' === kind ? yearFontName : monthFontName,
+          align,
         }
       );
     });
