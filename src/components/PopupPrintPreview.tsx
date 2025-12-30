@@ -273,7 +273,7 @@ function PopupPrintPreview({
       if (div) {
         const calendars = new Array(12).fill(0).map((_, i) => {
           const { year: yearR, month: monthR } = normalizeYearAndMonth(year, i+1, firstMonthIsApril);
-          return getCalendar(design, yearR, monthR);
+          return getCalendar(design, yearR, monthR)?.cloneNode(true) as SVGElement;
         });
         //console.log({calendars})
         div.replaceChildren.apply(div, calendars as Node[]);
