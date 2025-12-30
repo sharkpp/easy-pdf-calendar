@@ -73,7 +73,7 @@ function DesignListCore({ selectTags, design, year, onSelect }: DesignTagsProps 
   );
 
   useEffect(() => {
-    setDesigns(indexJson.index.filter(designInfo => designInfo.disabled !== true));
+    setDesigns(indexJson.index.filter(designInfo => import.meta.env.DEV || designInfo.disabled !== true));
   }, [indexJson]);
 
   useEffect(() => {
@@ -96,7 +96,7 @@ function DesignListCore({ selectTags, design, year, onSelect }: DesignTagsProps 
             {...(design !== designInfo.id ? {} : { bg: "orange", variant: "subtle" })}
           >
             <CardHeader>
-              <Heading size='sm'>{designInfo.name}</Heading>
+              <Heading size='sm'>{import.meta.env.DEV && designInfo.disabled && "🚫"}{designInfo.name}</Heading>
             </CardHeader>
             <CardBody>
               {/*<Text>View a summary of all your customers over the last month.</Text>*/}

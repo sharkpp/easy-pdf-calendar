@@ -1,5 +1,6 @@
 {
   "name":"シンプル５ 明色 画像付き",
+  "disabled": true,
   "layout": {
     "orientation": "portrait",
     "size": "B6JIS"
