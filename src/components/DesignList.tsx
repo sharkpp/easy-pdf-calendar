@@ -101,6 +101,7 @@ function DesignListCore({ selectTags, design, year, onSelect }: DesignTagsProps 
             <CardBody>
               {/*<Text>View a summary of all your customers over the last month.</Text>*/}
               <CalendarPreview
+                key={designInfo.id}
                 design={designInfo.id}
                 year={year}
                 month={1}
