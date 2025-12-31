@@ -264,7 +264,7 @@ function PopupPrintPreview({
     });
   }, [designInfo, printSizeList]);
 
-  const pageLayout = printSizeList[pageLayoutIndex[0]]||undefined;
+  const pageLayout: PrintSizeList.LayoutsInfoItem | undefined = printSizeList[pageLayoutIndex[0]];
 
 //console.log({pageLayoutIndex,pageLayoutIndexList,printSizeList,pageLayout});
 
@@ -303,7 +303,7 @@ function PopupPrintPreview({
           // カレンダーのSVGを取得
           MONTH_LIST.map(month => {
             const { year: yearR, month: monthR } = normalizeYearAndMonth(year, month, firstMonthIsApril);
-            return getCalendar(design, yearR, monthR)
+            return getCalendar(design, yearR, monthR)?.cloneNode(true) as SVGElement;
           }),
           fonts,
           designInfo,

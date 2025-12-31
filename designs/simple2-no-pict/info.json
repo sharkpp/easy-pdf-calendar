@@ -1,5 +1,5 @@
 {
-  "name":"シンプル５ 明色",
+  "name":"シンプル２ 明色",
   "layout": {
     "orientation": "landscape",
     "size": "B6JIS"
@@ -15,15 +15,12 @@
     "sundayDate":         "#FF0000",
     "saturdayDate":       "#0066ff",
     "holidayDate":        "#FF0000",
-    "previousMonthDate":  "transparent",
-    "nextMonthDate":      "transparent"
+    "previousMonthDate":  "#A0A0A0",
+    "nextMonthDate":      "#A0A0A0"
   },
   "fonts": {
-    "date": "Sono",
-    "holiday": "Noto Sans Gothic"
+    "date": "Noto Sans Gothic"
   },
   "options": {
-    "disablePreviousMonthDate": false,
-    "disableNextMonthDate": false
   }
 }

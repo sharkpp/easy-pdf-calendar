@@ -367,15 +367,17 @@ function buildCalendar(svgElm: SVGElement, year: number, month: number, designIn
       }
 
       // 日付を追加
-      addSvgText(
-        dateBaseElm,
-        ""+Math.abs(date),
-        {
-          textColor: textColor,
-          strokeColor: '#FFFFFF',
-          fontName: dateFontName,
-        }
-      );
+      if ('transparent' !== textColor) {
+        addSvgText(
+          dateBaseElm,
+          ""+Math.abs(date),
+          {
+            textColor: textColor,
+            strokeColor: '#FFFFFF',
+            fontName: dateFontName,
+          }
+        );
+      }
     });
 
   svgElm // 項目を非表示
