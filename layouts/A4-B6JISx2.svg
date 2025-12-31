@@ -38,7 +38,7 @@
      inkscape:label="layouts"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:none">
+     style="display:inline;opacity:0">
     <rect
        style="fill:#dcdcdc;stroke-width:1.38141;stroke-linecap:round;stroke-linejoin:round"
        id="rect1"
